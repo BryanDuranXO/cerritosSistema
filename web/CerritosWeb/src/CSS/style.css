@@ -1,0 +1,10 @@
+.bitch {
+    transition: all 0.3s ease; 
+  }
+  
+  .bitch:hover {
+    transform: scale(1.1); 
+    color: #5fb5ee9b;
+    
+  }
+  
