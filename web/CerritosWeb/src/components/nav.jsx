@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
 import cerritos from '../assets/cerritos.png';
-import '../CSS/style.css'
+import '../css/style.css'
 export const Navegacion = () =>{
     const navigate = useNavigate();
     return(
