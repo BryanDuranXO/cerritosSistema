@@ -3,9 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
+import cerritos from '../assets/cerritos.png';
+import '../css/style.css'
+=======
 import cerritos from '../assets/logocerritos.png';
 import '../CSS/style.css';
 
+>>>>>>> ee9eed95deefff5519426db7dcd201be8df3da0e
 export const Navegacion = () =>{
     const navigate = useNavigate();
     return(
