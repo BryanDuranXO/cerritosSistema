@@ -10,7 +10,7 @@ export default function Registro() {
           source={require("../assets/back.png")}
           style={styles.image}
         />
-        <Text style={styles.welcomeText}>¡Crear una cuenta!</Text>
+        <Text style={styles.welcomeText}>¡Registrate!</Text>
       </View>
 
      
