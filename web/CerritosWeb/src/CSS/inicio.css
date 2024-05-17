@@ -1,20 +1,218 @@
-.contenedor{
+.contenedor {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50rem;
-    height: 30rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
+    max-width: 80rem;
+    height: auto; 
+    margin-bottom: 3%;
     margin-top: 10px;
     background-color: #FDFDFD;
     border-radius: 7px;
     -webkit-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
--moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    -moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh; /* Ajusta la altura al 100% del viewport */
+    justify-content: flex-start; 
+    min-height: 100vh;
+}
+
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 5%;
+    width: 100%; 
+}
+
+.texto {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 5%;
+}
+
+.tittle {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.secondary-text {
+    text-align: center;
+}
+
+.secondary-text h3 {
+    color: #555353;
+    margin-bottom: 5%;
+}
+
+.info {
+    font-size: 20px;
+    margin-bottom: 3%;
+}
+
+.imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
+    margin-top: 2%;
+}
+
+img {
+    width: 63%;
+    height: auto; 
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+.boton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.boton button {
+    background-color: #F14610;
+    color: #ffffff;
+    width: 40%; /* Ajusta el ancho del botón */
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.hotel-imagenes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 81%;
+    max-width: 80rem;
+    margin-bottom: 3%;
+    margin-top: 10px;
+    margin-left: 5%;
+}
+
+.hotel {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: flex-start;
+    width: 60%;
+    margin-left: 10px;
+    max-width: 80rem;
+    height: 80%;
+    background-color: #FDFDFD;
+    border-radius: 7px;
+    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+}
+
+.imagenes {
+    width: 38%;
+    align-self: flex-end;
+}
+
+.habitaciones {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 5%;
+    max-width: 80rem;
+    margin-bottom: 3%;
+    height: auto; 
+    margin-top: 10px;
+    background-color: #FDFDFD;
+    border-radius: 7px;
+    -webkit-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    -moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+}
+
+.btnHab{
+    background-color: #191970;
+    color: #ffffff;
+    width: 40%;
+    height: 35px;
+    border-style: none;
+    border-radius: 4px;
+}   
+
+.evt {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 50%;
+    margin-bottom: 3%;
+    max-width: 80rem;
+    height: auto; 
+    margin-top: 10px;
+    background-color: #FDFDFD;
+    border-radius: 7px;
+    -webkit-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    -moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+}
+
+
+@media (max-width: 768px) {
+    .contenedor {
+        flex-direction: column; 
+        width: 90%;
+        height: auto;
+    }
+
+    .text-container {
+        margin-left: 0;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .texto {
+        font-size: 18px;
+        margin-top: 2%;
+    }
+
+    .tittle {
+        font-size: 28px;
+    }
+
+    .secondary-text h3 {
+        font-size: 18px;
+        margin-bottom: 3%;
+    }
+
+    .info {
+        font-size: 16px;
+    }
+
+    .imagen {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    img {
+        width: 80%;
+        height: auto;
+    }
+
+    .boton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    button {
+        width: 80%;
+        height: 40px;
+        font-size: 18px;
+    }
 }

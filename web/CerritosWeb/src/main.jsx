@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Routes>
       <Route path='/Inicio' element={<Inicio />} />
       <Route path='/form-PDF' element={<Form />} />
-      <Route path='/*' element={<Navegacion />} />
+      <Route path='/*' element={<Inicio />} />
     </Routes>
   </Router>
 );

@@ -14,7 +14,7 @@ function CollapsibleExample() {
 
   return (
     <Navbar collapseOnSelect expand="lg" style={{backgroundColor:'#111B2E', marginBottom: '15px'}}>
-        <img src={cerritos} alt="Logo" style={{ width: '5%', marginLeft: '8%' }} />
+        <img onClick={()=> {navigate('/Inicio')}} src={cerritos} alt="Logo" style={{ width: '5%', marginLeft: '8%', cursor: 'pointer'}} />
       <Container >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" style={{backgroundColor: 'white'}} /> 
         <Navbar.Collapse id="responsive-navbar-nav" >
