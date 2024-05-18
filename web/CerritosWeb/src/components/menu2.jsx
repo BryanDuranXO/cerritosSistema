@@ -13,9 +13,9 @@ function CollapsibleExample() {
   const navigate = useNavigate();
 
   return (
-    <Navbar collapseOnSelect expand="lg" style={{backgroundColor:'#111B2E', marginBottom: '15px'}}>
+    <Navbar collapseOnSelect expand="lg" fixed='top' style={{backgroundColor:'#111B2E', marginBottom: '15px', zIndex: 1000 }}>
         <img onClick={()=> {navigate('/Inicio')}} src={cerritos} alt="Logo" style={{ width: '5%', marginLeft: '8%', cursor: 'pointer'}} />
-      <Container >
+      <Container  >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" style={{backgroundColor: 'white'}} /> 
         <Navbar.Collapse id="responsive-navbar-nav" >
           <Nav className="me-auto">

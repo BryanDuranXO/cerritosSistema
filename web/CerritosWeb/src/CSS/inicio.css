@@ -2,16 +2,17 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    width: 80%;
+    width: 100%;
     max-width: 80rem;
     height: auto; 
-    margin-bottom: 3%;
+    margin-bottom: 4%;
     margin-top: 10px;
     background-color: #FDFDFD;
     border-radius: 7px;
     -webkit-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
     -moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
     box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    
 }
 
 .main-container {
@@ -20,6 +21,7 @@
     align-items: center;
     justify-content: flex-start; 
     min-height: 100vh;
+    margin-top: 5%;
 }
 
 
@@ -66,7 +68,7 @@
 }
 
 img {
-    width: 63%;
+    width: 50%;
     height: auto; 
     border-radius: 5px;
     margin-left: 15px;
@@ -78,6 +80,16 @@ img {
     align-items: center;
     width: 100%;
     margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+.boton2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 12px;
 }
 
 .boton button {
@@ -92,75 +104,16 @@ img {
     margin-left: 5px;
 }
 
-.hotel-imagenes-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 81%;
-    max-width: 80rem;
-    margin-bottom: 3%;
-    margin-top: 10px;
-    margin-left: 5%;
-}
-
-.hotel {
-    display: flex;
-    flex-direction: column; 
-    justify-content: space-between; 
-    align-items: flex-start;
-    width: 60%;
-    margin-left: 10px;
-    max-width: 80rem;
-    height: 80%;
-    background-color: #FDFDFD;
-    border-radius: 7px;
-    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-}
-
-.imagenes {
-    width: 38%;
-    align-self: flex-end;
-}
-
-.habitaciones {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    width: 5%;
-    max-width: 80rem;
-    margin-bottom: 3%;
-    height: auto; 
-    margin-top: 10px;
-    background-color: #FDFDFD;
-    border-radius: 7px;
-    -webkit-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-    -moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-}
-
-.btnHab{
+.boton2 button {
     background-color: #191970;
     color: #ffffff;
-    width: 40%;
+    width: 40%; /* Ajusta el ancho del botón */
     height: 35px;
-    border-style: none;
-    border-radius: 4px;
-}   
-
-.evt {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 50%;
-    margin-bottom: 3%;
-    max-width: 80rem;
-    height: auto; 
-    margin-top: 10px;
-    background-color: #FDFDFD;
-    border-radius: 7px;
-    -webkit-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-    -moz-box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
-    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 5px;
 }
 
 

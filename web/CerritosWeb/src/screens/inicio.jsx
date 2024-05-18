@@ -1,82 +1,144 @@
+import React from 'react';
 import { Fade } from "react-awesome-reveal";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import CollapsibleExample from '../components/menu2';
 import { Navegacion } from '../components/nav';
 import '../css/inicio.css';
 import '../css/style.css';
+import Footer from '../components/footer';
 
 export const Inicio = () => {
     return (
         <>
             <CollapsibleExample />
             <div className="main-container">
+                <div className="contenedor">
+                    <div className="text-container">
+                        <div className='texto'>
+                            <p className='tittle'>Cerritos Xochitepec</p>
+                        </div>
+                        <div className="secondary-text">
+                            <h3>Generando Momentos que recordarás toda la vida</h3>
+                            <p className='info'>
+                                Estamos comprometidos a hacer de su visita un recuerdo atesorable, por lo que todo nuestro empeño estará enfocado en personalizar nuestros servicios a sus necesidades y expectativas.
+                            </p>
+                        </div>
+                        <div className="boton">
+                            <button>Reserva ahora</button>
+                        </div>
+                    </div>
+                    <div className="imagen">
+                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                        </Carousel>
+                    </div>
+                </div>
+
+                <Fade direction="right">
+                    <div className="contenedor">
+                        <div className="text-container">
+                            <div className='texto'>
+                                <p className='tittle'>Sobre el Hotel</p>
+                            </div>
+                            <div className="secondary-text">
+                                <h3>Disfruta de nuevas experiencias en nuestras instalaciones</h3>
+                                <p className='info'>
+                                    ¿Buscas placer o negocios? Descubre el confort de nuestras villas con 18 habitaciones completamente equipadas. Disfruta de un descanso excepcional mientras contemplas nuestros extensos y encantadores jardines, llenos de historia y belleza.
+                                </p>
+                            </div>
+                            <div className="boton2">
+                                <button>Habitaciones</button>
+                            </div>
+                        </div>
+                        <div className="imagen">
+                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                        </Carousel>
+                    </div>
+                    </div>
+                </Fade>
+
                 <Fade direction="left">
                     <div className="contenedor">
                         <div className="text-container">
                             <div className='texto'>
-                                <p className='tittle'>Cerritos Xochitepec</p>
+                                <p className='tittle'>Eventos Sociales</p>
                             </div>
                             <div className="secondary-text">
-                                <h3>Generando Momentos que recordarás toda la vida</h3>
+                                <h3>Goza al máximo tus reuniones en nuestro establecimiento</h3>
                                 <p className='info'>
-                                    Estamos comprometidos a hacer de su visita un recuerdo atesorable, por lo que todo nuestro empeño estará enfocado en personalizar nuestros servicios a sus necesidades y expectativas.
+                                    Nuestras instalaciones para eventos te brindan hermosos jardines, lagos con vegetación exótica y vistas impresionantes, ¡la elección perfecta para ti y tus invitados!
                                 </p>
                             </div>
-                            <div className="boton">
+                            <div className="boton2">
+                                <button>Cotiza tu evento</button>
+                            </div>
+                        </div>
+                        <div className="imagen">
+                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                        </Carousel>
+                    </div>
+                    </div>
+                </Fade>
+
+                <Fade direction="right">
+                    <div className="contenedor">
+                        <div className="text-container">
+                            <div className='texto'>
+                                <p className='tittle'>Nuestros Espacios</p>
+                            </div>
+                            <div className="secondary-text">
+                                <h3>Disfruta de nuestras áreas verdes y espacios de entretenimiento</h3>
+                                <p className='info'>
+                                Descubre nuestros amplios jardines y sumérgete en la tranquilidad que ofrecen. Relájate en una de nuestras tres piscinas rodeadas de cómodos camastros. Para los amantes del deporte, contamos con una cancha de tenis y un mini golf para disfrutar al máximo tu estancia.                                </p>
+                            </div>
+                            <div className="boton2">
                                 <button>Reserva ahora</button>
                             </div>
                         </div>
                         <div className="imagen">
-                            <img src={'https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg'} alt="img" />
-                        </div>
-                    </div>
-                </Fade>
-
-                <Fade direction="right">
-                    <div className="hotel-imagenes-container">
-                        <div className="hotel">
-                            <div className="texto">
-                                <p className="tittle">Hotel</p>
-                                <p className="info">
-                                    ¿Buscas placer o negocios? Descubre el confort de nuestras villas con 18 habitaciones completamente equipadas. Disfruta de un descanso excepcional mientras contemplas nuestros extensos y encantadores jardines, llenos de historia y belleza.
-                                </p>
-                                <button className='btnHab'>Habitaciones</button>
+                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
                             </div>
-                        </div>
-                        <div className="imagenes">
-                            <img src={'https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg'} alt="img" />
-                        </div>
+                            <div>
+                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                            <div>
+                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                            </div>
+                        </Carousel>
                     </div>
-                </Fade>
-
-                <Fade direction="right">
-                    <div className="evt">
-                        <div className="texto">
-                            <p className="tittle">Eventos Sociales</p>
-                            <p className="info">
-                                Nuestras instalaciones para eventos te brindan hermosos jardines, lagos con vegetación exótica y vistas impresionantes, ¡la elección perfecta para ti y tus invitados!
-                            </p>
-                        </div>
                     </div>
                 </Fade>
             </div>
-
-            <Fade direction="left">
-                <div className="hotel-imagenes-container">
-                    <div className="hotel">
-                        <div className="texto">
-                            <p className="tittle">Espacios</p>
-                            <p className="info">
-                                Explora nuestros jardines amplios y exuberantes, tres piscinas con camastros, una cancha de tenis y un mini golf para disfrutar al máximo tu estadía.
-                            </p>
-                            <button className='btnHab'>Habitaciones</button>
-                        </div>
-                    </div>
-                    <div className="imagenes">
-                        <img src={'https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg'} alt="img" />
-                    </div>
-                </div>
-            </Fade>
-
+            <Footer/>
         </>
     );
 }
