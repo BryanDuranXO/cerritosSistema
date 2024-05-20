@@ -7,8 +7,13 @@ import { Navegacion } from '../components/nav';
 import '../css/inicio.css';
 import '../css/style.css';
 import Footer from '../components/footer';
+import { useNavigate } from 'react-router-dom';
 
 export const Inicio = () => {
+
+    const navigate = useNavigate();
+
+
     return (
         <>
             <CollapsibleExample />
@@ -56,7 +61,7 @@ export const Inicio = () => {
                                 </p>
                             </div>
                             <div className="boton2">
-                                <button>Habitaciones</button>
+                                <button onClick={() => {navigate('/Habitaciones')}}>Habitaciones</button>
                             </div>
                         </div>
                         <div className="imagen">

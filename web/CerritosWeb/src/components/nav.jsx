@@ -18,7 +18,7 @@ export const Navegacion = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link className="navegaciones" onClick={()=> {navigate('/form-PDF')}}>Inicio</Nav.Link>
-                        <Nav.Link className="navegaciones" onClick={()=> {navigate('/form-PDF')}}>Habitaciones</Nav.Link>
+                        <Nav.Link className="navegaciones" onClick={()=> {navigate('/Habitaciones')}}>Habitaciones</Nav.Link>
                         <Nav.Link className="navegaciones" onClick={()=> {navigate('/form-PDF')}}>Eventos sociales</Nav.Link>
                         <Nav.Link className="navegaciones" onClick={()=> {navigate('/form-PDF')}}>Contacto</Nav.Link>
                         <Nav.Link className="navegaciones" onClick={()=> {navigate('/form-PDF')}}>Acceso</Nav.Link>
