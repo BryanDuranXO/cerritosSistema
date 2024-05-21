@@ -93,7 +93,7 @@ export const Inicio = () => {
                                 </p>
                             </div>
                             <div className="boton2">
-                                <button>Cotiza tu evento</button>
+                                <button onClick={() => {navigate('/Eventos')}}>Cotiza tu evento</button>
                             </div>
                         </div>
                         <div className="imagen">
