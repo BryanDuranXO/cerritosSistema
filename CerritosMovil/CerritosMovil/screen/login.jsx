@@ -34,7 +34,8 @@ export default function Login() {
           <TextInput style={styles.input} />
           <Text style={styles.baseText}>Contraseña</Text>
           <View style={styles.passwordInputContainer}>
-            <TextInput style={[styles.input, styles.passwordInput]} />
+            <TextInput style={[styles.input, styles.passwordInput]} 
+             secureTextEntry={!showPassword} />
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}
               style={styles.passwordToggle}
