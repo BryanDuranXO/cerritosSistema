@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import Header from '../elemnts/Header'; // Asegúrate de importar el componente Header
+
 export default function Reservas() {
   return (
     <View style={styles.container}>
-      <Text>Reservas</Text>
-      <StatusBar style="auto" />
+      <Header/>
+      <View>
+      <Text>Contenido de la pantalla de Reservas</Text>
+      </View>
+    
+   
     </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+   
   },
+  
 });

@@ -24,12 +24,16 @@ export default function Login() {
     navigation.navigate("Registro");
   };
 
+  const handleLogin = () => {
+    navigation.navigate("Drawer");
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../assets/holi.png")} />
       <Card containerStyle={styles.cardContainer}>
         <View>
-          <Text style={styles.welcomeText}>¡Bienvenido puto!</Text>
+          <Text style={styles.welcomeText}>¡Bienvenido!</Text>
           <Text style={styles.baseText}>Usuario</Text>
           <TextInput style={styles.input} />
           <Text style={styles.baseText}>Contraseña</Text>
@@ -52,7 +56,7 @@ export default function Login() {
             ¿Olvidaste tu contraseña?
           </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>Iniciar sesión</Text>
             </TouchableOpacity>
           </View>
