@@ -3,9 +3,15 @@ import { Form, Button, Container } from 'react-bootstrap';
 import Footer from "../components/footer";
 import CollapsibleExample from "../components/menu2";
 import '../css/login.css'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
   return (
+
+    
     <>
       <CollapsibleExample />
       <Container className="contLog">
@@ -20,7 +26,7 @@ const Login = () => {
             <Form.Label htmlFor="Pass">Contraseña</Form.Label>
             <Form.Control type="password" name="Pass" id="pass" />
 
-            <Button className="form-submit-button" type="submit">
+            <Button className="form-submit-button" type="submit" onClick={() => {navigate('/ReservacionAdmin')}}>
               Entrar
             </Button>
 
