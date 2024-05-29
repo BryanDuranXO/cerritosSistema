@@ -16,7 +16,7 @@ function Usuarios() {
           <img className='logo' src={cerritos} alt="logo" />
         </div>
         <div className="subM2"></div>
-        <div onClick={() => { navigate('/Agenda') }} className="subM">Reservaciones</div>
+        <div onClick={() => { navigate('/ReservacionAdmin') }} className="subM">Reservaciones</div>
         <div onClick={() => { navigate('/Busqueda') }} className="subM">Buscar contrato</div>
         <div onClick={() => { navigate('/Usuarios') }} className="subM">Gestionar usuarios</div>
         <div onClick={() => { navigate('/Habitaciones') }} className="subM">Gestionar habitaciones</div>
