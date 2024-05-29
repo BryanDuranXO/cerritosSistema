@@ -8,7 +8,8 @@ import Habitaciones from './screens/Habitaciones.jsx';
 import Eventos from './screens/eventos.jsx';
 import Contacto from './screens/contacto.jsx';
 import Login from './screens/login.jsx';
-import NavAdmin from './components/nav.jsx';
+import NavAdmin from './screens/Agenda.jsx';
+import Usuarios from './screens/usuarios.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -21,6 +22,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='Contacto' element= {<Contacto/>} />
       <Route path='/Acceso' element={<Login/>} />
       <Route path='/ReservacionAdmin' element={<NavAdmin/>} />
+      <Route path='/Usuarios' element={<Usuarios/>} />
+
       <Route path='/*' element={<Inicio />} />
     </Routes>
   </Router>
