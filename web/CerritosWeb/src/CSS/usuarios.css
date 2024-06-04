@@ -301,6 +301,17 @@
     border-style: none;
 }
 
+.editButt{
+    width: 45%;
+    height: 35px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #FFAE1F;
+    border-radius: 3px;
+    margin: 2%;
+    border-style: none;
+}
+
 .cancelButt{
     width: 45%;
     height: 35px;
@@ -309,4 +320,9 @@
     background-color: #B50505;
     border-radius: 3px;
     border-style: none;
+}
+
+.registerButt:hover , .cancelButt:hover, .editButt:hover{
+    border: 3px solid #1796FF;
+    transition: all 0.1s ease-in-out;
 }

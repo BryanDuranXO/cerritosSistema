@@ -24,9 +24,33 @@ const customStyles = {
   },
 };
 
+Modal.setAppElement('#root');
+
+
+
+const customStyles2 = {
+  content: {
+    display: 'flex',
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    flexDirection: 'column',
+    textAlign: 'center',
+    width: '35%', 
+    height: '70%', 
+    margin: 'auto', 
+    backgroundColor: '#FFFFFF',
+    border: '2px solid #1796FF', 
+    borderRadius: '10px', 
+    padding: '20px' 
+  },
+};
+
 function Usuarios() {
 
   const [open, setIsOpen] = useState(false);
+  const [openUpdate, setIsOpenUpdate] = useState(false);
+  const [openDelete, setIsOpenDelete] = useState(false);
+
   const navigate = useNavigate();
 
   function openModal() {
@@ -37,6 +61,13 @@ function Usuarios() {
     setIsOpen(false);
   }
 
+  function openUpdateModal() {
+    setIsOpenUpdate(true);
+  }
+
+  function closeUpdateModal() {
+    setIsOpenUpdate(false);
+  }
   return (
     <div className="contNav">
       <div className="side">
@@ -94,7 +125,7 @@ function Usuarios() {
                     <td>@mdo</td>
                     <td colSpan="2" className='d-flex justify-content-center'>
                       <button type="button" className="btn btn-danger btn-sm m-1">Eliminar</button>
-                      <button type="button" className="btn btn-warning btn-sm m-1">Actualizar</button>
+                      <button onClick={openUpdateModal} type="button" className="btn btn-warning btn-sm m-1">Actualizar</button>
                     </td>
                   </tr>
                   <tr>
@@ -160,6 +191,42 @@ function Usuarios() {
             <div className="butFormMod">
             <button className='registerButt' onClick={closeModal}>Registrar</button>
             <button className='cancelButt' onClick={closeModal}>Cancelar</button>
+
+            </div>
+
+          </form>
+      </Modal>
+
+      <Modal
+        isOpen={openUpdate}
+        onRequestClose={closeUpdateModal}
+        style={customStyles2}
+      >
+           <h2 style={{fontWeight:'bold'}}>Editar Usuario</h2>
+          <form action="" >
+            <div className="dt1" >
+              <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' />
+              <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono'/>
+            </div>
+            <div className="dt1" >
+              <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' />
+              <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' />
+            </div>
+            <div className="dt2">
+              <input type="email" name="mail" id="mail" className="field2" placeholder='Correo electrónico' />
+            </div>
+            <div className="dt2">
+              <select className="field2" name="roles" id="roles" >
+                <option value="" selected>Rol</option>
+                <option value="gerente">Gerente</option>
+                <option value="usuario">Usuario</option>
+
+              </select>
+            </div>
+
+            <div className="butFormMod">
+            <button className='editButt' onClick={closeUpdateModal}>Editar</button>
+            <button className='cancelButt' onClick={closeUpdateModal}>Cancelar</button>
 
             </div>
 
