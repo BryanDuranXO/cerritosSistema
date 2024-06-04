@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .contLog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    padding: 0 20px;
+  }
+  
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Ancho máximo para el formulario */
+    border-radius: 7px;
+    margin: 0 auto;
+    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+  }
+  
+  .formu {
+    width: 80%;
+    height: 100%;
+    margin: 5%;
+  }
+  
+  .ttl,
+  .inf {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-submit-button {
+    width: 100%;
+  }
+  
+  .forgot-password {
+    margin-top: 20px;
+  }
+  
+  .form-submit-button {
+    background: #53b0e5;
+    border-color: #0066A2;
+    margin-top: 30px;
+  }
+  
+  .form-submit-button:hover {
+    background: #0099cc;
+  }
+  
+  .forgot-password {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    color: #0066A2;
+    text-decoration: none;
+  }
+  
+  /* Media queries para hacer el diseño responsive */
+  
+  @media (max-width: 768px) {
+    .formulario {
+      max-width: 90%; 
+    }
+  }
+  

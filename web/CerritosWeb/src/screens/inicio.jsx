@@ -3,7 +3,6 @@ import { Fade } from "react-awesome-reveal";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; 
 import CollapsibleExample from '../components/menu2';
-import { Navegacion } from '../components/nav';
 import '../css/inicio.css';
 import '../css/style.css';
 import Footer from '../components/footer';

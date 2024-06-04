@@ -67,7 +67,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 4% auto; /* Centrado horizontal y espacio en los bordes */
+    margin: 4% auto; 
 }
 
 .titulo {

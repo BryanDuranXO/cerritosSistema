@@ -24,8 +24,8 @@ function CollapsibleExample() {
           <Nav.Link onClick={() => { navigate('/inicio')}} style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Inicio</Nav.Link>
           <Nav.Link onClick={() => { navigate('/Habitaciones')}} style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Habitaciones</Nav.Link>
           <Nav.Link onClick={() => {navigate('/Eventos')}} style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Eventos sociales</Nav.Link>
-          <Nav.Link href="#deets" style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Contacto</Nav.Link>
-          <Nav.Link href="#deets" style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Acceso</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/Contacto')}} style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Contacto</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/Acceso')}} style={{ fontSize: '20px', marginRight: '25px', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s ease', fontFamily: '"Istok Web", sans-serif', fontWeight: 200 }}>Acceso</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
