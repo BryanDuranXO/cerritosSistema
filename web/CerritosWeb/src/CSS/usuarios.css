@@ -312,6 +312,17 @@
     border-style: none;
 }
 
+.delButt{
+    width: 45%;
+    height: 35px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #B50505;
+    border-radius: 3px;
+    margin: 2%;
+    border-style: none;
+}
+
 .cancelButt{
     width: 45%;
     height: 35px;
@@ -322,7 +333,17 @@
     border-style: none;
 }
 
-.registerButt:hover , .cancelButt:hover, .editButt:hover{
+.cancelButt2{
+    width: 45%;
+    height: 35px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #191970;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.registerButt:hover , .cancelButt:hover, .editButt:hover, .delButt:hover, .cancelButt2:hover{
     border: 3px solid #1796FF;
     transition: all 0.1s ease-in-out;
 }
