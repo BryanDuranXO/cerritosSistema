@@ -6,6 +6,8 @@ import cerritos from '../assets/logocerritos.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";  
 import Modal from 'react-modal';
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const customStyles = {
   content: {
@@ -58,6 +60,17 @@ function Usuarios() {
   }
 
   function closeModal() {
+    toast.success('Usuario registrado exitosamente!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Flip,
+      });
     setIsOpen(false);
   }
 
@@ -66,6 +79,17 @@ function Usuarios() {
   }
 
   function closeUpdateModal() {
+    toast.success('Usuario editado exitosamente!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Flip,
+      });
     setIsOpenUpdate(false);
   }
 
@@ -74,6 +98,17 @@ function Usuarios() {
   }
 
   function closeDeleteeModal() {
+    toast.success('Usuario Eliminado exitosamente!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Flip,
+      });
     setIsOpenDelete(false);
   }
   
@@ -107,6 +142,22 @@ function Usuarios() {
                 <button className="btn btn-primary" onClick={openModal} type="button" style={{fontSize: '15px', width: '100%', height: '30px', textAlign:'center', padding: '1px'}}>
                   <FontAwesomeIcon icon={faPlus} /> Agregar usuario
                 </button>
+                
+                <ToastContainer
+                  position="top-right"
+                  autoClose={1500}
+                  limit={5}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                  transition={Flip}
+                />
+
               </div>
             </div>
 
