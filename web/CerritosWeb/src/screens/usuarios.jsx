@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/usuarios.css';
 import cerritos from '../assets/logocerritos.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";  
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    display: 'flex',
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    flexDirection: 'column',
+    textAlign: 'center',
+    width: '35%', 
+    height: '90%', 
+    margin: 'auto', 
+    backgroundColor: '#FFFFFF',
+    border: '2px solid #1796FF', 
+    borderRadius: '10px', 
+    padding: '20px' 
+  },
+};
 
 function Usuarios() {
+
+  const [open, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <div className="contNav">
@@ -32,24 +60,20 @@ function Usuarios() {
         </div>
 
         <div className="content">
-
           <div className="users2">
-
             <div className="add">
               <div className="textoUsers">Usuarios</div>
               <div className="butoAdd">
-                <button className="btn btn-primary" type="button" style={{fontSize: '15px',width: '100%', height: '30px', textAlign:'center', padding: '1px'}}>
+                <button className="btn btn-primary" onClick={openModal} type="button" style={{fontSize: '15px', width: '100%', height: '30px', textAlign:'center', padding: '1px'}}>
                   <FontAwesomeIcon icon={faPlus} /> Agregar usuario
                 </button>
               </div>
             </div>
 
-            
-
             <div className="separacion"></div>
             <div className="input">
                 <label style={{margin: '1%', fontWeight: '500'}} htmlFor="Search">Buscar usuario</label>
-                <input style={{margin: '1%', borderRadius: '2px', backgroundColor:'#D9D9D9', borderStyle: 'none', height: '55%', textAlign: 'center'}}  type="text" name="Search" id="search" />            
+                <input style={{margin: '1%', borderRadius: '2px', backgroundColor:'#D9D9D9', borderStyle: 'none', height: '55%', textAlign: 'center'}} type="text" name="Search" id="search" />            
             </div>
             <div className="tabla">
               <table className="table table-bordered">
@@ -99,6 +123,49 @@ function Usuarios() {
           </div>
         </div>
       </div>
+
+      <Modal 
+        isOpen={open} 
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+          <h2 style={{fontWeight:'bold'}}>Registrar Usuario</h2>
+          <form action="" >
+            <div className="dt1" >
+              <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' />
+              <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono'/>
+            </div>
+            <div className="dt1" >
+              <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' />
+              <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' />
+            </div>
+            <div className="dt2">
+              <input type="email" name="mail" id="mail" className="field2" placeholder='Correo electrónico' />
+            </div>
+            <div className="dt2">
+              <input type="text" name="user" id="user" className="field2" placeholder='Nombre de usuario' />
+            </div>
+            <div className="dt2">
+              <input type="text" name="user" id="user" className="field2" placeholder='Contraseña' />
+            </div>
+            <div className="dt2">
+              <select className="field2" name="roles" id="roles" >
+                <option value="" selected>Rol</option>
+                <option value="gerente">Gerente</option>
+                <option value="usuario">Usuario</option>
+
+              </select>
+            </div>
+
+            <div className="butFormMod">
+            <button className='registerButt' onClick={closeModal}>Registrar</button>
+            <button className='cancelButt' onClick={closeModal}>Cancelar</button>
+
+            </div>
+
+          </form>
+      </Modal>
+
     </div>
   );
 }
