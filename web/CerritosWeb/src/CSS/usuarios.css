@@ -253,7 +253,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    margin: 7% 2%;
+    margin: 5% 2%;
 }
 
 .field{
@@ -287,11 +287,12 @@
     align-items: center;
     flex-direction: row;
     margin-left: 1%;
+    margin-top: 4%;
 }
 
 .registerButt{
     width: 45%;
-    height: 30px;
+    height: 35px;
     color: #ffffff;
     font-weight: bold;
     background-color: #191970;
@@ -302,7 +303,7 @@
 
 .cancelButt{
     width: 45%;
-    height: 30px;
+    height: 35px;
     color: #ffffff;
     font-weight: bold;
     background-color: #B50505;
