@@ -33,7 +33,7 @@ export default function Login() {
       <Image style={styles.logo} source={require("../assets/holi.png")} />
       <Card containerStyle={styles.cardContainer}>
         <View>
-          <Text style={styles.welcomeText}>¡Bienvenido!</Text>
+          <Text style={styles.welcomeText}>¡Bienvenido holaaaaa!</Text>
           <Text style={styles.baseText}>Usuario</Text>
           <TextInput style={styles.input} />
           <Text style={styles.baseText}>Contraseña</Text>
