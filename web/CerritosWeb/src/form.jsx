@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navegacion } from './components/nav';
+import CollapsibleExample from './components/menu2.jsx';
 
 function Form() {
     const [formData, setFormData] = useState({
@@ -56,9 +56,7 @@ function Form() {
     return (
 
         <>
-
-<Navegacion/>
-
+            <CollapsibleExample/>
             <div style={{ width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth: '2px' }}>
 
                 <form style={{ border: '1px solid black', padding: '20px', width: '50%', maxWidth: '500px' }} onSubmit={handleSubmit}>
@@ -85,6 +83,7 @@ function Form() {
                     <button type="submit">Enviar</button>
                 </form>
             </div>
+
         </>
     );
 }

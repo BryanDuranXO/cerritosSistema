@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.etiqueta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    margin-top: 70px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #130532;
+    font-size: 25px;
+}
+
+.main-container {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.contEvt {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    flex-direction: row; 
+    width: 100%;
+    height: 90%; 
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 2px solid black;
+}
+
+.itemvt {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center; 
+    width: 50%; 
+    margin: 2%;
+}
+
+.tittleEv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 35px;
+    width: 100%;
+    margin: 1%;
+}
+
+.itemvt2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center; 
+    width: 50%; 
+    margin: 2%;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    margin: 2% 5%;
+}
+
+.imagenEvt {
+    width: 75%; 
+    height: auto; 
+    display: flex;
+    margin-bottom: 3%;
+}
+
+.slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 70%; 
+    margin-top: 20px; 
+    
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    border: 1px solid red;
+    margin: 0% 3%
+}
