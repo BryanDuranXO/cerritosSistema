@@ -1,13 +1,22 @@
-import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, StyleSheet, Text, Image, TextInput } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, Image, TextInput, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
-export default function Registro({ handleRegistro}) {
-  const navigation=useNavigation();
-  const handleGoBack=()=>{
-      navigation.goBack();
-  }
+export default function Cuenta() {
+    const [showPassword, setShowPassword] = useState([false, false]);
+
+    const navigation = useNavigation();
+    const handleGoBack = () => {
+        navigation.navigate('Registro');
+    };
+
+    const handleTogglePassword = (index) => {
+        const updatedShowPassword = [...showPassword];
+        updatedShowPassword[index] = !updatedShowPassword[index];
+        setShowPassword(updatedShowPassword);
+    }
+
   return (
     <View style={styles.container}>
         <View style={styles.rowContainer2}>
@@ -20,36 +29,57 @@ export default function Registro({ handleRegistro}) {
      
       <View style={styles.rowContainer}>
         <Image
-          source={require("../assets/personal.png")}
+          source={require("../assets/dos.png")}
           style={styles.image}
         />
-        <Text style={styles.dataPerson}>Datos Personales</Text>
+        <Text style={styles.dataPerson}>Datos de la cuenta</Text>
       </View>
-      <Image style={styles.logo} source={require("../assets/registro.png")} />
+      <Image style={styles.logo} source={require("../assets/cuenta.png")} />
     
       <View style={styles.inputContainer}>
-        <Text style={styles.baseText}>Nombre(s)</Text>
+        <Text style={styles.baseText}>Correo electrónico</Text>
         <TextInput style={styles.input} />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.baseText}>Apellido paterno</Text>
+        <Text style={styles.baseText}>Nombre de usuario</Text>
         <TextInput style={styles.input} />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.baseText}>Apellido materno</Text>
-        <TextInput style={styles.input} />
+        <Text style={styles.baseText}>Contraseña</Text>
+        <View style={styles.passwordInputContainer}>
+            <TextInput style={[styles.input, styles.passwordInput]} secureTextEntry={!showPassword[0]} />
+            <TouchableOpacity
+              onPress={() => handleTogglePassword(0)}
+              style={styles.passwordToggle}
+            >
+              <FontAwesome
+                name={showPassword[0] ? "eye" : "eye-slash"}
+                size={20}
+                color="#000"
+              />
+            </TouchableOpacity>
+          </View>
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.baseText}>Télefono</Text>
-        <TextInput style={styles.input} />
+        <Text style={styles.baseText}>Confirmar contraseña</Text>
+        <View style={styles.passwordInputContainer}>
+            <TextInput style={[styles.input, styles.passwordInput]} secureTextEntry={!showPassword[1]} />
+            <TouchableOpacity
+              onPress={() => handleTogglePassword(1)}
+              style={styles.passwordToggle}
+            >
+              <FontAwesome
+                name={showPassword[1] ? "eye" : "eye-slash"}
+                size={20}
+                color="#000"
+              />
+            </TouchableOpacity>
+          </View>
       </View>
 
       <View style={styles.buttonContainer}>
-      <TouchableOpacity 
-          style={styles.button}
-          onPress={handleRegistro}
-        >
-          <Text style={styles.buttonText}>Siguiente</Text>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -137,5 +167,19 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignSelf: "center",
+  },
+  passwordInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
+  },
+  passwordInput: {
+    flex: 1,
+    marginLeft: -5,
+    marginRight: -3,
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 10,
   },
 });
