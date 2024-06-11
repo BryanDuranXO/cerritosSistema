@@ -7,8 +7,8 @@
 .contNav {
     display: flex;
     width: 100%;
-    height: 100vh;
-    border: 1px solid black;
+    height: 120vh;
+    overflow: hidden;
 }
 
 .main {
@@ -115,7 +115,7 @@
 
 .subM2 {
     width: 100%;
-    height: 8%;
+    height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,11 +187,14 @@
     width: 28px;
 }
 
-.HBCont{
-    display: flex;
-    flex-direction: row;
+.HBCont {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 30%); 
+    overflow-y: auto; 
+    position: static;
 }
 
 .HBItem{
@@ -206,7 +209,7 @@
 }
 
 .HBItem-sub{
-    width: 60%;
+    width: 65%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -216,7 +219,7 @@
 }
 
 .HBItem-sub2{
-    width: 60%;
+    width: 65%;
     height: 100%;
     display: flex;
     justify-content: center;
