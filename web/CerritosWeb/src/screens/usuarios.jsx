@@ -116,6 +116,7 @@ function Usuarios() {
                         <table id="example2" className="table text-nowrap mb-0 align-middle">
                           <thead className="text-dark fs-4">
                             <tr>
+                            <th className="border-bottom-0"><h6 className="fw-semibold mb-0">#</h6></th>
                               <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Nombre</h6></th>
                               <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Paterno</h6></th>
                               <th className="border-bottom-0"><h6 className="fw-semibold mb-0" style={{ marginRight: '-3px' }}>Acciones</h6></th>
@@ -125,6 +126,9 @@ function Usuarios() {
                           </thead>
                           <tbody>
                             <tr>
+                            <td className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">1</h6>
+                              </td>
                               <td className="border-bottom-0">
                                 <h6 className="fw-semibold mb-0">Maria Fernanda</h6>
                               </td>
