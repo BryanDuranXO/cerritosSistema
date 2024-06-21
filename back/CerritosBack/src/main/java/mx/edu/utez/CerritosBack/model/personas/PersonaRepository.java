@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface PersonaRepository extends JpaRepository<PersonaBean, Long> {
     Optional<PersonaBean> findByTelefono(String telefono);
     Optional<PersonaBean> findById(Long id);
+    Optional<PersonaBean> findByUsername(String username);
 }

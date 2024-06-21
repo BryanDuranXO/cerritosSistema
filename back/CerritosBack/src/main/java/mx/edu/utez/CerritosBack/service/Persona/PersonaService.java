@@ -107,6 +107,26 @@ public class PersonaService {
         }
     }
 
+    //login generico
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public ResponseEntity<ApiResponse> login(String user, String pass){
+        Optional persona = personaRepository.findByUsername(user);
+
+        if(persona.isPresent()){
+            PersonaBean personaLogin = (PersonaBean) persona.get();
+
+            if(personaLogin.getPassword().equals(pass)){
+                return new ResponseEntity<>(new ApiResponse(HttpStatus.OK, false, "Bienvenido"), HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.UNAUTHORIZED, true, "No encontrado"), HttpStatus.UNAUTHORIZED);
+
+        }
+
+        return new ResponseEntity<>(new ApiResponse(HttpStatus.UNAUTHORIZED, false, "nel"), HttpStatus.UNAUTHORIZED);
+
+    }
 
 
 }

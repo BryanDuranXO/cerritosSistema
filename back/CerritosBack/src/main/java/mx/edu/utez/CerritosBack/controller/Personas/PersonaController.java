@@ -38,4 +38,9 @@ public class PersonaController {
     public ResponseEntity<ApiResponse>deletePerson(@PathVariable("id") Long id){
         return personaService.deletePerson(id);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse> login(@RequestBody PersonaDTO dto){
+        return personaService.login(dto.getUsername(), dto.getPassword());
+    }
 }
