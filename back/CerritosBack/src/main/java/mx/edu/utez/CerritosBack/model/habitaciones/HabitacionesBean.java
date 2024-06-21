@@ -41,6 +41,9 @@ public class HabitacionesBean {
     @Column(nullable = false)
     private Boolean estado;
 
+    @Column(length = 250, nullable = false)
+    private String img;
+
     @OneToMany(mappedBy = "habitacionesBean", fetch = FetchType.LAZY)
     private Set<ReservaBean> reservaBeans;
 

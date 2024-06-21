@@ -40,6 +40,9 @@ public class ReservaBean {
     @Column(length = 10, nullable = false)
     private String id_contrato;
 
+    @Column(nullable = false)
+    private Boolean estado;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_id_habitacion")
