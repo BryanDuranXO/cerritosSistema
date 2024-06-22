@@ -23,6 +23,7 @@
     "@mantine/carousel": "^7.9.2",
     "@mantine/core": "^7.9.2",
     "@mantine/hooks": "^7.9.2",
+    "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "embla-carousel-react": "^7.1.0",
     "flowbite-react": "^0.9.0",
