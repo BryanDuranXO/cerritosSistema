@@ -63,9 +63,9 @@ function Usuarios() {
         </div>
         <div className="subM2"></div>
         <div onClick={() => navigate('/ReservacionAdmin')} className="subM">Reservaciones</div>
-        <div onClick={() => navigate('/Busqueda')} className="subM">Buscar contrato</div>
-        <div onClick={() => navigate('/Usuarios')} className="subM">Gestionar usuarios</div>
-        <div onClick={() => navigate('/HabitacionesAdmin')} className="subM">Gestionar habitaciones</div>
+        <div onClick={() => navigate('/Busqueda')} className="subM">Contratos</div>
+        <div onClick={() => navigate('/Usuarios')} className="subM">Huéspedes</div>
+        <div onClick={() => navigate('/HabitacionesAdmin')} className="subM">Habitaciones</div>
         <div onClick={() => navigate('/Perfil')} className="subM">Perfil</div>
       </div>
 
