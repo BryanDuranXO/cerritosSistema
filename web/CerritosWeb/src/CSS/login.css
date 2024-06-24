@@ -1,75 +1,105 @@
+/* login.css */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .contLog {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; 
-    padding: 0 20px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login-body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../assets/fondo.jpg'); /* Ruta a la imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.contLog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150%;
+  height: 100vh;
+  margin-left: -50px; /* Ajustar la altura para cubrir toda la pantalla verticalmente */
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px; /* Ancho máximo para el formulario */
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formu {
+  width: 80%;
+  margin: 5%;
+}
+
+.ttl {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.inf {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-submit-button {
+  width: 100%;
+  margin-top: 1rem;
+  background: #109aea;
+  border-color: #109aea;
+  margin-top: 30px;
+}
+
+.form-submit-button:hover {
+  background: #0099cc;
+}
+
+.forgot-password {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: #0066A2;
+  text-decoration: none;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-container .password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 100;
+  color: #6c757d; /* Color del ícono */
+}
+/* Media queries para hacer el diseño responsive */
+@media (max-width: 768px) {
   .formulario {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 400px; /* Ancho máximo para el formulario */
-    border-radius: 7px;
-    margin: 0 auto;
-    box-shadow: 1px 5px 11px -1px rgba(176,174,176,0.89);
+    max-width: 90%;
   }
-  
-  .formu {
-    width: 80%;
-    height: 100%;
-    margin: 5%;
-  }
-  
-  .ttl,
-  .inf {
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-submit-button {
-    width: 100%;
-  }
-  
-  .forgot-password {
-    margin-top: 20px;
-  }
-  
-  .form-submit-button {
-    background: #53b0e5;
-    border-color: #0066A2;
-    margin-top: 30px;
-  }
-  
-  .form-submit-button:hover {
-    background: #0099cc;
-  }
-  
-  .forgot-password {
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    color: #0066A2;
-    text-decoration: none;
-  }
-  
-  /* Media queries para hacer el diseño responsive */
-  
-  @media (max-width: 768px) {
-    .formulario {
-      max-width: 90%; 
-    }
-  }
-  
+}

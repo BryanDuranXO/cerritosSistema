@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/usuarios.css';
 import cerritos from '../assets/logocerritos.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD
-import { faPlus } from "@fortawesome/free-solid-svg-icons";  
+
+//import { faPlus } from "@fortawesome/free-solid-svg-icons";  
 import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,14 +34,14 @@ const customStyles2 = {
     height: '70%'
   },
 };
-=======
+
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
+
 
 function HabAdmin() {
   const [open, setOpen] = useState({ create: false, update: false, delete: false });
   const navigate = useNavigate();
-<<<<<<< HEAD
+
   const [checked, setChecked] = useState(true);
   const handleModalOpen = (type) => setOpen((prev) => ({ ...prev, [type]: true }));
   const handleModalClose = (type, message) => {
@@ -58,10 +58,9 @@ function HabAdmin() {
     });
     setOpen((prev) => ({ ...prev, [type]: false }));
   };
-=======
 
-  const [checked, IsChecked] = useState('checked')
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
+
+
 
   return (
     <div className="contNav">
@@ -91,22 +90,17 @@ function HabAdmin() {
             <div className="add">
               <div className="textoUsers">Habitaciones</div>
               <div className="butoAdd">
-<<<<<<< HEAD
                 <button
                   className="btn btn-primary"
                   type="button"
                   style={{ fontSize: '15px', width: '100%', height: '30px', textAlign: 'center', padding: '1px' }}
                   onClick={() => handleModalOpen('create')}
                 >
-=======
-                <button className="btn btn-primary" type="button" style={{ fontSize: '15px', width: '100%', height: '30px', textAlign: 'center', padding: '1px' }}>
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
                   <FontAwesomeIcon icon={faPlus} /> Agregar habitación
                 </button>
               </div>
             </div>
 
-<<<<<<< HEAD
             <div className="separacion"></div>
             <div className="input">
               <div className="check">
@@ -137,24 +131,10 @@ function HabAdmin() {
                 name="Search"
                 id="search"
               />
-=======
-
-
-            <div className="separacion"></div>
-            <div className="input">
-              <div className="check">
-                <label style={{ marginRight: '8px', marginBottom: '5px' }} htmlFor="Check">Mostrar todas las habitaciones</label>
-                <input className='checkInput' type="checkbox" name="Check" id="check" checked={checked} />
-              </div>
-
-              <label style={{ margin: '1%', fontWeight: '500' }} htmlFor="Search">Buscar habitación</label>
-              <input style={{ margin: '1%', borderRadius: '2px', backgroundColor: '#D9D9D9', borderStyle: 'none', height: '55%', textAlign: 'center' }} type="text" name="Search" id="search" />
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
             </div>
             <div className="HBCont">
               <div className="HBItem">
                 <div className="HBItem-sub">
-<<<<<<< HEAD
                   <p className="fs-3 text-center">Habitación premium</p>
                   <p className="fs-4">Descripción:</p>
                   <p className="fs-6">
@@ -164,37 +144,18 @@ function HabAdmin() {
                   </p>
                   <p className="fs-5 fw-medium">Costo:</p>
                   <p className="fs-5 fw-medium">Costo por extras:</p>
-=======
-                  <p class="fs-3 text-center">Habitación premium</p>
-                  <p class='fs-4'>Descripción:</p>
-                  <p class='fs-6' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aut a veniam officiis nobis nemo ipsum accusamus perferendis debitis error, amet harum commodi laboriosam eius suscipit doloremque eaque, nam iusto!:</p>
-                  <p class='fs-5 fw-medium'>Costo:</p>
-                  <p class='fs-5 fw-medium'>Costo por extras:</p>
-
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
                 </div>
 
                 <div className="HBItem-sub2">
                   <img className='HBimg' src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img" />
-<<<<<<< HEAD
                   <div className="sub2Btn">
                     <button type="button" className="btn btn-danger btn-sm">Eliminar</button>
                     <button type="button" className="btn btn-warning btn-sm">Actualizar</button>
-=======
-
-                  <div className="sub2Btn">
-                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button type="button" class="btn btn-warning btn-sm">Actualizar</button>
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
                   </div>
                 </div>
               </div>
 
-<<<<<<< HEAD
-              {/* Repeat block for another room, this should be dynamic */}
-=======
-
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
+             
               <div className="HBItem">
                 <div className="HBItem-sub">
                   <p className="fs-3 text-center">Habitación premium</p>
@@ -208,7 +169,6 @@ function HabAdmin() {
                   <p className="fs-5 fw-medium">Costo por extras:</p>
                 </div>
 
-<<<<<<< HEAD
                 <div className="HBItem-sub2">
                   <img className='HBimg' src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img" />
                   <div className="sub2Btn">
@@ -218,70 +178,6 @@ function HabAdmin() {
                 </div>
               </div>
               {/* End dynamic block */}
-=======
-                <div className="HBItem-sub">
-                  <p class="fs-3 text-center">Habitación premium</p>
-                  <p class='fs-4'>Descripción:</p>
-                  <p class='fs-6' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aut a veniam officiis nobis nemo ipsum accusamus perferendis debitis error, amet harum commodi laboriosam eius suscipit doloremque eaque, nam iusto!:</p>
-                  <p class='fs-5 fw-medium'>Costo:</p>
-                  <p class='fs-5 fw-medium'>Costo por extras:</p>
-
-                </div>
-
-                <div className="HBItem-sub2">
-                  <img className='HBimg' src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img" />
-
-                  <div className="sub2Btn">
-                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button type="button" class="btn btn-warning btn-sm">Actualizar</button>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="HBItem">
-
-                <div className="HBItem-sub">
-                  <p class="fs-3 text-center">Habitación premium</p>
-                  <p class='fs-4'>Descripción:</p>
-                  <p class='fs-6' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aut a veniam officiis nobis nemo ipsum accusamus perferendis debitis error, amet harum commodi laboriosam eius suscipit doloremque eaque, nam iusto!:</p>
-                  <p class='fs-5 fw-medium'>Costo:</p>
-                  <p class='fs-5 fw-medium'>Costo por extras:</p>
-
-                </div>
-
-                <div className="HBItem-sub2">
-                  <img className='HBimg' src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img" />
-
-                  <div className="sub2Btn">
-                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button type="button" class="btn btn-warning btn-sm">Actualizar</button>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="HBItem">
-
-                <div className="HBItem-sub">
-                  <p class="fs-3 text-center">Habitación premium</p>
-                  <p class='fs-4'>Descripción:</p>
-                  <p class='fs-6' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aut a veniam officiis nobis nemo ipsum accusamus perferendis debitis error, amet harum commodi laboriosam eius suscipit doloremque eaque, nam iusto!:</p>
-                  <p class='fs-5 fw-medium'>Costo:</p>
-                  <p class='fs-5 fw-medium'>Costo por extras:</p>
-
-                </div>
-
-                <div className="HBItem-sub2">
-                  <img className='HBimg' src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img" />
-
-                  <div className="sub2Btn">
-                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button type="button" class="btn btn-warning btn-sm">Actualizar</button>
-                  </div>
-                </div>
-              </div>
->>>>>>> ec4020667e25f790ef8d15d8eb877c0b8234ad82
             </div>
           </div>
         </div>
