@@ -22,32 +22,32 @@ public class PersonaBean {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String nombre;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String paterno;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String materno;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String correo;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10)
     private String telefono;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String username;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String password;
 
     @Column(length = 250)
     private String img;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_rol")
     private RolBean rolBean;
 
@@ -88,5 +88,14 @@ public class PersonaBean {
         this.password = password;
         this.img = img;
         this.rolBean = rolBean;
+    }
+
+    public PersonaBean(Long id,String nombre, String paterno, String materno, String correo, String telefono) {
+        this.id = id;
+        this.nombre = nombre;
+        this.paterno = paterno;
+        this.materno = materno;
+        this.correo = correo;
+        this.telefono = telefono;
     }
 }
