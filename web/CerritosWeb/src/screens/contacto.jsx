@@ -3,6 +3,7 @@ import Footer from "../components/footer";
 import '../css/contacto.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Carousel from 'react-bootstrap/Carousel';
 import {
     faYoutube,
     faGithub,
@@ -15,6 +16,32 @@ const Contacto = () => {
     return (
         <>
             <CollapsibleExample />
+            <div className="carousel-container">
+                <Carousel>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="../src/assets/foto1.jpg"
+                            alt="First slide"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100" 
+                            src="../src/assets/foto2.jpg"
+                            alt="Second slide"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="../src/assets/foto3.jpg"
+                            alt="Third slide"
+                        />
+                    </Carousel.Item>
+                </Carousel>
+            </div>
+
             <div className="mainCont">
                 <div className="contContac">
                     <p className="fs-4">Ubicación</p>
