@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/usuarios.css';
@@ -8,6 +8,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from 'react-modal';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const customStyles = {
   content: {
@@ -36,10 +37,48 @@ const customStyles2 = {
 Modal.setAppElement('#root');
 
 function Usuarios() {
-  const [open, setOpen] = useState({ create: false, update: false, delete: false });
   const navigate = useNavigate();
+  const URLusers = 'http://localhost:8080/api/cerritos/persona';
 
-  const handleModalOpen = (type) => setOpen((prev) => ({ ...prev, [type]: true }));
+  const [users, setUsers] = useState([]);
+  const [nombre, setNombre] = useState('');
+  const [paterno, setPaterno] = useState('');
+  const [materno, setMaterno] = useState('');
+  const [tel, setTel] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [username, setUsername] = useState('');
+  const [pass, setPass] = useState('');
+  const [rol, setRol] = useState('');
+
+  const [selectedUser, setSelectedUser] = useState(null); // Estado para el usuario seleccionado
+  const [open, setOpen] = useState({
+    create: false,
+    update: false,
+    delete: false
+  });
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(`${URLusers}/`);
+      console.log('Respuesta del servidor:', response.data);
+
+      if (response.data && response.data.data && response.data.data.body && Array.isArray(response.data.data.body.data)) {
+        setUsers(response.data.data.body.data);
+      } else {
+        console.error('Error: La estructura de datos recibida no es la esperada', response);
+      }
+    } catch (error) {
+      console.error('Error al obtener usuarios:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleModalOpen = (type) => setOpen(prev => ({ ...prev, [type]: true }));
+
   const handleModalClose = (type, message) => {
     toast.success(message, {
       position: "top-right",
@@ -52,8 +91,152 @@ function Usuarios() {
       theme: "light",
       transition: Flip,
     });
-    setOpen((prev) => ({ ...prev, [type]: false }));
+    setOpen(prev => ({ ...prev, [type]: false }));
   };
+
+  const handleEditUser = (userId) => {
+    console.log("Editar usuario con ID:", userId);
+    // Encuentra al usuario por su ID en el array de usuarios
+    const userToEdit = users.find(user => user.id === userId);
+    setSelectedUser(userToEdit); 
+    setOpen(prev => ({ ...prev, update: true }));
+  };
+  
+
+  // Función para eliminar usuario
+  const handleDeleteUser = async () => {
+    if (!selectedUser || !selectedUser.id) {
+      console.error('No se ha seleccionado un usuario válido para eliminar.');
+      toast.error('Error al eliminar usuario. Asegúrate de seleccionar un usuario válido.');
+      return;
+    }
+
+    try {
+      const response = await axios.delete(`${URLusers}/${selectedUser.id}`);
+
+      if (response.status === 200) {
+        handleModalClose('delete', 'Usuario eliminado exitosamente!');
+        fetchUsers(); // Actualiza la lista de usuarios después de eliminar
+      } else {
+        toast.error('Error al eliminar usuario. Inténtelo nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error);
+      toast.error('Error al eliminar usuario. Inténtelo nuevamente.');
+    }
+  };
+
+
+  const handleSubmitEditUser = async () => {
+    try {
+      if (!selectedUser || !selectedUser.rol) {
+        console.error('Error: El usuario seleccionado o su rol no están definidos correctamente.');
+        return;
+      }
+  
+      const response = await axios.put(`${URLusers}/${selectedUser.id}`, {
+        nombre: selectedUser.nombre,
+        paterno: selectedUser.paterno,
+        materno: selectedUser.materno,
+        telefono: selectedUser.telefono,
+        correo: selectedUser.correo,
+        username: selectedUser.username,
+        password: selectedUser.password,
+        rolBean: {
+          id: selectedUser.rol.id
+        }
+      });
+  
+      if (response.status === 200) {
+        handleModalClose('update', 'Usuario editado exitosamente!');
+        fetchUsers(); // Actualiza la lista de usuarios después de editar
+      } else {
+        toast.error('Error al editar usuario. Inténtelo nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error al editar usuario:', error);
+      toast.error('Error al editar usuario. Inténtelo nuevamente.');
+    }
+  };
+  
+  
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case 'name':
+        setNombre(value);
+        break;
+      case 'pat':
+        setPaterno(value);
+        break;
+      case 'mat':
+        setMaterno(value);
+        break;
+      case 'tel':
+        setTel(value);
+        break;
+      case 'correo':
+        setCorreo(value);
+        break;
+      case 'user':
+        setUsername(value);
+        break;
+      case 'password':
+        setPass(value);
+        break;
+      case 'roles':
+        setRol(value);
+        break;
+      default:
+        break;
+    }
+  };
+  // Función para registrar nuevo usuario
+  const handleRegisterUser = async () => {
+    try {
+      const newUser = {
+        nombre: nombre,
+        paterno: paterno,
+        materno: materno,
+        telefono: tel,
+        correo: correo,
+        username: username,
+        password: pass,
+        img: '',
+        rolBean: {
+          id: rol
+        }
+      };
+
+      const response = await axios.post(`${URLusers}/`, newUser);
+
+      if (response.status === 200) {
+        handleModalClose('create', 'Usuario registrado exitosamente!'); // Aquí se ajusta el mensaje
+        fetchUsers(); // Actualiza la lista de usuarios
+        // Limpia los campos del formulario después de registrar
+        setNombre('');
+        setPaterno('');
+        setMaterno('');
+        setTel('');
+        setCorreo('');
+        setUsername('');
+        setPass('');
+        setRol('');
+      } else {
+        toast.error('Error al registrar usuario. Inténtelo nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error al registrar usuario:', error.response); 
+      if (error.response) {
+        toast.error(`Error: ${error.response.data.message}`);
+      } else {
+        toast.error('Error al registrar usuario. Inténtelo nuevamente.');
+      }
+    }
+  };
+
+
 
   return (
     <div className="contNav">
@@ -116,31 +299,40 @@ function Usuarios() {
                         <table id="example2" className="table text-nowrap mb-0 align-middle">
                           <thead className="text-dark fs-4">
                             <tr>
-                            <th className="border-bottom-0"><h6 className="fw-semibold mb-0">#</h6></th>
-                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Nombre</h6></th>
-                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Paterno</h6></th>
+                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">#</h6></th>
+                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Nombre(s)</h6></th>
+                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Apellidos</h6></th>
+                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Telefono</h6></th>
+                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Correo</h6></th>
+                              <th className="border-bottom-0"><h6 className="fw-semibold mb-0">Estatus</h6></th>
                               <th className="border-bottom-0"><h6 className="fw-semibold mb-0" style={{ marginRight: '-3px' }}>Acciones</h6></th>
-                           
-                              
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                            <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0">1</h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0">Maria Fernanda</h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <p className="mb-0 fw-normal">Paterno</p>
-                              </td>
-                              <td className="border-bottom-0">
-                                <button type="button" className="btn btn-warning btn-sm"style={{ marginRight: '5px' }}onClick={() => handleModalOpen('update')}>Actualizar</button>
-                                <button type="button" className="btn btn-danger btn-sm"onClick={() => handleModalOpen('delete')}>Eliminar</button>
-                              </td>
-                           
-                            </tr>
+                            {users.length === 0 ? (
+                              <tr>
+                                <td colSpan="7" className="border-bottom-0 text-center">Sin registros</td>
+                              </tr>
+                            ) : (
+                              users.map((usuario, index) => (
+                                <tr key={usuario.id}>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{index + 1}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-capitalize">{usuario.nombre}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-capitalize">{usuario.paterno} {usuario.materno}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{usuario.telefono}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{usuario.correo}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-primary">En estancia</h6></td>
+                                  <td className="border-bottom-0">
+                                    <button className="btn btn-warning btn-sm m-1" onClick={() => handleEditUser(usuario.id)}>
+                                      Editar
+                                    </button>
+                                    <button className="btn btn-danger btn-sm m-1" onClick={() => handleDeleteUser(usuario.id)}>
+                                      Eliminar
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))
+                            )}
                           </tbody>
                         </table>
                       </div>
@@ -153,106 +345,116 @@ function Usuarios() {
           </div>
         </div>
 
+
         <Modal
           isOpen={open.create}
-          onRequestClose={() => handleModalClose('create', 'Usuario registrado exitosamente!')}
+          onRequestClose={() => handleModalClose('create', 'Cerrar modal')}
           style={customStyles}
         >
           <h2 style={{ fontWeight: 'bold' }}>Registrar Usuario</h2>
           <form>
             <div className="dt1">
-              <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' />
-              <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' />
+              <input className='field' type="text" name="name" value={nombre} onChange={handleChange} placeholder='Nombre(s)' />
+              <input className='field' type="text" name="tel" value={tel} onChange={handleChange} placeholder='Teléfono' />
             </div>
             <div className="dt1">
-              <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' />
-              <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' />
+              <input className='field' type="text" name="pat" value={paterno} onChange={handleChange} placeholder='Apellido Paterno' />
+              <input className='field' type="text" name="mat" value={materno} onChange={handleChange} placeholder='Apellido Materno' />
             </div>
-            <div className="dt2">
-              <input type="email" name="mail" id="mail" className="field2" placeholder='Correo electrónico' />
+            <div className="dt1">
+              <input className='field' type="text" name="correo" value={correo} onChange={handleChange} placeholder='Correo electrónico' />
             </div>
-            <div className="dt2">
-              <input type="text" name="user" id="user" className="field2" placeholder='Nombre de usuario' />
+            <div className="dt1">
+              <input className='field' type="text" name="user" value={username} onChange={handleChange} placeholder='Nombre de usuario' />
             </div>
-            <div className="dt2">
-              <input type="password" name="password" id="password" className="field2" placeholder='Contraseña' />
+            <div className="dt1">
+              <input className='field' type="password" name="password" value={pass} onChange={handleChange} placeholder='Contraseña' />
             </div>
-            <div className="dt2">
-              <select className="field2" name="roles" id="roles">
-                <option value="" selected>Rol</option>
-                <option value="gerente">Gerente</option>
-                <option value="usuario">Usuario</option>
+            <div className="dt1">
+              <select className="field" name="roles" value={rol} onChange={handleChange}>
+                <option value="">Rol</option>
+                <option value="1">Admin</option>
+                <option value="2">Huesped</option>
               </select>
             </div>
             <div className="butFormMod">
-              <button className='registerButt' onClick={() => handleModalClose('create', 'Usuario registrado exitosamente!')}>Registrar</button>
-              <button className='cancelButt' onClick={() => handleModalClose('create', 'Registro cancelado')}>Cancelar</button>
+              <button className='butAcc' type="button" onClick={handleRegisterUser}>Aceptar</button>
+              <button className='butCan' onClick={() => setOpen(prev => ({ ...prev, create: false }))} type="button">Cancelar</button>
             </div>
           </form>
         </Modal>
 
-        <Modal
-          isOpen={open.update}
-          onRequestClose={() => handleModalClose('update', 'Usuario editado exitosamente!')}
-          style={customStyles2}
-        >
-          <h2 style={{ fontWeight: 'bold' }}>Editar Usuario</h2>
-          <form>
-            <div className="dt1">
-              <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' />
-              <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' />
-            </div>
-            <div className="dt1">
-              <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' />
-              <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' />
-            </div>
-            <div className="dt2">
-              <input type="email" name="mail" id="mail" className="field2" placeholder='Correo electrónico' />
-            </div>
-            <div className="dt2">
-              <select className="field2" name="roles" id="roles">
-                <option value="" selected>Rol</option>
-                <option value="gerente">Gerente</option>
-                <option value="usuario">Usuario</option>
-              </select>
-            </div>
-            <div className="butFormMod">
-              <button className='editButt' onClick={() => handleModalClose('update', 'Usuario editado exitosamente!')}>Editar</button>
-              <button className='cancelButt' onClick={() => handleModalClose('update', 'Edición cancelada')}>Cancelar</button>
-            </div>
-          </form>
-        </Modal>
+<Modal
+  isOpen={open.update}
+  onRequestClose={() => handleModalClose('update', 'Usuario editado exitosamente!')}
+  style={customStyles2}
+>
+  <h2 style={{ fontWeight: 'bold' }}>Editar Usuario</h2>
+  {selectedUser && (
+    <form>
+      <div className="dt1">
+        <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' value={selectedUser.nombre} onChange={(e) => setSelectedUser({ ...selectedUser, nombre: e.target.value })} />
+        <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' value={selectedUser.telefono} onChange={(e) => setSelectedUser({ ...selectedUser, telefono: e.target.value })} />
+      </div>
+      <div className="dt1">
+        <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' value={selectedUser.paterno} onChange={(e) => setSelectedUser({ ...selectedUser, paterno: e.target.value })} />
+        <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' value={selectedUser.materno} onChange={(e) => setSelectedUser({ ...selectedUser, materno: e.target.value })} />
+      </div>
+      <div className="dt1">
+        <input className='field' type="text" name="correo" id="correo" placeholder='Correo electrónico' value={selectedUser.correo} onChange={(e) => setSelectedUser({ ...selectedUser, correo: e.target.value })} />
+      </div>
+      <div className="dt1">
+        <input className='field' type="text" name="user" id="user" placeholder='Nombre de usuario' value={selectedUser.username} readOnly />
+      </div>
+      <div className="dt1">
+        <input className='field' type="password" name="password" id="password" placeholder='Contraseña' value={selectedUser.password} readOnly />
+      </div>
+      <div className="dt1">
+      {selectedUser && selectedUser.rol && (
+  <select className="field" name="roles" value={selectedUser.rol.id} disabled>
+    <option value="">Rol</option>
+    <option value="1">Admin</option>
+    <option value="2">Huesped</option>
+  </select>
+)}
+      </div>
+      <div className="butFormMod">
+        <button className='butAcc' type="button" onClick={handleSubmitEditUser}>Aceptar</button>
+        <button className='butCan' onClick={() => setOpen(prev => ({ ...prev, update: false }))} type="button">Cancelar</button>
+      </div>
+    </form>
+  )}
+</Modal>
 
+
+
+
+        {/* Modal para Eliminar Usuario */}
         <Modal
           isOpen={open.delete}
           onRequestClose={() => handleModalClose('delete', 'Usuario eliminado exitosamente!')}
           style={customStyles2}
         >
           <h2 style={{ fontWeight: 'bold' }}>Eliminar Usuario</h2>
-          <form>
-            <div className="dt1">
-              <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' />
-              <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' />
-            </div>
-            <div className="dt1">
-              <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' />
-              <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' />
-            </div>
-            <div className="dt2">
-              <input type="email" name="mail" id="mail" className="field2" placeholder='Correo electrónico' />
-            </div>
-            <div className="dt2">
-              <select className="field2" name="roles" id="roles">
-                <option value="" selected>Rol</option>
-                <option value="gerente">Gerente</option>
-                <option value="usuario">Usuario</option>
-              </select>
-            </div>
-            <div className="butFormMod">
-              <button className='delButt' onClick={() => handleModalClose('delete', 'Usuario eliminado exitosamente!')}>Eliminar</button>
-              <button className='cancelButt2' onClick={() => handleModalClose('delete', 'Eliminación cancelada')}>Cancelar</button>
-            </div>
-          </form>
+          {selectedUser && (
+            <form>
+              <div className="dt1">
+                <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' defaultValue={selectedUser.nombre} />
+                <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' defaultValue={selectedUser.telefono} />
+              </div>
+              <div className="dt1">
+                <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' defaultValue={selectedUser.paterno} />
+                <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' defaultValue={selectedUser.materno} />
+              </div>
+              <div className="dt1">
+                <input className='field' type="text" name="correo" id="correo" placeholder='Correo electrónico' defaultValue={selectedUser.correo} />
+              </div>
+              <div className="butFormMod">
+                <button className='butAcc' type="button">Aceptar</button>
+                <button className='butCan' onClick={() => setOpen(prev => ({ ...prev, delete: false }))} type="button">Cancelar</button>
+              </div>
+            </form>
+          )}
         </Modal>
       </div>
     </div>
