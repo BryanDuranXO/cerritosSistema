@@ -2,9 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-.etiqueta {
+  }
+  
+  .etiqueta {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,87 +15,177 @@
     color: #ffffff;
     background-color: #130532;
     font-size: 25px;
-}
-
-.main-container {
+  }
+  
+  .main-container {
     width: 95%;
     margin: 0 auto;
-}
-
-.contEvt {
+  }
+  
+  .contEvt {
     display: flex;
-    justify-content: center; 
-    align-items: flex-start; 
-    flex-direction: row; 
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
     width: 100%;
-    height: 90%; 
-    margin-top: 1%;
-    margin-bottom: 1%;
-    border: 2px solid black;
-}
-
-.itemvt {
+    height: auto;
+    margin-top: 8%;
+    margin-bottom: 2%;
+    flex-wrap: wrap; /* Asegura que los elementos se apilen en pantallas pequeñas */
+  }
+  
+  .itemvt {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; 
-    align-items: center; 
-    width: 50%; 
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
     margin: 2%;
-}
-
-.tittleEv {
+  }
+  
+  .tittleEv {
+    display: flex;
+    justify-content: center;
+    align-items: right;
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .tittleEv2 {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 35px;
     width: 100%;
-    margin: 1%;
-}
-
-.itemvt2 {
+    vertical-align: text-top;
+  }
+  
+  .itemvt2 {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; 
-    align-items: center; 
-    width: 50%; 
-    margin: 2%;
-}
-
-.info {
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+  }
+  
+  .info {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 18px;
+    font-size: 15px;
     width: 100%;
     margin: 2% 5%;
-}
-
-.imagenEvt {
-    width: 75%; 
-    height: auto; 
+  }
+  
+  .imagenEvt {
+    max-width: 50%;
+    height: auto;
+    margin-top: -50px;
+  }
+  
+  .form {
     display: flex;
-    margin-bottom: 3%;
-}
-
-.slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 70%; 
-    margin-top: 20px; 
-    
-}
-
-.form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: right;
     flex-direction: column;
-    width: 70%;
+    width: 50%;
+    margin-left: 25%;
+  }
+  
+  /* Fondo de la card */
+  .card-bg {
+    background: url("https://cerritosxochitepec.com/wp-content/uploads/2021/12/IMG_1364-2048x637.jpg")
+      no-repeat center center;
+    background-size: cover;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    color: rgb(255, 255, 255); /* Para asegurar que el texto sea legible */
+  }
+  
+  .card-bg .card-body {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .card-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    border: 1px solid red;
-    margin: 0% 3%
+    background: rgba(0, 0, 0, 0.262);
+    z-index: 1;
+  }
+  
+  .slide {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 60%;
+    margin-bottom: 2%;
+  }
+  
+  .tittleEv3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+    font-weight: bold;
+  }
+
+.card{
+    margin-bottom: 2px;
 }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .contEvt {
+      flex-direction: column;
+      margin-top: 20px;
+    }
+  
+    .itemvt, .itemvt2 {
+      width: 100%;
+      margin: 10px 0;
+    }
+  
+    .imagenEvt {
+      width: 100%;
+      margin-top: 20px;
+    }
+  
+    .form {
+      width: 100%;
+      margin-left: 0;
+    }
+  
+    .slide {
+      width: 100%;
+    }
+  
+    .tittleEv {
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .tittleEv2 {
+      font-size: 25px;
+    }
+  
+    .tittleEv, .tittleEv3 {
+      font-size: 20px;
+    }
+  
+    .info {
+      font-size: 14px;
+    }
+  }
+  
