@@ -35,7 +35,7 @@ const Reservas = () => {
                 <Form.Control type="time" name="checkOutTime" />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="mt-3">Reservar</Button>
+              <Button variant="primary" type="submit" className="a" >Reservar</Button>
             </Form>
           </Card.Body>
         </Card>
