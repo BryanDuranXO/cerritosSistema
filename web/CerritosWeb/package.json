@@ -32,7 +32,7 @@
     "primereact": "^10.6.5",
     "react": "^18.2.0",
     "react-awesome-reveal": "^4.2.10",
-    "react-bootstrap": "^2.10.2",
+    "react-bootstrap": "^2.10.4",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-pro-sidebar": "^1.1.0",

@@ -262,25 +262,35 @@
 .field{
     height: 35px;
     width: 55%;
-    margin: 0% 3%;
+    margin: 2% 2%;
     text-align: center;
     border-radius: 3px;
-    background-color: #D9D9D9;
-    color: #938F8F;
-    font-weight: bold;    
-    border-style: none;
+    background-color: #dfdbdb;
+    color: #111010;
+    font-weight: 500;    
+    border: none;
+    outline: none;
+}
+
+.field:focus{
+    border:2px solid #1796FF;
 }
 
 .field2{
     height: 35px;
-    width: 95%;
+    width: 100%;
     text-align: center;
     border-radius: 3px;
-    background-color: #D9D9D9;
-    color: #938F8F;
-    font-weight: bold;
+    background-color: #dfdbdb;
+    color: #111010;
+    font-weight: 500;    
     border-style: none;
-    margin: 4%;
+    margin: 2%;
+    border: none;
+    outline: none;
+}
+.field2:focus{
+    border:2px solid #1796FF;
 }
 
 .butFormMod{
@@ -289,7 +299,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    margin-left: 1%;
+    margin-left: 2.5%;
     margin-top: 4%;
 }
 

@@ -9,6 +9,9 @@ import Modal from 'react-modal';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
+Modal.setAppElement('#root');
 
 const customStyles = {
   content: {
@@ -20,23 +23,15 @@ const customStyles = {
     width: '35%',
     height: '90%',
     margin: 'auto',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F6F8F9',
     border: '2px solid #1796FF',
     borderRadius: '10px',
-    padding: '20px'
+    padding: '20px',
+    boxShadow: '1px 5px 11px -1px rgba(176, 174, 176, 0.89)'
   },
 };
 
-const customStyles2 = {
-  content: {
-    ...customStyles.content,
-    height: '70%'
-  },
-};
-
-Modal.setAppElement('#root');
-
-function Usuarios() {
+const Usuarios = () => {
   const navigate = useNavigate();
   const URLusers = 'http://localhost:8080/api/cerritos/persona';
 
@@ -50,14 +45,41 @@ function Usuarios() {
   const [pass, setPass] = useState('');
   const [rol, setRol] = useState('');
 
-  const [selectedUser, setSelectedUser] = useState(null); // Estado para el usuario seleccionado
-  const [open, setOpen] = useState({
-    create: false,
-    update: false,
-    delete: false
+  const [usuarioEditar, setUsuarioEditar] = useState({
+    id: '',
+    nombre: '',
+    paterno: '',
+    materno: '',
+    telefono: '',
+    correo: '',
+    username: '',
+    password: '',
+    rol: '',
   });
 
-  const fetchUsers = async () => {
+  const [createOpen, setCreateOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+
+  const [filtro, setFiltro] = useState('');
+  const Busqueda = (e) => {
+    setFiltro(e.target.value);
+  };
+
+  const filteredUsers = users.filter(user => {
+    return (
+      user.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+      user.paterno.toLowerCase().includes(filtro.toLowerCase()) ||
+      user.materno.toLowerCase().includes(filtro.toLowerCase()) ||
+      user.telefono.includes(filtro) ||
+      user.correo.toLowerCase().includes(filtro.toLowerCase())
+    );
+  });
+
+  useEffect(() => {
+    traerPersonas();
+  }, []);
+
+  const traerPersonas = async () => {
     try {
       const response = await axios.get(`${URLusers}/`);
       console.log('Respuesta del servidor:', response.data);
@@ -72,130 +94,9 @@ function Usuarios() {
     }
   };
 
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const handleModalOpen = (type) => setOpen(prev => ({ ...prev, [type]: true }));
-
-  const handleModalClose = (type, message) => {
-    toast.success(message, {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Flip,
-    });
-    setOpen(prev => ({ ...prev, [type]: false }));
-  };
-
-  const handleEditUser = (userId) => {
-    console.log("Editar usuario con ID:", userId);
-    // Encuentra al usuario por su ID en el array de usuarios
-    const userToEdit = users.find(user => user.id === userId);
-    setSelectedUser(userToEdit); 
-    setOpen(prev => ({ ...prev, update: true }));
-  };
-  
-
-  // Función para eliminar usuario
-  const handleDeleteUser = async () => {
-    if (!selectedUser || !selectedUser.id) {
-      console.error('No se ha seleccionado un usuario válido para eliminar.');
-      toast.error('Error al eliminar usuario. Asegúrate de seleccionar un usuario válido.');
-      return;
-    }
-
+  const AgregarPersonas = async () => {
     try {
-      const response = await axios.delete(`${URLusers}/${selectedUser.id}`);
-
-      if (response.status === 200) {
-        handleModalClose('delete', 'Usuario eliminado exitosamente!');
-        fetchUsers(); // Actualiza la lista de usuarios después de eliminar
-      } else {
-        toast.error('Error al eliminar usuario. Inténtelo nuevamente.');
-      }
-    } catch (error) {
-      console.error('Error al eliminar usuario:', error);
-      toast.error('Error al eliminar usuario. Inténtelo nuevamente.');
-    }
-  };
-
-
-  const handleSubmitEditUser = async () => {
-    try {
-      if (!selectedUser || !selectedUser.rol) {
-        console.error('Error: El usuario seleccionado o su rol no están definidos correctamente.');
-        return;
-      }
-  
-      const response = await axios.put(`${URLusers}/${selectedUser.id}`, {
-        nombre: selectedUser.nombre,
-        paterno: selectedUser.paterno,
-        materno: selectedUser.materno,
-        telefono: selectedUser.telefono,
-        correo: selectedUser.correo,
-        username: selectedUser.username,
-        password: selectedUser.password,
-        rolBean: {
-          id: selectedUser.rol.id
-        }
-      });
-  
-      if (response.status === 200) {
-        handleModalClose('update', 'Usuario editado exitosamente!');
-        fetchUsers(); // Actualiza la lista de usuarios después de editar
-      } else {
-        toast.error('Error al editar usuario. Inténtelo nuevamente.');
-      }
-    } catch (error) {
-      console.error('Error al editar usuario:', error);
-      toast.error('Error al editar usuario. Inténtelo nuevamente.');
-    }
-  };
-  
-  
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case 'name':
-        setNombre(value);
-        break;
-      case 'pat':
-        setPaterno(value);
-        break;
-      case 'mat':
-        setMaterno(value);
-        break;
-      case 'tel':
-        setTel(value);
-        break;
-      case 'correo':
-        setCorreo(value);
-        break;
-      case 'user':
-        setUsername(value);
-        break;
-      case 'password':
-        setPass(value);
-        break;
-      case 'roles':
-        setRol(value);
-        break;
-      default:
-        break;
-    }
-  };
-  // Función para registrar nuevo usuario
-  const handleRegisterUser = async () => {
-    try {
-      const newUser = {
+      const usuario = {
         nombre: nombre,
         paterno: paterno,
         materno: materno,
@@ -203,18 +104,16 @@ function Usuarios() {
         correo: correo,
         username: username,
         password: pass,
-        img: '',
+        img: null,
         rolBean: {
           id: rol
         }
       };
 
-      const response = await axios.post(`${URLusers}/`, newUser);
-
+      const response = await axios.post(`${URLusers}/`, usuario);
       if (response.status === 200) {
-        handleModalClose('create', 'Usuario registrado exitosamente!'); // Aquí se ajusta el mensaje
-        fetchUsers(); // Actualiza la lista de usuarios
-        // Limpia los campos del formulario después de registrar
+        setCreateOpen(false);
+        traerPersonas()
         setNombre('');
         setPaterno('');
         setMaterno('');
@@ -223,19 +122,96 @@ function Usuarios() {
         setUsername('');
         setPass('');
         setRol('');
+        toast.success('Usuario registrado exitosamente!')
+      }
+
+    } catch (error) {
+      console.log(`error: ${error}`)
+    }
+  }
+
+  const OpenCreateModal = () => {
+    setCreateOpen(true);
+  };
+
+  const OpenUpdateModal = (user) => {
+    setUsuarioEditar({
+      id: user.id,
+      nombre: user.nombre,
+      paterno: user.paterno,
+      materno: user.materno,
+      telefono: user.telefono,
+      correo: user.correo,
+      username: user.username,
+      password: user.password,
+      rol: user.rolBean && user.rolBean.id ? user.rolBean.id : '',
+    });
+    setUpdateOpen(true);
+  };
+  
+
+  const closeModal = () => {
+    setCreateOpen(false);
+    setUpdateOpen(false);
+    toast.warning('Acción cancelada.');
+  };
+
+  const ActualizarUsuario = async () => {
+    try {
+      const { id, ...usuarioActualizado } = usuarioEditar;
+  
+      const response = await axios.put(`${URLusers}/${usuarioEditar.id}`, usuarioActualizado);
+  
+      if (response.status === 200) {
+        toast.success('Usuario actualizado exitosamente.');
+        setUpdateOpen(false);
+        traerPersonas();
       } else {
-        toast.error('Error al registrar usuario. Inténtelo nuevamente.');
+        toast.error('Error al actualizar el usuario.');
       }
     } catch (error) {
-      console.error('Error al registrar usuario:', error.response); 
+      console.error('Error al actualizar usuario:', error);
       if (error.response) {
-        toast.error(`Error: ${error.response.data.message}`);
+        console.error('Detalle del error:', error.response.data);
+        toast.error('Error: ' + error.response.data.message); // Muestra el mensaje de error del backend si está disponible
       } else {
-        toast.error('Error al registrar usuario. Inténtelo nuevamente.');
+        console.error('Error en la solicitud:', error.message);
+        toast.error('Error al actualizar el usuario.');
       }
     }
   };
+  
+  
+    
+  const EliminarUsuario = async (userId) => {
+    const confirmacion = await Swal.fire({
+      title: "¿Estás seguro de eliminar a este usuario?",
+      text: "La información no se podrá recuperar",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    });
 
+    if (confirmacion.isConfirmed) {
+      try {
+        const response = await axios.delete(`${URLusers}/${userId}`);
+        if (response.status === 200) {
+          toast.success('Usuario eliminado exitosamente.');
+          traerPersonas();
+        } else {
+          toast.error('No se pudo eliminar el usuario.');
+        }
+      } catch (error) {
+        console.error('Error al eliminar usuario:', error);
+        toast.error('Error al eliminar el usuario.');
+      }
+    } else {
+      toast.warning('Acción cancelada.');
+    }
+  };
 
 
   return (
@@ -265,7 +241,7 @@ function Usuarios() {
             <div className="add">
               <div className="textoUsers">Usuarios</div>
               <div className="butoAdd">
-                <button className="btn btn-primary" onClick={() => handleModalOpen('create')} type="button" style={{ fontSize: '15px', width: '100%', height: '30px', textAlign: 'center', padding: '1px' }}>
+                <button className="btn btn-primary" onClick={OpenCreateModal} type="button" style={{ fontSize: '15px', width: '100%', height: '30px', textAlign: 'center', padding: '1px' }}>
                   <FontAwesomeIcon icon={faPlus} /> Agregar usuario
                 </button>
                 <ToastContainer
@@ -288,7 +264,14 @@ function Usuarios() {
             <div className="separacion"></div>
             <div className="input">
               <label style={{ margin: '1%', fontWeight: '500' }} htmlFor="Search">Buscar usuario</label>
-              <input style={{ margin: '1%', borderRadius: '2px', backgroundColor: '#D9D9D9', borderStyle: 'none', height: '55%', textAlign: 'center' }} type="text" name="Search" id="search" />
+              <input
+                style={{ margin: '1%', borderRadius: '2px', backgroundColor: '#D9D9D9', borderStyle: 'none', height: '55%', textAlign: 'center' }}
+                type="text"
+                name="Search"
+                id="search"
+                value={filtro}
+                onChange={Busqueda}
+              />            
             </div>
             <div className="tabla">
               <div className="row">
@@ -309,29 +292,29 @@ function Usuarios() {
                             </tr>
                           </thead>
                           <tbody>
-                            {users.length === 0 ? (
-                              <tr>
-                                <td colSpan="7" className="border-bottom-0 text-center">Sin registros</td>
-                              </tr>
-                            ) : (
-                              users.map((usuario, index) => (
-                                <tr key={usuario.id}>
-                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{index + 1}</h6></td>
-                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-capitalize">{usuario.nombre}</h6></td>
-                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-capitalize">{usuario.paterno} {usuario.materno}</h6></td>
-                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{usuario.telefono}</h6></td>
-                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{usuario.correo}</h6></td>
+                            {filteredUsers.length > 0 ? (
+                              filteredUsers.map((user) => (
+                                <tr key={user.id}>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{user.id}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-capitalize">{user.nombre}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-capitalize">{user.paterno} {user.materno}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{user.telefono}</h6></td>
+                                  <td className="border-bottom-0"><h6 className="fw-semibold mb-0">{user.correo}</h6></td>
                                   <td className="border-bottom-0"><h6 className="fw-semibold mb-0 text-primary">En estancia</h6></td>
                                   <td className="border-bottom-0">
-                                    <button className="btn btn-warning btn-sm m-1" onClick={() => handleEditUser(usuario.id)}>
+                                    <button className="btn btn-warning btn-sm m-1" onClick={() => OpenUpdateModal(user)}>
                                       Editar
                                     </button>
-                                    <button className="btn btn-danger btn-sm m-1" onClick={() => handleDeleteUser(usuario.id)}>
+                                    <button className="btn btn-danger btn-sm m-1" onClick={() => EliminarUsuario(user.id)}>
                                       Eliminar
                                     </button>
                                   </td>
                                 </tr>
                               ))
+                            ) : (
+                              <tr>
+                                <td colSpan="7" className="border-bottom-0 text-center">Sin registros</td>
+                              </tr>
                             )}
                           </tbody>
                         </table>
@@ -341,124 +324,86 @@ function Usuarios() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
-
         <Modal
-          isOpen={open.create}
-          onRequestClose={() => handleModalClose('create', 'Cerrar modal')}
+          isOpen={createOpen}
+          onRequestClose={closeModal}
           style={customStyles}
         >
-          <h2 style={{ fontWeight: 'bold' }}>Registrar Usuario</h2>
+          <h2 style={{ fontWeight: '700' }}>Registrar Usuario</h2>
           <form>
             <div className="dt1">
-              <input className='field' type="text" name="name" value={nombre} onChange={handleChange} placeholder='Nombre(s)' />
-              <input className='field' type="text" name="tel" value={tel} onChange={handleChange} placeholder='Teléfono' />
+              <input className='field' type="text" name="name" value={nombre} onChange={(e) => { setNombre(e.target.value) }} placeholder='Nombre(s)' />
+              <input className='field' type="text" name="tel" value={tel} onChange={(e) => { setTel(e.target.value) }} placeholder='Teléfono' />
             </div>
             <div className="dt1">
-              <input className='field' type="text" name="pat" value={paterno} onChange={handleChange} placeholder='Apellido Paterno' />
-              <input className='field' type="text" name="mat" value={materno} onChange={handleChange} placeholder='Apellido Materno' />
+              <input className='field' type="text" name="pat" value={paterno} onChange={(e) => { setPaterno(e.target.value) }} placeholder='Apellido Paterno' />
+              <input className='field' type="text" name="mat" value={materno} onChange={(e) => { setMaterno(e.target.value) }} placeholder='Apellido Materno' />
             </div>
             <div className="dt1">
-              <input className='field' type="text" name="correo" value={correo} onChange={handleChange} placeholder='Correo electrónico' />
+              <input className='field2' type="text" name="correo" value={correo} onChange={(e) => { setCorreo(e.target.value) }} placeholder='Correo electrónico' />
             </div>
             <div className="dt1">
-              <input className='field' type="text" name="user" value={username} onChange={handleChange} placeholder='Nombre de usuario' />
+              <input className='field2' type="text" name="user" value={username} onChange={(e) => { setUsername(e.target.value) }} placeholder='Nombre de usuario' />
             </div>
             <div className="dt1">
-              <input className='field' type="password" name="password" value={pass} onChange={handleChange} placeholder='Contraseña' />
+              <input className='field2' type="password" name="password" value={pass} onChange={(e) => { setPass(e.target.value) }} placeholder='Contraseña' />
+            </div>
+            <select className="field2" name="roles" value={usuarioEditar.rol} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, rol: e.target.value })}>
+  <option value="">Rol</option>
+  <option value="1">Admin</option>
+  <option value="2">Huesped</option>
+</select>
+
+            <div className="butFormMod">
+              <button className='registerButt' type="button" onClick={() => { AgregarPersonas() }} >Registrar</button>
+              <button className='delButt' onClick={() => { closeModal() }} type="button">Cancelar</button>
+            </div>
+          </form>
+        </Modal>
+
+        <Modal
+          isOpen={updateOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
+          <h2 style={{ fontWeight: '700' }}>Editar Usuario</h2>
+          <form>
+            <div className="dt1">
+              <input className='field' type="text" name="name" value={usuarioEditar.nombre} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, nombre: e.target.value })} placeholder='Nombre(s)' />
+              <input className='field' type="text" name="tel" value={usuarioEditar.telefono} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, telefono: e.target.value })} placeholder='Teléfono' />
             </div>
             <div className="dt1">
-              <select className="field" name="roles" value={rol} onChange={handleChange}>
+              <input className='field' type="text" name="pat" value={usuarioEditar.paterno} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, paterno: e.target.value })} placeholder='Apellido Paterno' />
+              <input className='field' type="text" name="mat" value={usuarioEditar.materno} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, materno: e.target.value })} placeholder='Apellido Materno' />
+            </div>
+            <div className="dt1">
+              <input className='field2' type="text" name="correo" value={usuarioEditar.correo} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, correo: e.target.value })} placeholder='Correo electrónico' />
+            </div>
+            <div className="dt1">
+              <input className='field2' type="text" name="user" value={usuarioEditar.username} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, username: e.target.value })} placeholder='Nombre de usuario' />
+            </div>
+            <div className="dt1">
+              <input className='field2' type="password" name="password" value={usuarioEditar.password} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, password: e.target.value })} placeholder='Contraseña' />
+            </div>
+            <div className="dt1">
+              <select className="field2" name="roles" value={usuarioEditar.rol} onChange={(e) => setUsuarioEditar({ ...usuarioEditar, rol: e.target.value })}>
                 <option value="">Rol</option>
                 <option value="1">Admin</option>
                 <option value="2">Huesped</option>
               </select>
             </div>
             <div className="butFormMod">
-              <button className='butAcc' type="button" onClick={handleRegisterUser}>Aceptar</button>
-              <button className='butCan' onClick={() => setOpen(prev => ({ ...prev, create: false }))} type="button">Cancelar</button>
+              <button className='registerButt' onClick={() => ActualizarUsuario()} type="button" >Aceptar</button>
+              <button className='delButt' onClick={() => closeModal()} type="button">Cancelar</button>
             </div>
           </form>
-        </Modal>
-
-<Modal
-  isOpen={open.update}
-  onRequestClose={() => handleModalClose('update', 'Usuario editado exitosamente!')}
-  style={customStyles2}
->
-  <h2 style={{ fontWeight: 'bold' }}>Editar Usuario</h2>
-  {selectedUser && (
-    <form>
-      <div className="dt1">
-        <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' value={selectedUser.nombre} onChange={(e) => setSelectedUser({ ...selectedUser, nombre: e.target.value })} />
-        <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' value={selectedUser.telefono} onChange={(e) => setSelectedUser({ ...selectedUser, telefono: e.target.value })} />
-      </div>
-      <div className="dt1">
-        <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' value={selectedUser.paterno} onChange={(e) => setSelectedUser({ ...selectedUser, paterno: e.target.value })} />
-        <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' value={selectedUser.materno} onChange={(e) => setSelectedUser({ ...selectedUser, materno: e.target.value })} />
-      </div>
-      <div className="dt1">
-        <input className='field' type="text" name="correo" id="correo" placeholder='Correo electrónico' value={selectedUser.correo} onChange={(e) => setSelectedUser({ ...selectedUser, correo: e.target.value })} />
-      </div>
-      <div className="dt1">
-        <input className='field' type="text" name="user" id="user" placeholder='Nombre de usuario' value={selectedUser.username} readOnly />
-      </div>
-      <div className="dt1">
-        <input className='field' type="password" name="password" id="password" placeholder='Contraseña' value={selectedUser.password} readOnly />
-      </div>
-      <div className="dt1">
-      {selectedUser && selectedUser.rol && (
-  <select className="field" name="roles" value={selectedUser.rol.id} disabled>
-    <option value="">Rol</option>
-    <option value="1">Admin</option>
-    <option value="2">Huesped</option>
-  </select>
-)}
-      </div>
-      <div className="butFormMod">
-        <button className='butAcc' type="button" onClick={handleSubmitEditUser}>Aceptar</button>
-        <button className='butCan' onClick={() => setOpen(prev => ({ ...prev, update: false }))} type="button">Cancelar</button>
-      </div>
-    </form>
-  )}
-</Modal>
-
-
-
-
-        {/* Modal para Eliminar Usuario */}
-        <Modal
-          isOpen={open.delete}
-          onRequestClose={() => handleModalClose('delete', 'Usuario eliminado exitosamente!')}
-          style={customStyles2}
-        >
-          <h2 style={{ fontWeight: 'bold' }}>Eliminar Usuario</h2>
-          {selectedUser && (
-            <form>
-              <div className="dt1">
-                <input className='field' type="text" name="name" id="name" placeholder='Nombre(s)' defaultValue={selectedUser.nombre} />
-                <input className='field' type="text" name="tel" id="tel" placeholder='Teléfono' defaultValue={selectedUser.telefono} />
-              </div>
-              <div className="dt1">
-                <input className='field' type="text" name="pat" id="pat" placeholder='Apellido Paterno' defaultValue={selectedUser.paterno} />
-                <input className='field' type="text" name="mat" id="mat" placeholder='Apellido Materno' defaultValue={selectedUser.materno} />
-              </div>
-              <div className="dt1">
-                <input className='field' type="text" name="correo" id="correo" placeholder='Correo electrónico' defaultValue={selectedUser.correo} />
-              </div>
-              <div className="butFormMod">
-                <button className='butAcc' type="button">Aceptar</button>
-                <button className='butCan' onClick={() => setOpen(prev => ({ ...prev, delete: false }))} type="button">Cancelar</button>
-              </div>
-            </form>
-          )}
         </Modal>
       </div>
     </div>
   );
-}
+};
 
 export default Usuarios;
