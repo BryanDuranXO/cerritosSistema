@@ -2,12 +2,10 @@ package mx.edu.utez.CerritosBack.controller.Habitaciones;
 
 import lombok.AllArgsConstructor;
 import mx.edu.utez.CerritosBack.config.ApiResponse;
+import mx.edu.utez.CerritosBack.controller.Habitaciones.DTO.HabitacionesDTO;
 import mx.edu.utez.CerritosBack.service.Habitaciones.HabitacionesService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cerritos/habitaciones")
@@ -19,5 +17,21 @@ public class HabitacionesController {
     @GetMapping("/")
     public ResponseEntity<ApiResponse> AllHabitaciones(){
         return habitacionesService.getAllHabitaciones();
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<ApiResponse> NewHabitacion(@RequestBody HabitacionesDTO habitacionesDTO){
+        return habitacionesService.AgregarHabitacion(habitacionesDTO.toEntity());
+    }
+
+    //habilitar o deshabilitar hbaitacion
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse> ChangeStatus(@PathVariable Long id){
+        return habitacionesService.DeshabilitarHabitacion(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> Actualizar(@PathVariable("id") Long id, @RequestBody HabitacionesDTO habitacionesDTO){
+        return habitacionesService.ActualizarHabitaciones(id, habitacionesDTO.toEntity());
     }
 }

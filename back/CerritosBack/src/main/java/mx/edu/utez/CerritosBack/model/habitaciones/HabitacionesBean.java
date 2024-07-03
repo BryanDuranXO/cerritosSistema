@@ -47,5 +47,13 @@ public class HabitacionesBean {
     @OneToMany(mappedBy = "habitacionesBean", fetch = FetchType.LAZY)
     private Set<ReservaBean> reservaBeans;
 
-
+    public HabitacionesBean(String tipo, int capacidad, int numero_habitacion, Double costo, Double extra, Boolean estado, String img) {
+        this.tipo = tipo;
+        this.capacidad = capacidad;
+        this.numero_habitacion = numero_habitacion;
+        this.costo = costo;
+        this.extra = extra;
+        this.estado = estado;
+        this.img = img;
+    }
 }
