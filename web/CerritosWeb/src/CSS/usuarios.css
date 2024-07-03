@@ -360,3 +360,12 @@
     border: 3px solid #1796FF;
     transition: all 0.1s ease-in-out;
 }
+
+.ColorAct {
+    color: #268F67;
+}
+
+.colorInac {
+    color: #DC3848;
+}
+
