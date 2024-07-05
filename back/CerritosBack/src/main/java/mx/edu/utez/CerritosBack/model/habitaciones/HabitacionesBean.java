@@ -56,4 +56,6 @@ public class HabitacionesBean {
         this.estado = estado;
         this.img = img;
     }
+
+
 }
