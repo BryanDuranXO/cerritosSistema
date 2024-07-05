@@ -2,132 +2,134 @@ import Footer from "../components/footer";
 import CollapsibleExample from "../components/menu2";
 import Carousel from 'react-bootstrap/Carousel';
 import Form from 'react-bootstrap/Form';
-import '../css/eventos.css'
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import '../css/eventos.css';
 
 const Eventos = () => {
-    return(
+    return (
         <>
-            <CollapsibleExample/>
-
-            <div className="etiqueta">
-                Eventos Sociales
-            </div>
+            <CollapsibleExample />
 
             <div className="main-container">
-                <div className="contEvt">
-                    <div className="itemvt">
-                        <p className="tittleEv">Eventos Sociales</p>
-                        <p className="info">
-                            Nuestros espacios para eventos están conformados de bellos jardines, lagos con vegetación exótica y maravillosas vistas, sin duda la mejor opción para usted y sus invitados.
-                            Jardín con un concepto de servicios integrales para eventos sociales, corporativos y empresariales.
-                        </p>
-                        <p className="info">
-                            Los espacios están diseñados para adaptarse a cualquier tipo de evento, ya sea una boda elegante, una fiesta de cumpleaños vibrante, o un evento corporativo sofisticado.
-                            Nuestra ubicación es de fácil acceso para la comodidad de sus invitados. Permítanos ser parte de sus momentos más especiales, asegurando que cada evento sea único y memorable.
-                        </p>
+                <Card className="mb-4 card-bg">
+                    <Card.Body>
+                        <div className="contEvt d-flex">
+                            <div className="itemvt flex-grow-1">
+                                <Card.Title className="tittleEv2">Eventos Sociales</Card.Title>
+                                <Card.Text className="info">
+                                    Nuestros espacios para eventos están conformados de bellos jardines, lagos con vegetación exótica y maravillosas vistas, sin duda la mejor opción para usted y sus invitados.
+                                    Jardín con un concepto de servicios integrales para eventos sociales, corporativos y empresariales.
+                                </Card.Text>
+                            </div>
+                            <div className="imagenEvt">
+                                <img
+                                    className="img-fluid"
+                                    src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg"
+                                    alt="Imagen de evento social"
+                                />
+                            </div>
+                        </div>
+                    </Card.Body>
+                </Card>
+
+                <div className="d-flex justify-content-center align-items-rigth  w-100">
+                    <div className="w-50"> 
+                        <p className="tittleEv">Eventos Comunes</p>
+
+                        <Carousel className="slide" style={{marginLeft:"15%"}}> 
+                            <Carousel.Item >
+                                <img
+                                    className="d-block w-100"
+                                    src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Img2.jpg"
+                                    alt="First slide"
+                                />
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Img6.jpg"
+                                    alt="Second slide"
+                                />
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Img5.jpg"
+                                    alt="Third slide"
+                                />
+                            </Carousel.Item>
+                        </Carousel>
                     </div>
 
-                    <div className="itemvt2">
-                        <img className="imagenEvt" src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg" alt="img" />
-                    </div>
-                </div>
+                    <Card className="w-50" style={{marginBottom:"1%"}}> 
+                        <Card.Body>
+                            <Card.Title className="tittleEv3">¡Reserva tu momento!</Card.Title>
+                            <Form className="form"> 
+                                <Form.Group className="mb-3">
+                                
+                                    <Form.Control
+                                        id="floatingInputCustom"
+                                        type="text"
+                                        placeholder="Nombre completo"
+                                    />
+                                </Form.Group>
 
-                <p className="tittleEv">Eventos Comunes</p>
+                                <Form.Group className="mb-3">
+                                
+                                    <Form.Control
+                                        id="floatingPasswordCustom"
+                                        type="email"
+                                        placeholder="Correo electrónico"
+                                    />
+                                </Form.Group>
 
-                <div className="slide">
-                    <Carousel>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg"
-                                alt="First slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg"
-                                alt="Second slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg"
-                                alt="Third slide"
-                            />
-                        </Carousel.Item>
-                    </Carousel>
+                                <Form.Group className="mb-3">
+                                  
+                                    <Form.Control
+                                        id="floatingPasswordCustom"
+                                        type="tel"
+                                        placeholder="Teléfono"
+                                    />
+                                </Form.Group>
 
-                    <div className="form">
-                        <Form.Floating className="mb-3">
-                            <Form.Control
-                                id="floatingInputCustom"
-                                type="email"
-                                placeholder="Password"
+                                <Form.Group className="mb-3">
+                                 
+                                    <Form.Control
+                                        id="floatingPasswordCustom"
+                                        type="date"
+                                        placeholder="Fecha de evento"
+                                    />
+                                </Form.Group>
 
-                            />
-                            <label htmlFor="floatingInputCustom">Nombre completo</label>
-                        </Form.Floating>
+                                <Form.Group className="mb-3">
+                                
+                                    <Form.Control
+                                        id="floatingPasswordCustom"
+                                        type="text"
+                                        placeholder="Tipo de evento"
+                                    />
+                                </Form.Group>
 
-                        <Form.Floating className="mb-3">
-                            <Form.Control
-                                id="floatingPasswordCustom"
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <label htmlFor="floatingPasswordCustom">Correo electrónico</label>
-                        </Form.Floating>
+                                <Form.Group className="mb-3">
+                                   
+                                    <Form.Control
+                                        id="floatingPasswordCustom"
+                                        type="number"
+                                        placeholder="Número de invitados"
+                                    />
+                                </Form.Group>
 
-                        <Form.Floating className="mb-3">
-                            <Form.Control
-                                id="floatingPasswordCustom"
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <label htmlFor="floatingPasswordCustom">Télefono</label>
-                        </Form.Floating>
-
-                        <Form.Floating className="mb-3">
-                            <Form.Control
-                                id="floatingPasswordCustom"
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <label htmlFor="floatingPasswordCustom">Fecha de evento</label>
-                        </Form.Floating>
-
-                        <Form.Floating className="mb-3">
-                            <Form.Control
-                                id="floatingPasswordCustom"
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <label htmlFor="floatingPasswordCustom">Tipo de evento</label>
-                        </Form.Floating>
-
-                        <Form.Floating className="mb-3">
-                            <Form.Control
-                                id="floatingPasswordCustom"
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <label htmlFor="floatingPasswordCustom">Número de invitados</label>
-                        </Form.Floating>
-                    </div>
+                                <Button variant="primary" type="submit">
+                                    Enviar
+                                </Button>
+                            </Form>
+                        </Card.Body>
+                    </Card>
                 </div>
             </div>
 
-
-            <div className="main-container">
-                <div className="contEvt">
-                    
-                </div>
-
-            </div>
-            
-
-            <Footer/>
+            <Footer />
         </>
     );
 }

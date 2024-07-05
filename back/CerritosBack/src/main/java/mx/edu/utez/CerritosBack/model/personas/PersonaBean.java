@@ -54,48 +54,4 @@ public class PersonaBean {
     @ManyToMany(mappedBy = "personaBeanSet")
     Set<ReservaBean> reservaBeans;
 
-    public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img) {
-        this.nombre = nombre;
-        this.paterno = paterno;
-        this.materno = materno;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.username = username;
-        this.password = password;
-        this.img = img;
-    }
-
-    public PersonaBean(String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean) {
-        this.nombre = nombre;
-        this.paterno = paterno;
-        this.materno = materno;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.username = username;
-        this.password = password;
-        this.img = img;
-        this.rolBean = rolBean;
-    }
-
-    public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean) {
-        this.id = id;
-        this.nombre = nombre;
-        this.paterno = paterno;
-        this.materno = materno;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.username = username;
-        this.password = password;
-        this.img = img;
-        this.rolBean = rolBean;
-    }
-
-    public PersonaBean(Long id,String nombre, String paterno, String materno, String correo, String telefono) {
-        this.id = id;
-        this.nombre = nombre;
-        this.paterno = paterno;
-        this.materno = materno;
-        this.correo = correo;
-        this.telefono = telefono;
-    }
 }
