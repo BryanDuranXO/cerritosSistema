@@ -82,11 +82,7 @@
     margin-top: 2%;
 }
 
-img {
-    max-width: 100%; /* Ajustado para que las imágenes dentro del carrusel no se salgan del contenedor */
-    height: auto;
-    border-radius: 5px;
-}
+
 
 .boton {
     display: flex;

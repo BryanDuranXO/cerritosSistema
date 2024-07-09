@@ -40,7 +40,7 @@ function HabAdmin() {
   const [costo, setCosto] = useState('');
   const [extra, setExtra] = useState('');
   const [estado, setEstado] = useState(true);
-  const [img, setImg] = useState('https://firebasestorage.googleapis.com/v0/b/imagenes-5fef3.appspot.com/o/eibol.jpg?alt=media&token=f9979836-2a48-48bf-a999-5f3126670b91');
+  const [img, setImg] = useState('https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg');
   const [selectedHab, setSelectedHab] = useState(null);
 
   const [createOpen, setCreateOpen] = useState(false);

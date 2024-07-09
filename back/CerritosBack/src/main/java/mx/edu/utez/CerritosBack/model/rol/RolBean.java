@@ -25,5 +25,14 @@ public class RolBean {
 
     @OneToMany(mappedBy = "rolBean", fetch = FetchType.LAZY)
     private Set<PersonaBean> personaBeans;
+    public RolBean(Long idRol, String rol) {
+        this.id = idRol;
+        this.rol = rol;
+    }
 
+    public RolBean( String rol) {
+        this.rol = rol;
+    }
 }
+
+
