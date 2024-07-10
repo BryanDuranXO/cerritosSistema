@@ -12,40 +12,32 @@ export const Inicio = () => {
 
     const navigate = useNavigate();
 
-
     return (
         <>
             <CollapsibleExample />
             <div className="main-container">
-                <div className="contenedor">
+                
+                <div className="contenedor contenedor-con-fondo">
                     <div className="text-container">
-                        <div className='texto'>
-                            <p className='tittle'>Cerritos Xochitepec</p>
-                        </div>
+                        <p className='tittle'>"Cerritos Xochitepec"</p>
+                    
+                    <div className="text-container">
                         <div className="secondary-text">
-                            <h3>Generando Momentos que recordarás toda la vida</h3>
-                            <p className='info'>
+                            <h3 style={{color:"white",fontWeight:"bold", fontSize:"20px",alignItems:"center"}}>¡Generando Momentos que recordarás toda la vida!</h3>
+                            <p className='info2'>
                                 Estamos comprometidos a hacer de su visita un recuerdo atesorable, por lo que todo nuestro empeño estará enfocado en personalizar nuestros servicios a sus necesidades y expectativas.
                             </p>
                         </div>
+
+                    
+                </div>
                         <div className="boton">
                             <button>Reserva ahora</button>
                         </div>
                     </div>
-                    <div className="imagen">
-                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                        </Carousel>
-                    </div>
                 </div>
+
+                
 
                 <Fade direction="right">
                     <div className="contenedor">
@@ -64,18 +56,18 @@ export const Inicio = () => {
                             </div>
                         </div>
                         <div className="imagen">
-                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                        </Carousel>
-                    </div>
+                            <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                                <div>
+                                    <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                                <div>
+                                    <img src="../src/assets/foto5.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                                <div>
+                                    <img src="../src/assets/foto6.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                            </Carousel>
+                        </div>
                     </div>
                 </Fade>
 
@@ -96,18 +88,18 @@ export const Inicio = () => {
                             </div>
                         </div>
                         <div className="imagen">
-                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                        </Carousel>
-                    </div>
+                            <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                                <div>
+                                    <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Img5.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                                <div>
+                                    <img src="../src/assets/foto9.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                                <div>
+                                    <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                            </Carousel>
+                        </div>
                     </div>
                 </Fade>
 
@@ -120,25 +112,29 @@ export const Inicio = () => {
                             <div className="secondary-text">
                                 <h3>Disfruta de nuestras áreas verdes y espacios de entretenimiento</h3>
                                 <p className='info'>
-                                Descubre nuestros amplios jardines y sumérgete en la tranquilidad que ofrecen. Relájate en una de nuestras tres piscinas rodeadas de cómodos camastros. Para los amantes del deporte, contamos con una cancha de tenis y un mini golf para disfrutar al máximo tu estancia.                                </p>
+                                    Descubre nuestros amplios jardines y sumérgete en la tranquilidad que ofrecen. Relájate en una de nuestras tres piscinas rodeadas de cómodos camastros. Para los amantes del deporte, contamos con una cancha de tenis y un mini golf para disfrutar al máximo tu estancia.
+                                </p>
                             </div>
                             <div className="boton2">
                                 <button>Reserva ahora</button>
                             </div>
                         </div>
                         <div className="imagen">
-                        <Carousel  showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                                <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                            <div>
-                            <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home2.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
-                            </div>
-                        </Carousel>
-                    </div>
+                            <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true} interval={5000}>
+                                <div>
+                                    <img src="../src/assets/foto5.jpg" alt="img1" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                                <div>
+                                    <img src="../src/assets/foto6.jpg" alt="img2" style={{ maxWidth: '400px', maxHeight: '400px' }} />
+                                </div>
+                                <div>
+                                    <img src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Gale9-ph2zqdwn3abm5fcmlpjowiwiiiz1wqkzvutb76a1da.jpg" alt="img3" style={{ maxWidth: '500px', maxHeight: '500px' }} />
+                                </div>
+                                <div>
+                                    <img src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Gale14.jpg" alt="img3" style={{ maxWidth: '500px', maxHeight: '500px' }} />
+                                </div>
+                            </Carousel>
+                        </div>
                     </div>
                 </Fade>
             </div>

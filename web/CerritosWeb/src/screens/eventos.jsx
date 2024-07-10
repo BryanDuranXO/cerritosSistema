@@ -15,6 +15,8 @@ const Eventos = () => {
                 <Card className="mb-4 card-bg">
                     <Card.Body>
                         <div className="contEvt d-flex">
+                            
+                           
                             <div className="itemvt flex-grow-1">
                                 <Card.Title className="tittleEv2">Eventos Sociales</Card.Title>
                                 <Card.Text className="info">
@@ -22,22 +24,23 @@ const Eventos = () => {
                                     Jardín con un concepto de servicios integrales para eventos sociales, corporativos y empresariales.
                                 </Card.Text>
                             </div>
-                            <div className="imagenEvt">
-                                <img
-                                    className="img-fluid"
-                                    src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg"
-                                    alt="Imagen de evento social"
-                                />
-                            </div>
                         </div>
                     </Card.Body>
                 </Card>
 
-                <div className="d-flex justify-content-center align-items-rigth  w-100">
+                <div className="d-flex justify-content-center align-items-rigth w-100">
                     <div className="w-50"> 
                         <p className="tittleEv">Eventos Comunes</p>
 
                         <Carousel className="slide" style={{marginLeft:"15%"}}> 
+                        <Carousel.Item >
+                                <img
+                                    className="d-block w-100"
+                                    src="https://cerritosxochitepec.com/wp-content/uploads/elementor/thumbs/Img1-ph8l6bg4onugdzk4xihwya3qlkspnqstucsga4c0aw.jpg"
+                                    alt="Third slide"
+                                />
+                            </Carousel.Item>
+
                             <Carousel.Item >
                                 <img
                                     className="d-block w-100"
@@ -67,7 +70,6 @@ const Eventos = () => {
                             <Card.Title className="tittleEv3">¡Reserva tu momento!</Card.Title>
                             <Form className="form"> 
                                 <Form.Group className="mb-3">
-                                
                                     <Form.Control
                                         id="floatingInputCustom"
                                         type="text"
@@ -76,7 +78,6 @@ const Eventos = () => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                
                                     <Form.Control
                                         id="floatingPasswordCustom"
                                         type="email"
@@ -85,7 +86,6 @@ const Eventos = () => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                  
                                     <Form.Control
                                         id="floatingPasswordCustom"
                                         type="tel"
@@ -94,7 +94,6 @@ const Eventos = () => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                 
                                     <Form.Control
                                         id="floatingPasswordCustom"
                                         type="date"
@@ -103,7 +102,6 @@ const Eventos = () => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                
                                     <Form.Control
                                         id="floatingPasswordCustom"
                                         type="text"
@@ -112,7 +110,6 @@ const Eventos = () => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                   
                                     <Form.Control
                                         id="floatingPasswordCustom"
                                         type="number"
