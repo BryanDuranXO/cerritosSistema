@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,8 +8,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Nav.css';
 import cerritos from '../assets/logocerritos.png';
 
+
 function NavAdmin() {
   const navigate = useNavigate();
+  
+  
 
   // Define los eventos del calendario con colores
   const events = [

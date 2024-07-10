@@ -45,8 +45,8 @@ const Login = () => {
           timer: 1500,
           showConfirmButton: false,
         }).then(() => {
-          navigate("/ReservacionAdmin"); // Cambia '/ReservacionAdmin' por la ruta a la que quieras navegar después del login
-        });
+          navigate("/ReservacionAdmin"); 
+                });
       } else {
         Swal.fire({
           icon: "error",
