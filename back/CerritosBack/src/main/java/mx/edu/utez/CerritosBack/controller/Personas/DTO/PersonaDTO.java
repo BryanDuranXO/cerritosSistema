@@ -3,6 +3,7 @@ package mx.edu.utez.CerritosBack.controller.Personas.DTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mx.edu.utez.CerritosBack.model.personas.PersonaBean;
+import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 
 @Data
@@ -18,18 +19,19 @@ public class PersonaDTO {
     private String password;
     private String img;
     private RolBean rolBean;
+    private ReservaBean reservaBean;
 
     public PersonaBean toEntity() {
         if (rolBean == null)
                 return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img);
-            return new PersonaBean(nombre, paterno, materno, correo, telefono, username, password, img, rolBean);
+            return new PersonaBean(nombre, paterno, materno, correo, telefono, username, password, img, rolBean, reservaBean);
 
     }
 
-    public PersonaBean toUpdate() {
-        if (rolBean == null)
-            return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img);
-        return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img, rolBean);
-    }
+//    public PersonaBean toUpdate() {
+//        if (rolBean == null)
+//            return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img);
+//        return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img, rolBean);
+//    }
 
 }

@@ -12,7 +12,7 @@ import mx.edu.utez.CerritosBack.model.rol.RolBean;
 import java.util.Set;
 
 @Entity
-@Table(name = "personas")
+@Table(name = "usuarios")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -51,8 +51,10 @@ public class PersonaBean {
     @JoinColumn(name = "fk_id_rol")
     private RolBean rolBean;
 
-    @ManyToMany(mappedBy = "personaBeanSet")
-    Set<ReservaBean> reservaBeans;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_reserva")
+    private ReservaBean reservaBean;
 
 
     public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img) {
@@ -78,8 +80,7 @@ public class PersonaBean {
         this.rolBean = rolBean;
     }
 
-    public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean) {
-        this.id = id;
+    public PersonaBean(String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean, ReservaBean reservaBean) {
         this.nombre = nombre;
         this.paterno = paterno;
         this.materno = materno;
@@ -89,7 +90,6 @@ public class PersonaBean {
         this.password = password;
         this.img = img;
         this.rolBean = rolBean;
+        this.reservaBean = reservaBean;
     }
-
-
 }

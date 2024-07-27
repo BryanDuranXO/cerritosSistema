@@ -1,5 +1,9 @@
 package mx.edu.utez.CerritosBack.service.Habitaciones;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.AllArgsConstructor;
 import mx.edu.utez.CerritosBack.config.ApiResponse;
 import mx.edu.utez.CerritosBack.model.habitaciones.HabitacionesBean;
@@ -9,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -27,11 +32,7 @@ public class HabitacionesService {
     public ResponseEntity<ApiResponse> AgregarHabitacion(HabitacionesBean habitacionesBean) {
         String tipoHabitacion = habitacionesBean.getTipo().toLowerCase();
 
-        // Verificar si ya existe una habitación con ese tipo
-        Optional<HabitacionesBean> habitacionExistente = habitacionesRepository.findByTipo(tipoHabitacion);
-        if (habitacionExistente.isPresent()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Tipo de habitación duplicado"), HttpStatus.BAD_REQUEST);
-        }
+
             HabitacionesBean habitacionGuardada = habitacionesRepository.saveAndFlush(habitacionesBean);
             return new ResponseEntity<>(new ApiResponse(HttpStatus.OK, true, "Habitación agregada correctamente"), HttpStatus.OK);
 
@@ -76,5 +77,7 @@ public class HabitacionesService {
         }
 
     }
+
+
 
 }

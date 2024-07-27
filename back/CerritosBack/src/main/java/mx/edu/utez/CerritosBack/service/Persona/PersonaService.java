@@ -1,17 +1,34 @@
 package mx.edu.utez.CerritosBack.service.Persona;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import mx.edu.utez.CerritosBack.config.ApiResponse;
 import mx.edu.utez.CerritosBack.model.personas.PersonaBean;
 import mx.edu.utez.CerritosBack.model.personas.PersonaRepository;
+import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
+import mx.edu.utez.CerritosBack.model.reservas.ReservaRepository;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 import mx.edu.utez.CerritosBack.model.rol.RolRepository;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -21,60 +38,18 @@ public class PersonaService {
 
     private final PersonaRepository personaRepository;
     private final RolRepository rolRepository;
+    private final ReservaRepository reservaRepository;
+    private JavaMailSender mailSender;
+
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> getAllPeople(){
         return new ResponseEntity<>(new ApiResponse(personaRepository.findAll(), HttpStatus.OK, "todo bien"), HttpStatus.OK);
     }
 
-    @Transactional(rollbackFor = {SQLException.class})
-    public ResponseEntity<ApiResponse> savePerson(PersonaBean personaBean) {
-
-        if (personaBean.getNombre() == null || personaBean.getNombre().isEmpty() || personaBean.getNombre().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El nombre es obligatorio y no puede estar vacío."), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getPaterno() == null || personaBean.getPaterno().isEmpty() || personaBean.getPaterno().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El apellido Paterno es obligatorio y no puede estar vacio"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getMaterno() == null || personaBean.getMaterno().isEmpty() || personaBean.getMaterno().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El apellido Materno es obligatorio y no puede estar vacio"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getCorreo() == null || personaBean.getCorreo().isEmpty() || personaBean.getCorreo().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El correo es obligatorio y no puede estar vacio"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getUsername() == null || personaBean.getUsername().isEmpty() || personaBean.getUsername().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El nombre de usuario es obligatorio y no puede estar vacio"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getPassword() == null || personaBean.getPassword().isEmpty() || personaBean.getPassword().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "La contraseña es obligatorio y no puede estar vacia"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getTelefono() == null || personaBean.getTelefono().isEmpty() || personaBean.getTelefono().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El numero telefonico es obligatorio y no puede estar vacio"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (personaBean.getRolBean() == null || personaBean.getRolBean().getId() == null) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Debe proporcionar un rol valido"), HttpStatus.BAD_REQUEST);
-        }
-
-        // Verificación del rol
-        Optional<RolBean> foundRol = rolRepository.findById(personaBean.getRolBean().getId());
-        if (!foundRol.isPresent()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El rol proporcionado no existe"), HttpStatus.BAD_REQUEST);
-        }
-        personaBean.setRolBean(foundRol.get());
-
-        Optional<PersonaBean> foundPersona = personaRepository.findByTelefono(personaBean.getTelefono());
-        if (foundPersona.isPresent()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Ya existe una persona registrada con los mismos datos"), HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(new ApiResponse(personaRepository.saveAndFlush(personaBean), HttpStatus.OK, "Guardado exitosamente"), HttpStatus.OK);
+    @Transactional(readOnly = true)
+    public ResponseEntity<ApiResponse> getOnePeople(String telefono){
+        return new ResponseEntity<>(new ApiResponse(personaRepository.findByTelefono(telefono), HttpStatus.OK, "ok"), HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = {SQLException.class})
@@ -107,6 +82,76 @@ public class PersonaService {
         }
     }
 
+    @Transactional(rollbackFor = {SQLException.class})
+    public ResponseEntity<ApiResponse> savePerson(PersonaBean personaBean) {
+        if (personaBean.getNombre() == null || personaBean.getNombre().isEmpty() || personaBean.getNombre().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El nombre es obligatorio y no puede estar vacío."), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getPaterno() == null || personaBean.getPaterno().isEmpty() || personaBean.getPaterno().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El apellido Paterno es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getMaterno() == null || personaBean.getMaterno().isEmpty() || personaBean.getMaterno().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El apellido Materno es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getCorreo() == null || personaBean.getCorreo().isEmpty() || personaBean.getCorreo().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El correo es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getUsername() == null || personaBean.getUsername().isEmpty() || personaBean.getUsername().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El nombre de usuario es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getPassword() == null || personaBean.getPassword().isEmpty() || personaBean.getPassword().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "La contraseña es obligatoria y no puede estar vacía"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getTelefono() == null || personaBean.getTelefono().isEmpty() || personaBean.getTelefono().isBlank()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El número telefónico es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (personaBean.getRolBean() == null || personaBean.getRolBean().getId() == null) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Debe proporcionar un rol válido"), HttpStatus.BAD_REQUEST);
+        }
+
+        // Verificación del rol
+        Optional<RolBean> foundRol = rolRepository.findById(personaBean.getRolBean().getId());
+        if (!foundRol.isPresent()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El rol proporcionado no existe"), HttpStatus.BAD_REQUEST);
+        }
+        personaBean.setRolBean(foundRol.get());
+
+        // Verificación de la reserva
+        if (personaBean.getReservaBean() == null || personaBean.getReservaBean().getId() == null) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Debe proporcionar una reserva válida"), HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<ReservaBean> foundReserva = reservaRepository.findById(personaBean.getReservaBean().getId());
+        if (!foundReserva.isPresent()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "La reserva proporcionada no existe"), HttpStatus.BAD_REQUEST);
+        }
+        personaBean.setReservaBean(foundReserva.get());
+
+        Optional<PersonaBean> foundPersona = personaRepository.findByTelefono(personaBean.getTelefono());
+        if (foundPersona.isPresent()) {
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Ya existe una persona registrada con los mismos datos"), HttpStatus.BAD_REQUEST);
+        }
+
+        personaRepository.saveAndFlush(personaBean);
+
+        try {
+            enviarCorreo(personaBean.getCorreo(), personaBean.getReservaBean().getContrato(), personaBean.getReservaBean().getFecha_entrada(), personaBean.getReservaBean().getFecha_salida());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, true, "Error al enviar el correo"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(new ApiResponse(personaBean, HttpStatus.OK, "Guardado exitosamente"), HttpStatus.OK);
+    }
+
+
     //login generico
 
     @Transactional(rollbackFor = {SQLException.class})
@@ -128,5 +173,44 @@ public class PersonaService {
 
     }
 
+    public void enviarCorreo(String correo, String contrato, Date llegada, Date salida) throws Exception, WriterException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(correo);
+        helper.setFrom("cerritosxochitepecmail@gmail.com");
+        helper.setSubject("¡Reserva Exitosa!");
+
+        String htmlContent = "<h1 style='color: #007bff;'>¡Hola!</h1>"
+                + "<p style='font-weight: bold;'>¡Esperamos que estés bien!</p>"
+                + "<p style='font-size: 18px;'>Este es un correo de parte de Cerritos Xochitepec para darte un detalle sobre tu reserva.</p>"
+                + "<p style='font-size: 18px;'>Fecha de llegada: " + llegada + "</p>"
+                + "<p style='font-size: 18px;'>Fecha de salida: " + salida + "</p>"
+                + "<p style='font-size: 18px;'>Contrato: " + contrato + "</p>"
+                + "<p style='font-size: 18px;'>Adjunto encontrarás un código QR con la misma información.</p>"
+                + "<img src='https://cerritosxochitepec.com/wp-content/uploads/2021/12/Logo2-180.png' alt='Logo Cerritos Xochitepec'>";
+
+        helper.setText(htmlContent, true);
+
+        // Generar el código QR
+        String qrText = String.format("ID: %s\nFecha de llegada: %s\nFecha de salida: %s", contrato, llegada, salida);
+        BufferedImage qrImage = generateQRCode(qrText, 350, 350);
+
+        // Adjuntar el código QR al correo
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(qrImage, "png", baos);
+        byte[] qrBytes = baos.toByteArray();
+
+        helper.addAttachment("codigoQR.png", new ByteArrayResource(qrBytes));
+
+        mailSender.send(message);
+    }
+
+
+    public BufferedImage generateQRCode(String text, int width, int height) throws Exception {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
 
 }
