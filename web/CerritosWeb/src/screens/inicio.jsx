@@ -32,7 +32,7 @@ export const Inicio = () => {
                     
                 </div>
                         <div className="boton">
-                            <button>Reserva ahora</button>
+                            <button onClick={() =>{navigate('/Habitaciones')}}>Reserva ahora</button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ export const Inicio = () => {
                                 </p>
                             </div>
                             <div className="boton2">
-                                <button>Reserva ahora</button>
+                                <button onClick={() =>{navigate('/Habitaciones')}}>Reserva ahora</button>
                             </div>
                         </div>
                         <div className="imagen">

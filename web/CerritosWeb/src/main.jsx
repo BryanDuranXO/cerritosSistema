@@ -13,6 +13,8 @@ import Usuarios from './screens/usuarios.jsx';
 import HabAdmin from './screens/habitacionesAdmin.jsx';
 import Perfil from './screens/perfil.jsx';
 import Reservas from './screens/reservas.jsx';
+import MainUser from './screens/UserDetalles.jsx';
+import PerfilUser from './screens/PerfilUser.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -30,6 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/Perfil' element={<Perfil/>}/>
       <Route path='/*' element={<Inicio />} />
       <Route path="/reservacion" element={<Reservas/>} />
+      <Route path='/UserVista' element={<MainUser/>} />
+      <Route path='UserProfile' element={<PerfilUser/>}/>
     </Routes>
   </Router>
 );

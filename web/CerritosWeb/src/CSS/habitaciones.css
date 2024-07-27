@@ -68,6 +68,7 @@
     justify-content: center;
     align-items: center;
     margin: 4% auto; 
+    flex-direction: column;
 }
 
 .titulo {
@@ -77,7 +78,7 @@
 }
 
 .txt {
-    font-size: 1rem;
+    font-size: 3vh;
     margin-top: 2%;
 }
 
@@ -96,7 +97,8 @@
 
 .imgh {
     width: 80%;
-    height: 80%;
+    height: 250px;
+    border-radius: 1%;
 }
 
 .dbtn {
@@ -116,6 +118,17 @@
     background-color: #002c53;
     color: #ffffff;
     font-weight: normal;
+}
+
+.filtro{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 30%;
+    height: 60px;
+    margin-top: 1%;
+    margin-left: 2%;
+    
 }
 
 .slide-in-left {

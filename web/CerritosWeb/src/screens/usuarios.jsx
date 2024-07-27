@@ -72,6 +72,7 @@ function Usuarios() {
       const data = response.data?.data?.body?.data;
 
       if (Array.isArray(data)) {
+        console.log(data)
         setUsers(data);
       } else {
         console.error(
@@ -364,10 +365,11 @@ function Usuarios() {
                     <span className="fw-normal">{user.username}</span>
                   </td>
                   <td className="border-bottom-0">
-                    <span className="fw-normal">
-                      {user?.rolBean?.rol}
-                    </span>
-                  </td>
+  <span className="fw-normal">
+    {user?.rolBean?.id === 1 ? "admin" : user?.rolBean?.id === 2 ? "huésped" : "desconocido"}
+  </span>
+</td>
+
                   <td className="border-bottom-0">
                     <button
                       type="button"

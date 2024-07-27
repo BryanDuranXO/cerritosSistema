@@ -1,111 +1,93 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Footer from "../components/footer";
 import CollapsibleExample from "../components/menu2";
 import '../css/habitaciones.css';
+import axios from "axios";
 
 const Habitaciones = () => {
   const navigate = useNavigate();
 
-  const handleReservationClick = () => {
-    navigate('/reservacion');
+  const URLHab = 'http://localhost:8080/api/cerritos/habitaciones/';
+  const [Hab, setHab] = useState([]);
+  const [filter, setFilter] = useState("Todos");
+
+  const handleReservationClick = (habitacion) => {
+    navigate('/reservacion', { state: { tipo: habitacion.tipo, numero: habitacion.numero_habitacion, fk: habitacion.id } });
   };
+
+  const getHabitaciones = async () => {
+    try {
+      const response = await axios.get(URLHab);
+      console.log('La respuesta del axios es:', response.data);
+
+      if (response.data && Array.isArray(response.data.data)) {
+        setHab(response.data.data);
+      } else {
+        console.error('Error: La estructura de datos recibida no es la esperada', response);
+      }
+    } catch (error) {
+      console.error('Error al obtener habitaciones:', error);
+    }
+  };
+
+  useEffect(() => {
+    getHabitaciones();
+  }, []);
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const filteredHabitaciones = Hab.filter((habitacion) => {
+    if (filter === "Todos") {
+      return true;
+    }
+    return habitacion.tipo === filter;
+  });
 
   return (
     <>
       <CollapsibleExample />
 
       <div className="etiqueta">
-        Nuestras Habitaciones
+        Nuestras habitaciones disponibles
+      </div>
+
+      <div className="filtro">
+        <select className="form-select" aria-label="Default select example" value={filter} onChange={handleFilterChange}>
+          <option value="Todos">Todas las habitaciones</option>
+          <option value="Familiar">Familiar</option>
+          <option value="Sencilla">Sencilla</option>
+          <option value="Doble">Doble</option>
+          <option value="Suite">Suite</option>
+        </select>
       </div>
 
       <div className="contHabit">
-
-        <div className="item">
-
-          <div className="sub">
-            <div className="titulo">Habitacion Sencilla</div>
-            <div className="txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident tempora, amet hic aut repellendus a, culpa nesciunt mollitia laudantium est possimus nisi harum earum molestiae consequatur dolore aspernatur, delectus necessitatibus assumenda sit nihil? Atque, assumenda. Molestiae magnam doloribus qui dolorem voluptates, cupiditate magni placeat, modi dolorum atque officia fugit repellendus?</div>
-            <div className="price">Precio por hospedaje: $1500.00</div>
-            <div className="extras">Precio por extras: $1500.00</div>
-            <div className="dbtn"><button className="btnh" onClick={handleReservationClick}>Reservar ahora</button></div>
+        {filteredHabitaciones.map((habitacion, index) => (
+          <div className="item" key={index}>
+            <div className="sub">
+              <div className="titulo">Habitación {habitacion.tipo}</div>
+              <div className="txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ipsam aliquam illo voluptatum ipsa molestias ullam ab autem, nihil architecto.</div>
+              <div className="price">Precio por hospedaje: ${habitacion.costo}</div>
+              <div className="price">Precio por extras: ${habitacion.extra}</div>
+              <div className="extras">Capacidad máxima de {habitacion.capacidad} personas</div>
+              <div className="dbtn">
+                <button className="btnh" onClick={() => handleReservationClick(habitacion)}>Reservar ahora</button>
+              </div>
+            </div>
+            <div className="sub2">
+              <div className="extras">Número de habitación {habitacion.numero_habitacion}</div>
+              <img className="imgh" src={habitacion.img} alt={habitacion.tipo} />
+            </div>
           </div>
-
-          <div className="sub2">
-            <img className="imgh" src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="" />
-          </div>
-
-        </div>
-
-        <div className="item">
-
-          <div className="sub">
-            <div className="titulo">Habitacion Doble</div>
-            <div className="txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident tempora, amet hic aut repellendus a, culpa nesciunt mollitia laudantium est possimus nisi harum earum molestiae consequatur dolore aspernatur, delectus necessitatibus assumenda sit nihil? Atque, assumenda. Molestiae magnam doloribus qui dolorem voluptates, cupiditate magni placeat, modi dolorum atque officia fugit repellendus?</div>
-            <div className="price">Precio por hospedaje: $1500.00</div>
-            <div className="extras">Precio por extras: $1500.00</div>
-            <div className="dbtn"><button className="btnh" onClick={handleReservationClick}>Reservar ahora</button></div>
-          </div>
-
-          <div className="sub2">
-            <img className="imgh" src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="" />
-          </div>
-
-        </div>
-
-        <div className="item">
-
-          <div className="sub">
-            <div className="titulo">Habitacion Familiar</div>
-            <div className="txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident tempora, amet hic aut repellendus a, culpa nesciunt mollitia laudantium est possimus nisi harum earum molestiae consequatur dolore aspernatur, delectus necessitatibus assumenda sit nihil? Atque, assumenda. Molestiae magnam doloribus qui dolorem voluptates, cupiditate magni placeat, modi dolorum atque officia fugit repellendus?</div>
-            <div className="price">Precio por hospedaje: $1500.00</div>
-            <div className="extras">Precio por extras: $1500.00</div>
-            <div className="dbtn"><button className="btnh" onClick={handleReservationClick}>Reservar ahora</button></div>
-          </div>
-
-          <div className="sub2">
-            <img className="imgh" src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="" />
-          </div>
-
-        </div>
-
-        <div className="item">
-
-          <div className="sub">
-            <div className="titulo">Habitacion Suite</div>
-            <div className="txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident tempora, amet hic aut repellendus a, culpa nesciunt mollitia laudantium est possimus nisi harum earum molestiae consequatur dolore aspernatur, delectus necessitatibus assumenda sit nihil? Atque, assumenda. Molestiae magnam doloribus qui dolorem voluptates, cupiditate magni placeat, modi dolorum atque officia fugit repellendus?</div>
-            <div className="price">Precio por hospedaje: $1500.00</div>
-            <div className="extras">Precio por extras: $1500.00</div>
-            <div className="dbtn"><button className="btnh" onClick={handleReservationClick}>Reservar ahora</button></div>
-          </div>
-
-          <div className="sub2">
-            <img className="imgh" src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="" />
-          </div>
-
-        </div>
-
-        <div className="item">
-
-          <div className="sub">
-            <div className="titulo">Habitacion Sencilla</div>
-            <div className="txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident tempora, amet hic aut repellendus a, culpa nesciunt mollitia laudantium est possimus nisi harum earum molestiae consequatur dolore aspernatur, delectus necessitatibus assumenda sit nihil? Atque, assumenda. Molestiae magnam doloribus qui dolorem voluptates, cupiditate magni placeat, modi dolorum atque officia fugit repellendus?</div>
-            <div className="price">Precio por hospedaje: $1500.00</div>
-            <div className="extras">Precio por extras: $1500.00</div>
-            <div className="dbtn"><button className="btnh" onClick={handleReservationClick}>Reservar ahora</button></div>
-          </div>
-
-          <div className="sub2">
-            <img className="imgh" src="https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg" alt="" />
-          </div>
-
-        </div>
-
+        ))}
       </div>
 
       <Footer />
     </>
   );
-}
+};
 
 export default Habitaciones;

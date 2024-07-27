@@ -1,46 +1,152 @@
 /* reservationForm.css */
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-  
-  
-  .card {
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-header {
-    
-    color:black;
-    border-radius: 10px 10px 0 0;
-    text-align: center;
-    font-size: 24px;
-  }
-  
-  .card-body {
-    padding: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-label {
-    font-weight: bold;
-  }
-  
-  .form-control {
-    border-radius: 5px;
-  }
-  
-  .a {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 2%;
-  }
-  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.card {
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.card-header {
+  color: black;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  font-size: 24px;
+}
+
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.a {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 2%;
+}
+
+.contenedorPrincipal {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 550px;
+}
+
+.contformularioReserva {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  flex-direction: column;
+  margin: 1%;
+  margin-left: -0.2%;
+}
+
+.contImagenHab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 100%;
+  border: 1px solid blue;
+  flex-direction: column;
+  gap: 10%;
+  margin: 1%;
+}
+
+.tituloForm {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+  margin-left: 8%;
+  flex-direction: column;
+}
+
+.formu {
+  display: flex;
+  flex-direction: column;
+  width: 97%;
+  height: 90%;
+  margin-left: 8%;
+}
+
+.fila {
+  height: 30%;
+  width: 97%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 15%;
+}
+
+
+.etiquetaInfo{
+  width: 100%;
+  height: 4%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: #2F3899;
+  margin: 1%;
+}
+
+.indicaciones{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  width: 100%;
+  height: 10%;
+}
+
+.indi{
+  height: 100%;
+  width: 20%;
+  display: flex;
+  border: 1px solid blue;
+  flex-direction: row;
+}
+
+
+.cuadrito1 {
+  width: 15px;  
+  height: 15px;
+  margin: 4px 2px;
+  background-color: red;
+}
+
+.cuadrito2 {
+  width: 15px;  
+  height: 15px;
+  margin: 4px 2px;
+  background-color: #F1F1F1;
+  border: 1px solid black;
+}

@@ -9,8 +9,24 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { Flip, ToastContainer, toast } from 'react-toastify';
 import Modal from 'react-modal';
+import { initializeApp } from 'firebase/app';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 Modal.setAppElement('#root');
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJnoPAfo_sZ_t3pUBf1ybDd_FLJ3slFj8",
+  authDomain: "imagenes-5fef3.firebaseapp.com",
+  projectId: "imagenes-5fef3",
+  storageBucket: "imagenes-5fef3.appspot.com",
+  messagingSenderId: "371161634977",
+  appId: "1:371161634977:web:9ad1d15f9609fe5ae9f8e0"
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+
+
 
 const customStyles = {
   content: {
@@ -42,9 +58,12 @@ function HabAdmin() {
   const [estado, setEstado] = useState(true);
   const [img, setImg] = useState('https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg');
   const [selectedHab, setSelectedHab] = useState(null);
+  const [filter, setFilter] = useState("Todos");
+
 
   const [createOpen, setCreateOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const navigate = useNavigate();
 
@@ -69,8 +88,33 @@ function HabAdmin() {
     getHabitaciones();
   }, []);
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const filteredHabitaciones = totHab.filter((habitacion) => {
+    if (filter === "Todos") {
+      return true;
+    }
+    return habitacion.tipo === filter;
+  });
+  
   const agregarHabitacion = async () => {
     try {
+      let imageUrl = 'https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg'; // Valor por defecto
+  
+      if (imageFile) {
+        const storageRef = ref(storage, `images/${imageFile.name}`);
+        await uploadBytes(storageRef, imageFile);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+      
+      if (!imageFile) {
+        console.error('No se ha seleccionado ningún archivo de imagen.');
+        return;
+      }
+      
+  
       const newHab = {
         tipo: tipo,
         capacidad: capacidad,
@@ -78,12 +122,14 @@ function HabAdmin() {
         costo: costo,
         extra: extra,
         estado: estado,
-        img: img
+        img: imageUrl
       };
-
+  
+      console.log('Datos de la habitación a enviar:', newHab);
+  
       const respuesta = await axios.post(`${URLHAB}/`, newHab);
       console.log(`respuesta del axios post: ${respuesta.status}`);
-
+  
       if (respuesta.status === 200) {
         setTipo('');
         setCapacidad('');
@@ -91,16 +137,24 @@ function HabAdmin() {
         setCosto('');
         setExtra('');
         setEstado(true);
-        setImg(img);
+        setImageFile(null);
         toast.success('Habitación registrada exitosamente');
         setCreateOpen(false);
         getHabitaciones();
       }
-
+  
     } catch (error) {
-      console.log(`error: ${error}`);
+      console.error('Error al agregar la habitación:', error.response ? error.response.data : error.message);
+      toast.error('Error al registrar la habitación');
     }
   };
+  
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
 
   const OpenCreateModal = () => {
     setCreateOpen(true);
@@ -208,18 +262,23 @@ function HabAdmin() {
             </div>
 
             <div className="separacion"></div>
+            
             <div className="input">
-              <div className="check">
-                <label style={{ marginRight: '8px', marginBottom: '5px' }} htmlFor="Check">Mostrar todas las habitaciones</label>
-                <input className='checkInput' type="checkbox" name="Check" id="check" checked={checked} onChange={() => setIsChecked(!checked)} />
-              </div>
+            <div className="filtro">
+        <select className="form-select" aria-label="Default select example" value={filter} onChange={handleFilterChange}>
+          <option value="Todos">Todas las habitaciones</option>
+          <option value="Familiar">Familiar</option>
+          <option value="Sencilla">Sencilla</option>
+          <option value="Doble">Doble</option>
+          <option value="Suite">Suite</option>
+        </select>
+      </div>
 
-              <label style={{ margin: '1%', fontWeight: '500' }} htmlFor="Search">Buscar habitación</label>
-              <input style={{ margin: '1%', borderRadius: '2px', backgroundColor: '#D9D9D9', borderStyle: 'none', height: '55%', textAlign: 'center' }} type="text" name="Search" id="search" />
+
             </div>
 
             <div className="HBCont">
-              {totHab.map((habitacion) => (
+              {filteredHabitaciones.map((habitacion) => (
                 <div key={habitacion.id} className="HBItem">
                   <div className="ImgHab">
                     <img className='rounded mx-auto d-block HBimg' src={habitacion.img} alt="" />
@@ -267,9 +326,14 @@ function HabAdmin() {
                   <option value="Suite">Suite</option>
                 </select>
               </div>
-              <div className="dt1">
-                <input type="field" className="field2" readOnly placeholder='Imagen' />
-              </div>
+              <div className="form-group">
+            <label>Imagen</label>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              className="form-control"
+            />
+          </div>
               <div className="butFormMod">
               <button className='registerButt' onClick={() => {agregarHabitacion()} }>Registrar</button>
               <button className='delButt'  onClick={() => {closeModal()} }>Cancelar</button>
