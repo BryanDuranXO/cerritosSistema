@@ -6,6 +6,8 @@ import mx.edu.utez.CerritosBack.model.personas.PersonaBean;
 import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 public class PersonaDTO {
@@ -27,6 +29,8 @@ public class PersonaDTO {
             return new PersonaBean(nombre, paterno, materno, correo, telefono, username, password, img, rolBean, reservaBean);
 
     }
+
+
 
 //    public PersonaBean toUpdate() {
 //        if (rolBean == null)

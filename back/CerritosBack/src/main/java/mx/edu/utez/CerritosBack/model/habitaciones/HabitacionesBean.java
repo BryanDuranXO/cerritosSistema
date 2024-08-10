@@ -1,14 +1,11 @@
 package mx.edu.utez.CerritosBack.model.habitaciones;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.CerritosBack.model.personas.PersonaBean;
 import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
-import mx.edu.utez.CerritosBack.model.rol.RolBean;
 
 import java.util.Set;
 
@@ -44,10 +41,14 @@ public class HabitacionesBean {
     @Column(length = 250, nullable = false)
     private String img;
 
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
     @OneToMany(mappedBy = "habitacionesBean", fetch = FetchType.LAZY)
     private Set<ReservaBean> reservaBeans;
 
-    public HabitacionesBean(String tipo, int capacidad, int numero_habitacion, Double costo, Double extra, Boolean estado, String img) {
+    public HabitacionesBean(String tipo, int capacidad, int numero_habitacion,
+                            Double costo, Double extra, Boolean estado, String img, String desc) {
         this.tipo = tipo;
         this.capacidad = capacidad;
         this.numero_habitacion = numero_habitacion;
@@ -57,5 +58,16 @@ public class HabitacionesBean {
         this.img = img;
     }
 
-
+    public HabitacionesBean(Long id, String tipo, int capacidad, int numero_habitacion,
+                            Double costo, Double extra, Boolean estado, String img, String descripcion) {
+        this.id = id;
+        this.tipo = tipo;
+        this.capacidad = capacidad;
+        this.numero_habitacion = numero_habitacion;
+        this.costo = costo;
+        this.extra = extra;
+        this.estado = estado;
+        this.img = img;
+        this.descripcion = descripcion;
+    }
 }

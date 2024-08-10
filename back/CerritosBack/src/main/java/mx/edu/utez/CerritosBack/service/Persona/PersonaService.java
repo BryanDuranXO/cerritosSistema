@@ -5,7 +5,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import mx.edu.utez.CerritosBack.config.ApiResponse;
@@ -26,9 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -100,13 +98,7 @@ public class PersonaService {
             return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El correo es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
         }
 
-        if (personaBean.getUsername() == null || personaBean.getUsername().isEmpty() || personaBean.getUsername().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El nombre de usuario es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
-        }
 
-        if (personaBean.getPassword() == null || personaBean.getPassword().isEmpty() || personaBean.getPassword().isBlank()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "La contraseña es obligatoria y no puede estar vacía"), HttpStatus.BAD_REQUEST);
-        }
 
         if (personaBean.getTelefono() == null || personaBean.getTelefono().isEmpty() || personaBean.getTelefono().isBlank()) {
             return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El número telefónico es obligatorio y no puede estar vacío"), HttpStatus.BAD_REQUEST);
@@ -133,11 +125,6 @@ public class PersonaService {
             return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "La reserva proporcionada no existe"), HttpStatus.BAD_REQUEST);
         }
         personaBean.setReservaBean(foundReserva.get());
-
-        Optional<PersonaBean> foundPersona = personaRepository.findByTelefono(personaBean.getTelefono());
-        if (foundPersona.isPresent()) {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "Ya existe una persona registrada con los mismos datos"), HttpStatus.BAD_REQUEST);
-        }
 
         personaRepository.saveAndFlush(personaBean);
 
@@ -173,7 +160,8 @@ public class PersonaService {
 
     }
 
-    public void enviarCorreo(String correo, String contrato, Date llegada, Date salida) throws Exception, WriterException {
+    public void enviarCorreo(String correo, String contrato, LocalDate llegada, LocalDate salida)
+            throws Exception, WriterException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -183,20 +171,20 @@ public class PersonaService {
 
         String htmlContent = "<h1 style='color: #007bff;'>¡Hola!</h1>"
                 + "<p style='font-weight: bold;'>¡Esperamos que estés bien!</p>"
-                + "<p style='font-size: 18px;'>Este es un correo de parte de Cerritos Xochitepec para darte un detalle sobre tu reserva.</p>"
+                + "<p style='font-size: 18px;'>Este es un correo de parte de " +
+                "Cerritos Xochitepec para darte un detalle sobre tu reserva.</p>"
                 + "<p style='font-size: 18px;'>Fecha de llegada: " + llegada + "</p>"
                 + "<p style='font-size: 18px;'>Fecha de salida: " + salida + "</p>"
                 + "<p style='font-size: 18px;'>Contrato: " + contrato + "</p>"
                 + "<p style='font-size: 18px;'>Adjunto encontrarás un código QR con la misma información.</p>"
-                + "<img src='https://cerritosxochitepec.com/wp-content/uploads/2021/12/Logo2-180.png' alt='Logo Cerritos Xochitepec'>";
+                + "<img src='https://cerritosxochitepec.com/wp-content/uploads/2021/12/Logo2-180.png' alt='Logo" +
+                " Cerritos Xochitepec'>";
 
         helper.setText(htmlContent, true);
 
-        // Generar el código QR
         String qrText = String.format("ID: %s\nFecha de llegada: %s\nFecha de salida: %s", contrato, llegada, salida);
         BufferedImage qrImage = generateQRCode(qrText, 350, 350);
 
-        // Adjuntar el código QR al correo
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(qrImage, "png", baos);
         byte[] qrBytes = baos.toByteArray();
@@ -212,5 +200,7 @@ public class PersonaService {
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
     }
+
+
 
 }

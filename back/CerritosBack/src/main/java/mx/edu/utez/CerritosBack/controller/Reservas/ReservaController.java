@@ -1,7 +1,6 @@
 package mx.edu.utez.CerritosBack.controller.Reservas;
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import mx.edu.utez.CerritosBack.config.ApiResponse;
 import mx.edu.utez.CerritosBack.controller.Reservas.DTO.ReservaDTO;
@@ -10,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.util.Date;
 
 @RestController
@@ -19,6 +16,7 @@ import java.util.Date;
 @CrossOrigin(origins = {"*"})
 @AllArgsConstructor
 public class ReservaController {
+
     private final ReservaService reservaService;
 
     @GetMapping("/")
@@ -27,8 +25,9 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getContrato(@PathVariable String id){
-        return new ResponseEntity<>(new ApiResponse(reservaService.GetOneContrato(id), HttpStatus.OK, "ok"), HttpStatus.OK);
+    public ResponseEntity<ApiResponse> getReserva(@PathVariable String id){
+        return new ResponseEntity<>(new ApiResponse(reservaService.GetOneContrato(id),
+                HttpStatus.OK, "ok"), HttpStatus.OK);
     }
 
     @PostMapping("/")
@@ -36,6 +35,20 @@ public class ReservaController {
         return reservaService.saveReserva(dto.toEntity());
 
     }
+    @PostMapping("/evt")
+    public void sendMail (
+            @RequestParam String nombre,
+            @RequestParam String tipo,
+            @RequestParam String tel,
+            @RequestParam String correo,
+            @RequestParam String fecha,
+            @RequestParam String tot
+    ) throws MessagingException {
+        reservaService.correoEventos(nombre, tipo, tel, correo, fecha, tot);
+    }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> cancelar(@PathVariable Long id){
+        return reservaService.Cancelacion(id);
+    }
 }

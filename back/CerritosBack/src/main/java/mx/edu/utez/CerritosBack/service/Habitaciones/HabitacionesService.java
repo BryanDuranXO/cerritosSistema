@@ -21,22 +21,33 @@ import java.util.Optional;
 @Transactional
 @AllArgsConstructor
 public class HabitacionesService {
+
     private final HabitacionesRepository habitacionesRepository;
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> getAllHabitaciones(){
-        return new ResponseEntity<>(new ApiResponse(habitacionesRepository.findAll(), HttpStatus.OK, "todo bien"), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(habitacionesRepository.findAll(),
+                HttpStatus.OK, "todo bien"),
+                HttpStatus.OK);
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<ApiResponse> getOneHabitacion(Long id){
+        return new ResponseEntity<>(new ApiResponse(habitacionesRepository.findById(id),
+                HttpStatus.OK, "todo bien"),
+                HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<ApiResponse> AgregarHabitacion(HabitacionesBean habitacionesBean) {
-        String tipoHabitacion = habitacionesBean.getTipo().toLowerCase();
-
 
             HabitacionesBean habitacionGuardada = habitacionesRepository.saveAndFlush(habitacionesBean);
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.OK, true, "Habitación agregada correctamente"), HttpStatus.OK);
-
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.OK,
+                    false,
+                    "Habitación agregada correctamente"),
+                    HttpStatus.OK);
     }
+
 
     //update queda pendiente
     @Transactional(rollbackFor = {SQLException.class})
@@ -51,33 +62,39 @@ public class HabitacionesService {
             encontrado.setNumero_habitacion(habitacionesBean.getNumero_habitacion());
             encontrado.setTipo(habitacionesBean.getTipo());
             encontrado.setImg(habitacionesBean.getImg());
-            return new ResponseEntity<>(new ApiResponse(habitacionesRepository.save(encontrado), HttpStatus.OK, "actualizado exitosamente"), HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(habitacionesRepository.save(encontrado),
+                    HttpStatus.OK, "actualizado exitosamente"),
+                    HttpStatus.OK);
         } else{
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.NOT_FOUND,true, "No encontrado"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.NOT_FOUND,
+                    true, "No encontrado"),
+                    HttpStatus.NOT_FOUND);
         }
     }
 
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<ApiResponse> DeshabilitarHabitacion(Long id){
         Optional<HabitacionesBean> foundHabitacion = habitacionesRepository.findById(id);
-
         if (foundHabitacion.isPresent()){
             HabitacionesBean encontrado = foundHabitacion.get();
             if (encontrado.getEstado() == true){
                 encontrado.setEstado(false);
-                return new ResponseEntity<>(new ApiResponse(habitacionesRepository.save(encontrado), HttpStatus.OK, "Deshabilitado correctamente"), HttpStatus.OK);
+                return new ResponseEntity<>(new ApiResponse(habitacionesRepository.save(encontrado),
+                        HttpStatus.OK, "Deshabilitado correctamente"), HttpStatus.OK);
             } else {
                 encontrado.setEstado(true);
-                return new ResponseEntity<>(new ApiResponse(habitacionesRepository.save(encontrado), HttpStatus.OK, "Habilitado correctamente"), HttpStatus.OK);
-
+                return new ResponseEntity<>(new ApiResponse(habitacionesRepository.save(encontrado),
+                        HttpStatus.OK, "Habilitado correctamente"), HttpStatus.OK);
             }
         } else {
-            return new ResponseEntity<>(new ApiResponse(HttpStatus.NOT_FOUND, true, "Habotacion no encontrada"), HttpStatus.NOT_FOUND);
-
+            return new ResponseEntity<>(new ApiResponse(HttpStatus.NOT_FOUND,
+                    true, "Habotacion no encontrada"), HttpStatus.NOT_FOUND);
         }
-
     }
 
-
+//    @Transactional(rollbackFor = {SQLException.class})
+//    public ResponseEntity<ApiResponse> tipoNum(String tipo, int numero){
+//        return new ResponseEntity<>(new ApiResponse(habitacionesRepository.findByTipoAndNumero_habitacion(tipo, numero), HttpStatus.OK, "ok"), HttpStatus.OK);
+//    }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.Date;
 
 @RestController
@@ -56,20 +57,21 @@ public class PersonaController {
         return personaService.login(dto.getUsername(), dto.getPassword());
     }
 
+
+
     @GetMapping("/qrcode")
     public void generateQRCode(HttpServletResponse response,
                                @RequestBody ReservaDTO reservaDTO,
                                @RequestParam(defaultValue = "350") int width,
                                @RequestParam(defaultValue = "350") int height) throws Exception {
-        // Obtener la fecha actual
         String date = java.time.LocalDate.now().toString();
 
         String IDC = reservaDTO.getContrato();
-        Date llegada = reservaDTO.getFecha_entrada();
-        Date salida = reservaDTO.getFecha_salida();
+        LocalDate llegada = reservaDTO.getFecha_entrada();
+        LocalDate salida = reservaDTO.getFecha_salida();
 
 
-        // Formatear los datos en una sola cadena
+        // Esto es para formatear los datos en una sola cadena y sea recibida por el metodo para generar el QR
         String text = String.format("ID: %s\nFecha de llegada: %s\nFecha de salida: %s", IDC, llegada, salida);
 
         // Generar el código QR
@@ -79,4 +81,6 @@ public class PersonaController {
         outputStream.flush();
         outputStream.close();
     }
+
+
 }

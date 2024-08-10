@@ -12,20 +12,14 @@ import mx.edu.utez.CerritosBack.model.habitaciones.HabitacionesBean;
 @NoArgsConstructor
 public class HabitacionesDTO {
     private String tipo;
-
     private int capacidad;
-
     private int numero_habitacion;
-
     private Double costo;
-
     private Double extra;
-
     private Boolean estado;
-
     private String img;
-
+    private String descripcion;
     public HabitacionesBean toEntity(){
-        return new HabitacionesBean(tipo,capacidad , numero_habitacion, costo, extra, estado, img);
+        return new HabitacionesBean(tipo,capacidad , numero_habitacion, costo, extra, estado,img, descripcion);
     }
 }

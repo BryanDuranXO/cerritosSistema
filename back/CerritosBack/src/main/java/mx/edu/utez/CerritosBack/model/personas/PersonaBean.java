@@ -9,6 +9,7 @@ import lombok.Setter;
 import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -56,7 +57,6 @@ public class PersonaBean {
     @JoinColumn(name = "fk_id_reserva")
     private ReservaBean reservaBean;
 
-
     public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img) {
         this.nombre = nombre;
         this.paterno = paterno;
@@ -92,4 +92,6 @@ public class PersonaBean {
         this.rolBean = rolBean;
         this.reservaBean = reservaBean;
     }
+
+
 }
