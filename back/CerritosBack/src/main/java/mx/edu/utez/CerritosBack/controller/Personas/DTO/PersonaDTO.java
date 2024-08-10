@@ -28,10 +28,10 @@ public class PersonaDTO {
 
     }
 
-//    public PersonaBean toUpdate() {
-//        if (rolBean == null)
-//            return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img);
-//        return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img, rolBean);
-//    }
+  public PersonaBean toUpdate() {
+       if (rolBean == null)
+          return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img);
+    return new PersonaBean( nombre, paterno, materno, correo, telefono, username, password, img, rolBean);
+   }
 
 }

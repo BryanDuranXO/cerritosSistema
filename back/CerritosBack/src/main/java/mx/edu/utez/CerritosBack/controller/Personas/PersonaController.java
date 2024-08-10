@@ -40,11 +40,11 @@ public class PersonaController {
         return personaService.savePerson(personaDTO.toEntity());
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ApiResponse> updatePerson(@PathVariable("id") Long id, @RequestBody PersonaDTO dto){
-//        dto.setId(id);
-//        return personaService.updatePerson(dto.toUpdate());
-//    }
+ @PutMapping("/{id}")
+   public ResponseEntity<ApiResponse> updatePerson(@PathVariable("id") Long id, @RequestBody PersonaDTO dto){
+       dto.setId(id);
+       return personaService.updatePerson(dto.toUpdate());
+   }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse>deletePerson(@PathVariable("id") Long id){

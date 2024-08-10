@@ -11,18 +11,15 @@ import org.springframework.http.HttpStatus;
 @Setter
 @Getter
 public class ApiResponse {
-
     private Object data;
     private HttpStatus status;
     private boolean error;
     private String mensaje;
-
     public ApiResponse(Object data, HttpStatus status, String mensaje) {
         this.data = data;
         this.status = status;
         this.mensaje = mensaje;
     }
-
     public ApiResponse(Object data, boolean error, String mensaje) {
         this.data = data;
         this.error = error;

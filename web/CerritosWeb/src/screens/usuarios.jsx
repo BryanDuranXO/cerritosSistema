@@ -366,7 +366,7 @@ function Usuarios() {
                   </td>
                   <td className="border-bottom-0">
   <span className="fw-normal">
-    {user?.rolBean?.id === 1 ? "admin" : user?.rolBean?.id === 2 ? "huésped" : "desconocido"}
+    {user?.rolBean?.id === 1 ? "Administrador" : user?.rolBean?.id === 2 ? "huésped" : "Huésped"}
   </span>
 </td>
 
