@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Card, Form, Button } from "react-bootstrap";
+import { Card, Form, Button, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import CollapsibleExample from "../components/menu2";
 import "../css/reservacionForm.css";
 import axios from "axios";
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import timeGridPlugin from '@fullcalendar/timegrid';
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const Reservas = () => {
   const location = useLocation();
-  const { tipo, numero, fk } = location.state || { tipo: "", numero: "", fk: "" };
-  const Navigate = useNavigate();
+  const { tipo, numero, fk } = location.state || {
+    tipo: "",
+    numero: "",
+    fk: "",
+  };
+  const navigate = useNavigate();
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
-
-  const URLReserva = 'http://localhost:8080/api/cerritos/reservas/';
-  const URLPersona = 'http://localhost:8080/api/cerritos/persona/';
+  const URLReserva = "http://localhost:8080/api/cerritos/reservas/";
+  const URLPersona = "http://localhost:8080/api/cerritos/persona/";
 
   const [users, setUsers] = useState([]);
   const [reservas, setReservas] = useState([]);
-  
+  const [loading, setLoading] = useState(false); 
+
   const [nombre, setNombre] = useState("");
   const [paterno, setPaterno] = useState("");
   const [materno, setMaterno] = useState("");
   const [tel, setTel] = useState("");
   const [correo, setCorreo] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [entrada, setEntrada] = useState("");
   const [salida, setSalida] = useState("");
   const [hentrada, setHentrada] = useState("");
@@ -41,7 +47,7 @@ const Reservas = () => {
       const data = response.data?.data?.body?.data;
 
       if (Array.isArray(data)) {
-        console.log(data)
+        console.log(data);
         setUsers(data);
       } else {
         console.error(
@@ -58,94 +64,169 @@ const Reservas = () => {
     traerPersonas();
   }, []);
 
-  let contractCounter = 0; 
+  let contractCounter = 0;
 
-const generarIdContrato = (nombre, paterno, materno) => {
-  const nombreAbreviado = (nombre[0] || 'X') + (paterno[0] || 'Y') + (materno[0] || 'Z');
-  
-  // Incrementar el contador
-  contractCounter++;
+  const generarIdContrato = (nombre, paterno, materno) => {
+    const nombreAbreviado =
+      (nombre[0] || "X") + (paterno[0] || "Y") + (materno[0] || "Z");
 
-  // Asegurar que el contador tenga 4 dígitos (rellenar con ceros si es necesario)
-  const contadorFormato = contractCounter.toString().padStart(4, '0');
+    contractCounter++;
 
-  // Generar el ID combinando la parte aleatoria y el contador
-  return `${nombreAbreviado.toUpperCase()}${contadorFormato}`;
-};
+    const contadorFormato = contractCounter.toString().padStart(4, "0");
 
+    return `${contractCounter+1}${nombreAbreviado.toUpperCase()}${contadorFormato}`;
+  };
 
-const handleCrearReserva = async (e) => {
-  e.preventDefault();
-  
-  // Generar el ID de contrato
-  const idContrato = generarIdContrato(nombre, paterno, materno);
-
-  try {
-    const newReserva = {
-      fecha_entrada: entrada,
-      fecha_salida: salida,
-      hora_entrada: hentrada,
-      hora_salida: hsalida,
-      contrato: idContrato,
-      estado: true,
-      habitacionesBean: {
-        id: fk
-      }
-    };
-
-    // Guardar la reserva
-    const postReserva = await axios.post(URLReserva, newReserva);
-    console.log("Reserva creada:", postReserva.data);
-
-    // Obtener la reserva recién creada
-    const getReserva = await axios.get(`${URLReserva}${idContrato}`);
-    const reservaId = getReserva.data.data.body.data.id;
-    console.log("Reserva obtenida:", getReserva.data);
-
-    // Asignar el ID de la reserva obtenida a los datos de la persona
-    const newPersonReserva = {
-      nombre: nombre,
-      paterno: paterno,
-      materno: materno,
-      correo: correo,
-      telefono: tel,
-      username: "username",
-      password: "pass",
-      rolBean: {
-        id: 2,
-      },
-      reservaBean: {
-        id: reservaId
-      }
-    };
-
-    // Guardar los datos de la persona
-    const postPersona = await axios.post(URLPersona, newPersonReserva);
-    console.log("Persona creada:", postPersona.data);
+  const CrearReserva = async (e) => {
+    e.preventDefault();
 
     Swal.fire({
-      icon: "success",
-      title: "Reserva creada correctamente",
-      text: "Por favor verifica tu usuario y contraseña.",
-      timer: 2500,
+      title: "¿Deseas crear una cuenta?",
+      text: "Podrás manipular de una forma eficiente tu reservación en la sección de acceso.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+      cancelButtonText: "No",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+
+        const { value: formValues } = await Swal.fire({
+          title: "Crear cuenta",
+          html:
+            '<input id="swal-input1" class="swal2-input" placeholder="Usuario">' +
+            '<input id="swal-input2" type="password" class="swal2-input" placeholder="Contraseña">',
+          focusConfirm: false,
+          preConfirm: () => {
+            return [
+              document.getElementById("swal-input1").value,
+              document.getElementById("swal-input2").value,
+            ];
+          },
+        });
+
+        if (formValues) {
+          setUsername(formValues[0]);
+          setPassword(formValues[1]);
+
+          setLoading(true); 
+
+          const idContrato = generarIdContrato(nombre, paterno, materno);
+
+          try {
+            const newReserva = {
+              fecha_entrada: entrada,
+              fecha_salida: salida,
+              hora_entrada: hentrada,
+              contrato: idContrato,
+              estado: true,
+              habitacionesBean: {
+                id: fk,
+              },
+            };
+
+            const postReserva = await axios.post(URLReserva, newReserva);
+
+            const getReserva = await axios.get(`${URLReserva}${idContrato}`);
+            const reservaId = getReserva.data.data.body.data.id;
+
+            const newPersonReserva = {
+              nombre: nombre,
+              paterno: paterno,
+              materno: materno,
+              correo: correo,
+              telefono: tel,
+              username: formValues[0],
+              password: formValues[1],
+              rolBean: {
+                id: 2,
+              },
+              reservaBean: {
+                id: reservaId,
+              },
+            };
+
+            const postPersona = await axios.post(URLPersona, newPersonReserva);
+
+            Swal.fire({
+              icon: "success",
+              title: "Reserva y cuenta creadas correctamente",
+              text: "Por favor verifica tu usuario y contraseña en la sección de acceso.",
+              timer: 2500,
+            });
+
+            navigate("/Inicio");
+
+          } catch (error) {
+            if (error.response) {
+            } else if (error.request) {
+            } else {
+              console.error("Error", error.message);
+            }
+          } finally {
+            setLoading(false); 
+          }
+        }
+      } else {
+        setLoading(true); 
+
+        const idContrato = generarIdContrato(nombre, paterno, materno);
+
+        try {
+          const newReserva = {
+            fecha_entrada: entrada,
+            fecha_salida: salida,
+            hora_entrada: hentrada,
+            contrato: idContrato,
+            estado: true,
+            habitacionesBean: {
+              id: fk,
+            },
+          };
+
+          const postReserva = await axios.post(URLReserva, newReserva);
+
+          const getReserva = await axios.get(`${URLReserva}${idContrato}`);
+          const reservaId = getReserva.data.data.body.data.id;
+
+          const newPersonReserva = {
+            nombre: nombre,
+            paterno: paterno,
+            materno: materno,
+            correo: correo,
+            telefono: tel,
+            username: null,
+            password: null,
+            rolBean: {
+              id: 2,
+            },
+            reservaBean: {
+              id: reservaId,
+            },
+          };
+
+          const postPersona = await axios.post(URLPersona, newPersonReserva);
+
+          Swal.fire({
+            icon: "success",
+            title: "Reserva creada correctamente",
+            text: "Reserva creada sin cuenta.",
+            timer: 2500,
+          });
+
+          navigate("/Inicio");
+        } catch (error) {
+          if (error.response) {
+          } else if (error.request) {
+            console.error("Error en la solicitud:", error.request);
+          } else {
+            console.error("Error", error.message);
+          }
+        } finally {
+          setLoading(false); 
+        }
+      }
     });
-
-    Navigate("/Inicio")
-
-  } catch (error) {
-    if (error.response) {
-      // El servidor respondió con un estado de error
-      console.error("Error en la solicitud:", error.response.status);
-      console.error("Datos de error:", error.response.data);
-    } else if (error.request) {
-      // La solicitud fue hecha pero no se recibió respuesta
-      console.error("Error en la solicitud:", error.request);
-    } else {
-      // Algo salió mal al configurar la solicitud
-      console.error("Error", error.message);
-    }
-  }
-};
+  };
 
   
   return (
@@ -162,7 +243,13 @@ const handleCrearReserva = async (e) => {
             <div className="etiquetaInfo">
               <p className="h6 fw-semibold">Datos del solicitante</p>
             </div>
-            <form onSubmit={handleCrearReserva}>
+            {loading && (
+              <div className="spinner-container">
+                <Spinner animation="border" role="status" />
+              </div>
+            )}
+            <form onSubmit={CrearReserva}>
+              <form onSubmit={CrearReserva}>
               <div className="fila">
                 <div className="form-group ">
                   <label htmlFor="nombre">Nombre(s)</label>
@@ -264,7 +351,10 @@ const handleCrearReserva = async (e) => {
                     onChange={(e) => setSalida(e.target.value)}
                   />
                 </div>
-                <div className="form-group ">
+
+              </div>
+              <div className="fila">
+              <div className="form-group ">
                   <label htmlFor="horaLlegada">Hora de llegada</label>
                   <input
                     type="time"
@@ -301,67 +391,65 @@ const handleCrearReserva = async (e) => {
                     readOnly
                   />
                 </div>
-              </div>
-
-              <button type="submit">Reservar</button>
+              </div>            
+            </form>
+              <button className="btn btn-primary" type="submit" disabled={loading}>
+                Reservar
+              </button>
             </form>
           </div>
         </div>
 
-
         <div className="contImagenHab">
+          <p className="h3">Fechas disponibles para la habitación {tipo}</p>
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+            initialView="dayGridMonth"
+            weekends={true}
+            headerToolbar={{
+              start: "today prev,next",
+              center: "title",
+              end: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            buttonText={{
+              today: "Hoy",
+              month: "Mes",
+              week: "Semana",
+              day: "Día",
+            }}
+            buttonIcons={{
+              prev: "chevron-left",
+              next: "chevron-right",
+              prevYear: "chevrons-left",
+              nextYear: "chevrons-right",
+            }}
+            themeSystem="bootstrap"
+            titleFormat={{
+              year: "numeric",
+              month: "long",
+            }}
+            dayMaxEventRows={true}
+            height="100%"
+            width="100%"
+            locale="es"
+            selectable={true}
+            editable={true}
+            validRange={{ start: today }}
+          />
 
-        <p className="h3">Fechas disponibles para la habitación {tipo}</p>
-        <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-                initialView="dayGridMonth"
-                weekends={true}
-                headerToolbar={{
-                  start: 'today prev,next',
-                  center: 'title',
-                  end: 'dayGridMonth,timeGridWeek,timeGridDay',
-                }}
-                buttonText={{
-                  today: 'Hoy',
-                  month: 'Mes',
-                  week: 'Semana',
-                  day: 'Día'
-                }}
-                buttonIcons={{
-                  prev: 'chevron-left',
-                  next: 'chevron-right',
-                  prevYear: 'chevrons-left',
-                  nextYear: 'chevrons-right'
-                }}
-                themeSystem="bootstrap"
-                titleFormat={{
-                  year: 'numeric', month: 'long'
-                }}
-                dayMaxEventRows={true}
-                height="100%"
-                width="100%"
-                locale="es"
-                selectable={true}
-                editable={true}
-                validRange={{start: today}}
-              />
-              
-              <div className="indicaciones">
-  <div className="indi">
-    <div className="cuadrito2"></div>
-    <span>Fechas no disponibles</span>
-  </div>
+          <div className="indicaciones">
+            <div className="indi">
+              <div className="cuadrito2"></div>
+              <span>Fechas no disponibles</span>
+            </div>
 
-  <div className="indi">
-    <div className="cuadrito1"></div>
-    <span>Fechas ocupadas</span>
-  </div>
+            <div className="indi">
+              <div className="cuadrito1"></div>
+              <span>Fechas ocupadas</span>
+            </div>
 
-  <div className="indi">
-    <div className="cuadrito"></div>
-    <span>Fechas disponibles</span>
-  </div>
-</div>
+            
+          </div>
         </div>
       </div>
     </>

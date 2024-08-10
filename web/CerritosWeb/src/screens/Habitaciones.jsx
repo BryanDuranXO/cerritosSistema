@@ -19,7 +19,6 @@ const Habitaciones = () => {
   const getHabitaciones = async () => {
     try {
       const response = await axios.get(URLHab);
-      console.log('La respuesta del axios es:', response.data);
 
       if (response.data && Array.isArray(response.data.data)) {
         setHab(response.data.data);
@@ -40,6 +39,12 @@ const Habitaciones = () => {
   };
 
   const filteredHabitaciones = Hab.filter((habitacion) => {
+    // Solo mostrar habitaciones con estatus true
+    if (habitacion.estado !== true) {
+      return false;
+    }
+
+    // Aplicar el filtro de tipo
     if (filter === "Todos") {
       return true;
     }
@@ -69,7 +74,7 @@ const Habitaciones = () => {
           <div className="item" key={index}>
             <div className="sub">
               <div className="titulo">Habitación {habitacion.tipo}</div>
-              <div className="txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ipsam aliquam illo voluptatum ipsa molestias ullam ab autem, nihil architecto.</div>
+              <div className="txt">{habitacion.descripcion}</div>
               <div className="price">Precio por hospedaje: ${habitacion.costo}</div>
               <div className="price">Precio por extras: ${habitacion.extra}</div>
               <div className="extras">Capacidad máxima de {habitacion.capacidad} personas</div>
