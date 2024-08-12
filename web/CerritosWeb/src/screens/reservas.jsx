@@ -41,6 +41,11 @@ const Reservas = () => {
   const [hentrada, setHentrada] = useState("");
   const [hsalida, setHsalida] = useState("12:00:00");
 
+  const Gettoken =() =>{
+    const token = localStorage.getItem('token');
+    return token;
+  }
+
   const traerPersonas = async () => {
     try {
       const response = await axios.get(URLPersona);
@@ -124,9 +129,9 @@ const Reservas = () => {
               },
             };
 
-            const postReserva = await axios.post(URLReserva, newReserva);
+            const postReserva = await axios.post(`${URLReserva}save`, newReserva);
 
-            const getReserva = await axios.get(`${URLReserva}${idContrato}`);
+            const getReserva = await axios.get(`${URLReserva}one/${idContrato}`);
             const reservaId = getReserva.data.data.body.data.id;
 
             const newPersonReserva = {
@@ -136,6 +141,7 @@ const Reservas = () => {
               correo: correo,
               telefono: tel,
               username: formValues[0],
+              estatus: 1,
               password: formValues[1],
               rolBean: {
                 id: 2,
@@ -183,9 +189,9 @@ const Reservas = () => {
             },
           };
 
-          const postReserva = await axios.post(URLReserva, newReserva);
+          const postReserva = await axios.post(`${URLReserva}save`, newReserva);
 
-          const getReserva = await axios.get(`${URLReserva}${idContrato}`);
+          const getReserva = await axios.get(`${URLReserva}one/${idContrato}`);
           const reservaId = getReserva.data.data.body.data.id;
 
           const newPersonReserva = {
@@ -195,6 +201,7 @@ const Reservas = () => {
             correo: correo,
             telefono: tel,
             username: null,
+            estatus: 1,
             password: null,
             rolBean: {
               id: 2,

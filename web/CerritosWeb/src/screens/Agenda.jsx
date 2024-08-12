@@ -13,6 +13,11 @@ import Swal from "sweetalert2";
 
 function NavAdmin() {
 
+  const cerrar = ()=>{
+    localStorage.clear('token');
+    navigate('/Acceso')
+  }
+
   const navigate = useNavigate();
   const today = new Date().toLocaleDateString('es-MX', {
     year: 'numeric',
@@ -54,7 +59,20 @@ function NavAdmin() {
 
   const traerEventos = async () => {
     try {
-      const response = await axios.get(URLreservas);
+
+      const token = await localStorage.getItem('token');
+      console.log(token)
+        
+      // Verifica si el token existe
+      if (!token) {
+        throw new Error('Token no encontrado');
+      }
+
+      const response = await axios.get('http://localhost:8080/api/cerritos/reservas/', {
+        headers: {
+          'Authorization': `Bearer ${token}` // Incluye el token en los encabezados
+        }
+      });
       const data = response.data.data;
       console.log('Datos recibidos de la API:', data);
   
@@ -372,7 +390,7 @@ function NavAdmin() {
           <div className="nav">
             <div className="nv">
               <img className='userPic' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />John Doe
-              <button className='butSal' onClick={() => navigate('/Acceso')}>Cerrar sesión</button>
+              <button className='butSal' onClick={() => cerrar()}>Cerrar sesión</button>
             </div>
           </div>
 

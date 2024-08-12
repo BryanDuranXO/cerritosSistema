@@ -45,7 +45,7 @@ const customStyles = {
 };
 
 function HabAdmin() {
-  const URLHAB = 'http://localhost:8080/api/cerritos/habitaciones';
+  const URLHAB = 'http://localhost:8080/api/cerritos/habitaciones/';
 
   const [totHab, setTotHab] = useState([]);
   const [tipo, setTipo] = useState('');
@@ -71,8 +71,7 @@ function HabAdmin() {
 
   const getHabitaciones = async () => {
     try {
-      const response = await axios.get(`${URLHAB}/`);
-      console.log('La respuesta del axios es:', response.data);
+      const response = await axios.get(`${URLHAB}all`);
 
       if (response.data && Array.isArray(response.data.data)) {
         setTotHab(response.data.data);

@@ -8,13 +8,15 @@ import axios from "axios";
 const Habitaciones = () => {
   const navigate = useNavigate();
 
-  const URLHab = 'http://localhost:8080/api/cerritos/habitaciones/';
+  const URLHab = 'http://localhost:8080/api/cerritos/habitaciones/all';
   const [Hab, setHab] = useState([]);
   const [filter, setFilter] = useState("Todos");
 
   const handleReservationClick = (habitacion) => {
     navigate('/reservacion', { state: { tipo: habitacion.tipo, numero: habitacion.numero_habitacion, fk: habitacion.id } });
   };
+
+
 
   const getHabitaciones = async () => {
     try {

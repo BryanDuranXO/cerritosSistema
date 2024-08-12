@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import CollapsibleExample from "../components/menu2";
-
 import axios from "axios";
 import "../css/login.css"; // Asegúrate de importar tu archivo CSS
 import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
@@ -16,15 +15,14 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Agregar la clase al body cuando el componente se monta
     document.body.classList.add("login-body");
-    // Remover la clase del body cuando el componente se desmonta
     return () => {
       document.body.classList.remove("login-body");
     };
   }, []);
 
   const URL = "http://localhost:8080/api/cerritos/persona/login";
+  const url = "http://localhost:8080/api/auth/signin"; // CON JWT
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -32,12 +30,18 @@ const Login = () => {
 
   const login = async () => {
     try {
-      const response = await axios.post(URL, {
+      const response = await axios.post(url, {
         username: username,
         password: pass,
       });
 
       if (response.status === 200) {
+       
+        const token = response.data.data; // Asumiendo que la API devuelve un token
+
+       // Guardar token en localStorage o sessionStorage
+       localStorage.setItem("token", token);
+
         Swal.fire({
           icon: "success",
           title: "Login exitoso",
@@ -46,7 +50,7 @@ const Login = () => {
           showConfirmButton: false,
         }).then(() => {
           navigate("/ReservacionAdmin"); 
-                });
+        });
       } else {
         Swal.fire({
           icon: "error",
@@ -94,7 +98,7 @@ const Login = () => {
             </Form.Label>
             <div className="password-input-container">
               <Form.Control
-                type={showPassword ? "password" : "text"}
+                type={showPassword ? "text" : "password"} // Cambié el orden aquí para que funcione correctamente
                 name="Pass"
                 id="pass"
                 onChange={(e) => setPass(e.target.value)}
