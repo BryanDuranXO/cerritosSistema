@@ -103,6 +103,8 @@ function HabAdmin() {
   const agregarHabitacion = async () => {
     try {
       let imageUrl = ''; // Valor por defecto
+
+      const token = localStorage.getItem('token')
   
       if (imageFile) {
         const storageRef = ref(storage, `images/${imageFile.name}`);
@@ -129,7 +131,11 @@ function HabAdmin() {
   
       console.log('Datos de la habitación a enviar:', newHab);
   
-      const respuesta = await axios.post(`${URLHAB}/`, newHab);
+      const respuesta = await axios.post(`${URLHAB}`, newHab,{
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        }
+      });
       console.log(`respuesta del axios post: ${respuesta.status}`);
   
       if (respuesta.status === 200) {
@@ -216,7 +222,13 @@ function HabAdmin() {
 
   const ChangeStatus = async (id, estado, numero_habitacion) => {
     try {
-      const response = await axios.patch(`${URLHAB}/${id}`, { estado: !estado });
+
+      const token = localStorage.getItem('token')
+      const response = await axios.patch(`${URLHAB}${id}`, { estado: !estado },{
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
 
       if (response.status === 200) {
         toast.success(`Estado de la habitación ${numero_habitacion} cambiado exitosamente`);
