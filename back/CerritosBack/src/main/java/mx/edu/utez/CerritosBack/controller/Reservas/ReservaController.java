@@ -19,18 +19,18 @@ public class ReservaController {
 
     private final ReservaService reservaService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<ApiResponse> getReservas(){
         return  reservaService.getAllReservas();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/one/{id}")
     public ResponseEntity<ApiResponse> getReserva(@PathVariable String id){
         return new ResponseEntity<>(new ApiResponse(reservaService.GetOneContrato(id),
                 HttpStatus.OK, "ok"), HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping("/save")
     public ResponseEntity<ApiResponse> saveReservacion(@RequestBody ReservaDTO dto){
         return reservaService.saveReserva(dto.toEntity());
 

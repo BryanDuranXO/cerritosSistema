@@ -14,11 +14,13 @@ import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
 import mx.edu.utez.CerritosBack.model.reservas.ReservaRepository;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 import mx.edu.utez.CerritosBack.model.rol.RolRepository;
+import mx.edu.utez.CerritosBack.security.MainSecurity;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,9 @@ public class PersonaService {
     private final ReservaRepository reservaRepository;
     private JavaMailSender mailSender;
 
+    private PasswordEncoder passwordEncoder;
+
+    private final MainSecurity pass; // Inyecta el servicio de encriptación de contraseñas
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> getAllPeople(){
@@ -125,6 +130,9 @@ public class PersonaService {
             return new ResponseEntity<>(new ApiResponse(HttpStatus.BAD_REQUEST, true, "La reserva proporcionada no existe"), HttpStatus.BAD_REQUEST);
         }
         personaBean.setReservaBean(foundReserva.get());
+
+        String encrypted = passwordEncoder.encode(personaBean.getPassword());
+        personaBean.setPassword(encrypted);
 
         personaRepository.saveAndFlush(personaBean);
 
