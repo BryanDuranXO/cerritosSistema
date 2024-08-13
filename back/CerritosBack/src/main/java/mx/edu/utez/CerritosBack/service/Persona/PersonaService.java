@@ -55,6 +55,11 @@ public class PersonaService {
         return new ResponseEntity<>(new ApiResponse(personaRepository.findByTelefono(telefono), HttpStatus.OK, "ok"), HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
+    public ResponseEntity<ApiResponse>onlyOneHuesped(String username){
+        return new ResponseEntity<>(new ApiResponse(personaRepository.findByUsername(username), HttpStatus.OK, "todo ok"), HttpStatus.OK);
+    }
+
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<ApiResponse> updatePerson(PersonaBean personaBean) {
         if (personaBean.getRolBean() == null || personaBean.getRolBean().getId() == null)

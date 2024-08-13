@@ -19,31 +19,22 @@ public class HabitacionesBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 60, nullable = false)
     private String tipo;
-
     @Column(nullable = false)
     private int capacidad;
-
     @Column(nullable = false)
     private int numero_habitacion;
-
     @Column(nullable = false)
     private Double costo;
-
     @Column(nullable = false)
     private Double extra;
-
     @Column(nullable = false)
     private Boolean estado;
-
     @Column(length = 250, nullable = false)
     private String img;
-
     @Column(columnDefinition = "TEXT")
     private String descripcion;
-
     @OneToMany(mappedBy = "habitacionesBean", fetch = FetchType.LAZY)
     private Set<ReservaBean> reservaBeans;
 

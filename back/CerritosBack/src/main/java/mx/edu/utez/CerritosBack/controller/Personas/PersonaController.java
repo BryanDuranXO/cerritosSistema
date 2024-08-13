@@ -31,6 +31,11 @@ public class PersonaController {
         return new ResponseEntity<>(new ApiResponse(personaService.getAllPeople(), HttpStatus.OK, "todo bien"), HttpStatus.OK);
     }
 
+    @GetMapping("/one/{username}")
+    public ResponseEntity<ApiResponse> getOnePerson(@PathVariable String username){
+        return new ResponseEntity<>(new ApiResponse(personaService.onlyOneHuesped(username), HttpStatus.OK, "todo bien"), HttpStatus.OK);
+    }
+
     @GetMapping("/{telefono}")
     public ResponseEntity<ApiResponse> getOne(@PathVariable String telefono){
         return new ResponseEntity<>(new ApiResponse(personaService.getOnePeople(telefono), HttpStatus.OK, "ok"), HttpStatus.OK);

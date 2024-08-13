@@ -30,7 +30,8 @@ public class MainSecurity {
             "/api/cerritos/habitaciones/all",
             "/api/cerritos/evt/",
             "/api/cerritos/reservas/save",
-            "/api/cerritos/reservas/one/**"
+            "/api/cerritos/reservas/one/**",
+            "/api/cerritos/rol/**"
     };
     private final UserDetailsServiceImpl service;
 
