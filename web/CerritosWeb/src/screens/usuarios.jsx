@@ -95,6 +95,7 @@ function Usuarios() {
   };
 
   const NuevaPersona = async () => {
+
     const newPerson = {
       nombre: nombre,
       paterno: paterno,
@@ -103,9 +104,11 @@ function Usuarios() {
       telefono: tel,
       username: username,
       password: pass,
+      img: null,
       rolBean: {
-        id: parseInt(rol),
-      },
+        id: parseInt(rol)
+      }, 
+      reservaBean: { id: 17 }
     };
 
     try {
@@ -216,7 +219,7 @@ function Usuarios() {
           }}
           className="subM"
         >
-          Contrato
+          Busqueda Rapida
         </div>
         <div
           onClick={() => {
@@ -408,97 +411,94 @@ function Usuarios() {
         transition={Flip}
       />
 
-      <Modal
-        isOpen={createOpen}
-        onRequestClose={closeModal}
-        contentLabel="Registrar nuevo usuario"
-        style={customStyles}
-      >
-        <h2 style={{ fontWeight: "bold" }}>Registro</h2>
-        <div className="dt1">
-          <input
-            type="text"
-            className="field"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            placeholder="Nombre(s)"
-          />
-          <input
-            type="text"
-            className="field"
-            value={tel}
-            onChange={(e) => setTel(e.target.value)}
-            placeholder="Télefono"
-          />
-        </div>
-        <div className="dt1">
-          <input
-            type="text"
-            className="field"
-            value={paterno}
-            onChange={(e) => setPaterno(e.target.value)}
-            placeholder="Apellido paterno"
-          />
-          <input
-            type="text"
-            className="field"
-            value={materno}
-            onChange={(e) => setMaterno(e.target.value)}
-            placeholder="Apellido materno"
-          />
-        </div>
-        <div className="dt1">
-          <input
-            type="text"
-            className="field2"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            placeholder="Correo electrónico"
-          />
-        </div>
-        <div className="dt1">
-          <input
-            type="text"
-            className="field2"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Nombre de usuario"
-          />
-        </div>
-        <div className="dt1">
-          <input
-            type="password"
-            className="field2"
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
-            placeholder="Contraseña"
-          />
-        </div>
-        <div className="dt1">
-          <select
-            className="field2"
-            value={rol}
-            onChange={(e) => setRol(e.target.value)}
-            name=""
-            id=""
-          >
-            <option value={rol}>Rol</option>
-            {roles.map((role) => (
-              <option key={role.id} value={role.id.toString()}>
-                {role.rol}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="butFormMod">
-          <button className="registerButt" onClick={NuevaPersona}>
-            Registrar
-          </button>
-          <button className="delButt" onClick={closeModal}>
-            Cancelar
-          </button>
-        </div>
-      </Modal>
+<Modal
+  isOpen={createOpen}
+  onRequestClose={closeModal}
+  contentLabel="Registrar nuevo usuario"
+  style={customStyles}
+>
+  <h2 style={{ fontWeight: "bold" }}>Registro</h2>
+  <div className="dt1">
+    <input
+      type="text"
+      className="field"
+      value={nombre}
+      onChange={(e) => setNombre(e.target.value)}
+      placeholder="Nombre(s)"
+    />
+    <input
+      type="text"
+      className="field"
+      value={tel}
+      onChange={(e) => setTel(e.target.value)}
+      placeholder="Télefono"
+    />
+  </div>
+  <div className="dt1">
+    <input
+      type="text"
+      className="field"
+      value={paterno}
+      onChange={(e) => setPaterno(e.target.value)}
+      placeholder="Apellido paterno"
+    />
+    <input
+      type="text"
+      className="field"
+      value={materno}
+      onChange={(e) => setMaterno(e.target.value)}
+      placeholder="Apellido materno"
+    />
+  </div>
+  <div className="dt1">
+    <input
+      type="text"
+      className="field2"
+      value={correo}
+      onChange={(e) => setCorreo(e.target.value)}
+      placeholder="Correo electrónico"
+    />
+  </div>
+  <div className="dt1">
+    <input
+      type="text"
+      className="field2"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      placeholder="Nombre de usuario"
+    />
+  </div>
+  <div className="dt1">
+    <input
+      type="password"
+      className="field2"
+      value={pass}
+      onChange={(e) => setPass(e.target.value)}
+      placeholder="Contraseña"
+    />
+  </div>
+  <div className="dt1">
+    <select
+      className="field2"
+      value={rol}
+      onChange={(e) => setRol(e.target.value)}
+      name=""
+      id=""
+    >
+      <option value="">Rol</option>  {/* Asegúrate de que esta opción no tenga valor */}
+      <option value={"1"}>Admin</option>
+      <option value={"2"}>Huésped</option>
+    </select>
+  </div>
+  <div className="butFormMod">
+    <button className="registerButt" onClick={NuevaPersona}>
+      Registrar
+    </button>
+    <button className="delButt" onClick={closeModal}>
+      Cancelar
+    </button>
+  </div>
+</Modal>
 
       <Modal
         isOpen={updateOpen}

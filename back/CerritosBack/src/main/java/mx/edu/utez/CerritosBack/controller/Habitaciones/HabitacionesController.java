@@ -12,12 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = {"*"})
 @AllArgsConstructor
 public class HabitacionesController {
+
+
     private final HabitacionesService habitacionesService;
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse> AllHabitaciones(){
         return habitacionesService.getAllHabitaciones();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> OneHabitacion(@PathVariable Long id){
+        return habitacionesService.getOneHabitacion(id);
+    }
+
+
 
     @PostMapping("/")
     public ResponseEntity<ApiResponse> NewHabitacion(@RequestBody HabitacionesDTO habitacionesDTO){
@@ -31,7 +40,13 @@ public class HabitacionesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> Actualizar(@PathVariable("id") Long id, @RequestBody HabitacionesDTO habitacionesDTO){
+    public ResponseEntity<ApiResponse> Actualizar(
+            @PathVariable("id") Long id, @RequestBody HabitacionesDTO habitacionesDTO){
         return habitacionesService.ActualizarHabitaciones(id, habitacionesDTO.toEntity());
     }
+
+//    @GetMapping("hab/{tipo}/{num}")
+//    public ResponseEntity<ApiResponse> HabitacionTipo(@PathVariable("tipo") String tipo, @PathVariable("num") int num){
+//        return habitacionesService.tipoNum(tipo, num);
+//    }
 }

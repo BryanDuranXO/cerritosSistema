@@ -15,6 +15,7 @@ import Perfil from './screens/perfil.jsx';
 import Reservas from './screens/reservas.jsx';
 import MainUser from './screens/UserDetalles.jsx';
 import PerfilUser from './screens/PerfilUser.jsx';
+import Busqueda from './screens/Busqueda.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/ReservacionAdmin' element={<NavAdmin/>} />
       <Route path='/Usuarios' element={<Usuarios/>} />
       <Route path='/HabitacionesAdmin' element={<HabAdmin/>} />
+      <Route path='/Busqueda' element={<Busqueda/>} />
       <Route path='/Perfil' element={<Perfil/>}/>
       <Route path='/*' element={<Inicio />} />
       <Route path="/reservacion" element={<Reservas/>} />

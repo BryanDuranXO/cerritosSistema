@@ -9,6 +9,7 @@ import lombok.Setter;
 import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -21,28 +22,20 @@ public class PersonaBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 50)
     private String nombre;
-
     @Column(length = 50)
     private String paterno;
-
     @Column(length = 50)
     private String materno;
-
     @Column(length = 50)
     private String correo;
-
     @Column(length = 10)
     private String telefono;
-
     @Column(length = 50)
     private String username;
-
     @Column(length = 50)
     private String password;
-
     @Column(length = 250)
     private String img;
 
@@ -56,7 +49,6 @@ public class PersonaBean {
     @JoinColumn(name = "fk_id_reserva")
     private ReservaBean reservaBean;
 
-
     public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img) {
         this.nombre = nombre;
         this.paterno = paterno;
@@ -67,7 +59,6 @@ public class PersonaBean {
         this.password = password;
         this.img = img;
     }
-
     public PersonaBean(String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean) {
         this.nombre = nombre;
         this.paterno = paterno;
@@ -79,7 +70,6 @@ public class PersonaBean {
         this.img = img;
         this.rolBean = rolBean;
     }
-
     public PersonaBean(String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean, ReservaBean reservaBean) {
         this.nombre = nombre;
         this.paterno = paterno;
@@ -92,4 +82,6 @@ public class PersonaBean {
         this.rolBean = rolBean;
         this.reservaBean = reservaBean;
     }
+
+
 }

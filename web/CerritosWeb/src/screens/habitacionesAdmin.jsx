@@ -26,8 +26,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-
-
 const customStyles = {
   content: {
     display: 'flex',
@@ -57,8 +55,10 @@ function HabAdmin() {
   const [extra, setExtra] = useState('');
   const [estado, setEstado] = useState(true);
   const [img, setImg] = useState('https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg');
+  const [des, setDesc] = useState('');
   const [selectedHab, setSelectedHab] = useState(null);
-  const [filter, setFilter] = useState("Todos");
+
+  
 
 
   const [createOpen, setCreateOpen] = useState(false);
@@ -88,11 +88,13 @@ function HabAdmin() {
     getHabitaciones();
   }, []);
 
-  const handleFilterChange = (event) => {
+  const [filter, setFilter] = useState("Todos");
+
+  const filtrado = (event) => {
     setFilter(event.target.value);
   };
 
-  const filteredHabitaciones = totHab.filter((habitacion) => {
+  const HabitacionesFiltradas = totHab.filter((habitacion) => {
     if (filter === "Todos") {
       return true;
     }
@@ -101,7 +103,7 @@ function HabAdmin() {
   
   const agregarHabitacion = async () => {
     try {
-      let imageUrl = 'https://cerritosxochitepec.com/wp-content/uploads/2021/12/Home1.jpg'; // Valor por defecto
+      let imageUrl = ''; // Valor por defecto
   
       if (imageFile) {
         const storageRef = ref(storage, `images/${imageFile.name}`);
@@ -122,7 +124,8 @@ function HabAdmin() {
         costo: costo,
         extra: extra,
         estado: estado,
-        img: imageUrl
+        img: imageUrl,
+        descripcion: des
       };
   
       console.log('Datos de la habitación a enviar:', newHab);
@@ -195,7 +198,7 @@ function HabAdmin() {
         img: img
       };
 
-      const response = await axios.patch(`${URLHAB}/${selectedHab.id}`, updatedHab);
+      const response = await axios.put(`${URLHAB}/${selectedHab.id}`, updatedHab);
 
       if (response.status === 200) {
         toast.success('Habitación actualizada exitosamente');
@@ -234,8 +237,9 @@ function HabAdmin() {
         </div>
         <div className="subM2" ></div>
         <div onClick={() => { navigate('/ReservacionAdmin') }} className="subM">Reservaciones</div>
-        <div onClick={() => { navigate('/Busqueda') }} className="subM">Contrato</div>
-        <div onClick={() => { navigate('/Usuarios') }} className="subM">Usuarios</div>
+        <div onClick={() => navigate("/Busqueda")} className="subM">
+            Busqueda rapida
+          </div>        <div onClick={() => { navigate('/Usuarios') }} className="subM">Usuarios</div>
         <div onClick={() => { navigate('/HabitacionesAdmin') }} className="subM">Habitaciones</div>
         <div onClick={() => { navigate('/Perfil') }} className="subM">Perfil</div>
       </div>
@@ -265,7 +269,7 @@ function HabAdmin() {
             
             <div className="input">
             <div className="filtro">
-        <select className="form-select" aria-label="Default select example" value={filter} onChange={handleFilterChange}>
+        <select className="form-select" aria-label="Default select example" value={filter} onChange={filtrado}>
           <option value="Todos">Todas las habitaciones</option>
           <option value="Familiar">Familiar</option>
           <option value="Sencilla">Sencilla</option>
@@ -278,7 +282,7 @@ function HabAdmin() {
             </div>
 
             <div className="HBCont">
-              {filteredHabitaciones.map((habitacion) => (
+              {HabitacionesFiltradas.map((habitacion) => (
                 <div key={habitacion.id} className="HBItem">
                   <div className="ImgHab">
                     <img className='rounded mx-auto d-block HBimg' src={habitacion.img} alt="" />
@@ -326,6 +330,9 @@ function HabAdmin() {
                   <option value="Suite">Suite</option>
                 </select>
               </div>
+              <div className="dt1">
+                <input type='textarea'placeholder='Descripcion' className="field2" value={des} onChange={(e)=>{setDesc(e.target.value)}} name="" id=""/>
+              </div>
               <div className="form-group">
             <label>Imagen</label>
             <input
@@ -341,45 +348,89 @@ function HabAdmin() {
             </Modal>
 
             <Modal
-              isOpen={updateOpen}
-              onRequestClose={closeModal}
-              contentLabel="Actualizar Habitación"
-              style={customStyles}
-            >
-              <div className="form-group">
-                <label htmlFor="tipo">Tipo:</label>
-                <input type="text" className="form-control" id="tipo" value={tipo} onChange={(e) => setTipo(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="capacidad">Capacidad:</label>
-                <input type="text" className="form-control" id="capacidad" value={capacidad} onChange={(e) => setCapacidad(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="numHab">Número de habitación:</label>
-                <input type="text" className="form-control" id="numHab" value={numHab} onChange={(e) => setNumHab(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="costo">Costo:</label>
-                <input type="text" className="form-control" id="costo" value={costo} onChange={(e) => setCosto(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="extra">Extras:</label>
-                <input type="text" className="form-control" id="extra" value={extra} onChange={(e) => setExtra(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="estado">Estado:</label>
-                <select className="form-control" id="estado" value={estado} onChange={(e) => setEstado(e.target.value)}>
-                  <option value={true}>Disponible</option>
-                  <option value={false}>No disponible</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="img">URL de la imagen:</label>
-                <input type="text" className="form-control" id="img" value={img} onChange={(e) => setImg(e.target.value)} />
-              </div>
-              <button type="button" className="btn btn-primary" onClick={actualizarHabitacion}>Actualizar</button>
-              <button type="button" className="btn btn-secondary" style={{ marginLeft: '10px' }} onClick={closeModal}>Cancelar</button>
-            </Modal>
+  isOpen={updateOpen}
+  onRequestClose={closeModal}
+  contentLabel="Actualizar Habitación"
+  style={customStyles}
+>
+  <div className="form-group">
+    <label htmlFor="tipo">Tipo:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="tipo"
+      value={tipo}
+      onChange={(e) => setTipo(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="capacidad">Capacidad:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="capacidad"
+      value={capacidad}
+      onChange={(e) => setCapacidad(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="numHab">Número de habitación:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="numHab"
+      value={numHab}
+      onChange={(e) => setNumHab(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="costo">Costo:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="costo"
+      value={costo}
+      onChange={(e) => setCosto(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="extra">Extras:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="extra"
+      value={extra}
+      onChange={(e) => setExtra(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="estado">Estado:</label>
+    <select
+      className="form-control"
+      id="estado"
+      value={estado}
+      onChange={(e) => setEstado(e.target.value)}
+    >
+      <option value={true}>Disponible</option>
+      <option value={false}>No disponible</option>
+    </select>
+  </div>
+  <div className="form-group">
+    <label htmlFor="img">URL de la imagen:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="img"
+      value={img}
+      onChange={(e) => setImg(e.target.value)}
+    />
+  </div>
+  <div className="d-flex justify-content-end">
+    <button type="button" className="btn btn-primary" onClick={actualizarHabitacion}>Actualizar</button>
+    <button type="button" className="btn btn-secondary ms-2" onClick={closeModal}>Cancelar</button>
+  </div>
+</Modal>
+
 
           </div>
         </div>
