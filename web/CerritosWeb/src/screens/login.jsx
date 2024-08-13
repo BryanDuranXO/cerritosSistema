@@ -21,7 +21,7 @@ const Login = () => {
     };
   }, []);
 
-  const URL = "http://localhost:8080/api/cerritos/persona/login";
+  const URL = "http://localhost:8080/api/cerritos/persona/one/";
   const url = "http://localhost:8080/api/auth/signin"; // CON JWT
 
   const togglePasswordVisibility = () => {
@@ -39,8 +39,12 @@ const Login = () => {
        
         const token = response.data.data; // Asumiendo que la API devuelve un token
 
-       // Guardar token en localStorage o sessionStorage
        localStorage.setItem("token", token);
+
+       const person = await axios.get(`${URL}${username}`)
+       const responsePerson = person.data.data;
+      console.log(responsePerson)
+localStorage.setItem("persona", JSON.stringify(responsePerson));
 
         Swal.fire({
           icon: "success",

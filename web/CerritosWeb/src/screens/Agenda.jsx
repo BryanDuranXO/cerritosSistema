@@ -13,6 +13,10 @@ import Swal from "sweetalert2";
 
 function NavAdmin() {
 
+  const personaLogin = JSON.parse(localStorage.getItem("persona"));
+
+  const personaSesion = personaLogin.body.data.username;
+
   const cerrar = ()=>{
     localStorage.clear('token');
     navigate('/Acceso')
@@ -389,7 +393,7 @@ function NavAdmin() {
         <div className="main">
           <div className="nav">
             <div className="nv">
-              <img className='userPic' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />John Doe
+              <img className='userPic' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />{personaSesion}
               <button className='butSal' onClick={() => cerrar()}>Cerrar sesión</button>
             </div>
           </div>

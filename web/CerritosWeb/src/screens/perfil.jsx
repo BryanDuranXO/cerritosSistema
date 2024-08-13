@@ -9,6 +9,21 @@ import Form from 'react-bootstrap/Form';
 
 function Perfil() {
     const navigate = useNavigate();
+
+    const personaLogin = JSON.parse(localStorage.getItem("persona"));
+
+  const personaSesion = {
+    nombre : personaLogin.body.data.nombre,
+    materno : personaLogin.body.data.materno,
+    paterno : personaLogin.body.data.paterno,
+    correo: personaLogin.body.data.correo,
+    telefono: personaLogin.body.data.telefono,
+    username: personaLogin.body.data.username,
+    estatus: personaLogin.body.data.estatus,
+  }
+
+  const estatusTexto = personaSesion.estatus ? 'Activo' : 'Inactivo';
+
   
     return (
       <div className="contNav">
@@ -27,7 +42,7 @@ function Perfil() {
         <div className="main">
           <div className="nav">
             <div className="nv">
-              <img className='userPic' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />John Doe
+              <img className='userPic' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />{}
               <button className='butSal' onClick={() => { navigate('/Acceso') }}>Cerrar sesión</button>
             </div>
           </div>
@@ -41,28 +56,28 @@ function Perfil() {
   
                 <div className="contenidoft">
                   <img className='fotouser' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />
-                  <p style={{ color: '#2E3B4C' }} className="fs-3 fw-semibold">John Doe</p>
-                  <p style={{ color: '#6B7381' }} className="fs-4 fw-semibold">Gerente</p>
-                  <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">JohnDoe@gmail.com</p>
+                  <p style={{ color: '#2E3B4C' }} className="fs-3 fw-semibold">{personaSesion.nombre} {personaSesion.materno} {personaSesion.paterno}</p>
+                  <p style={{ color: '#6B7381' }} className="fs-4 fw-semibold">{personaSesion.estatus}</p>
+                  <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">{personaSesion.correo}</p>
   
                 </div>
   
                 <div className="contenido">
                   <div className="infoUser">
                     <p style={{ color: '#2E3B4C', marginRight: '2%' }} className="fs-5 fw-bold">Número télefonico:</p>
-                    <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">777-622-2548</p>
+                    <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">{personaSesion.telefono}</p>
   
                   </div>
   
                   <div className="infoUser">
                     <p style={{ color: '#2E3B4C', marginRight: '2%' }} className="fs-5 fw-bold">Nombre de usuario:</p>
-                    <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">John Doe</p>
+                    <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">{personaSesion.username}</p>
   
                   </div>
   
                   <div className="infoUser">
-                    <p style={{ color: '#2E3B4C', marginRight: '2%' }} className="fs-5 fw-bold">Fecha de nacimiento:</p>
-                    <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">2004-11-14</p>
+                    <p style={{ color: '#2E3B4C', marginRight: '2%' }} className="fs-5 fw-bold">Estatus de cuenta:</p>
+                    <p style={{ color: '#6B7381' }} className="fs-5 fw-semibold">{estatusTexto}</p>
   
                   </div>
                 </div>
