@@ -14,11 +14,13 @@ import mx.edu.utez.CerritosBack.model.reservas.ReservaBean;
 import mx.edu.utez.CerritosBack.model.reservas.ReservaRepository;
 import mx.edu.utez.CerritosBack.model.rol.RolBean;
 import mx.edu.utez.CerritosBack.model.rol.RolRepository;
+import mx.edu.utez.CerritosBack.security.MainSecurity;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @AllArgsConstructor
+
 public class PersonaService {
 
     private final PersonaRepository personaRepository;
@@ -39,6 +42,9 @@ public class PersonaService {
     private final ReservaRepository reservaRepository;
     private JavaMailSender mailSender;
 
+    private PasswordEncoder passwordEncoder;
+
+    private final MainSecurity pass; // Inyecta el servicio de encriptación de contraseñas
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> getAllPeople(){
@@ -126,6 +132,9 @@ public class PersonaService {
         }
         personaBean.setReservaBean(foundReserva.get());
 
+        String encrypted = passwordEncoder.encode(personaBean.getPassword());
+        personaBean.setPassword(encrypted);
+
         personaRepository.saveAndFlush(personaBean);
 
         try {
@@ -181,16 +190,13 @@ public class PersonaService {
                 " Cerritos Xochitepec'>";
 
         helper.setText(htmlContent, true);
-
         String qrText = String.format("ID: %s\nFecha de llegada: %s\nFecha de salida: %s", contrato, llegada, salida);
         BufferedImage qrImage = generateQRCode(qrText, 350, 350);
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(qrImage, "png", baos);
         byte[] qrBytes = baos.toByteArray();
 
         helper.addAttachment("codigoQR.png", new ByteArrayResource(qrBytes));
-
         mailSender.send(message);
     }
 

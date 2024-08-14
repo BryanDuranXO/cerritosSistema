@@ -34,7 +34,12 @@ public class PersonaBean {
     private String telefono;
     @Column(length = 50)
     private String username;
-    @Column(length = 50)
+
+    @Column(columnDefinition = "BOOLEAN", nullable = false)
+    private Boolean estatus;
+
+    @Column(columnDefinition = "TEXT")
+
     private String password;
     @Column(length = 250)
     private String img;
@@ -70,6 +75,37 @@ public class PersonaBean {
         this.img = img;
         this.rolBean = rolBean;
     }
+
+
+    public PersonaBean(Long id, String nombre, String paterno, String materno, String correo, String telefono, String username, Boolean estatus, String password, String img, RolBean rolBean) {
+        this.id = id;
+        this.nombre = nombre;
+        this.paterno = paterno;
+        this.materno = materno;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.username = username;
+        this.estatus = estatus;
+        this.password = password;
+        this.img = img;
+        this.rolBean = rolBean;
+    }
+
+    public PersonaBean(String nombre, String paterno, String materno, String correo, String telefono, String username, Boolean estatus, String password, String img, RolBean rolBean, ReservaBean reservaBean) {
+        this.nombre = nombre;
+        this.paterno = paterno;
+        this.materno = materno;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.username = username;
+        this.estatus = estatus;
+        this.password = password;
+        this.img = img;
+        this.rolBean = rolBean;
+        this.reservaBean = reservaBean;
+    }
+
+
     public PersonaBean(String nombre, String paterno, String materno, String correo, String telefono, String username, String password, String img, RolBean rolBean, ReservaBean reservaBean) {
         this.nombre = nombre;
         this.paterno = paterno;

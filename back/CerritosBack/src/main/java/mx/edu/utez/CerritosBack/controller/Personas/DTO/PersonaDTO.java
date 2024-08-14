@@ -19,6 +19,7 @@ public class PersonaDTO {
     private String telefono;
     private String username;
     private String password;
+    private Boolean estatus;
     private String img;
     private RolBean rolBean;
     private ReservaBean reservaBean;
@@ -26,7 +27,7 @@ public class PersonaDTO {
     public PersonaBean toEntity() {
         if (rolBean == null)
                 return new PersonaBean(id, nombre, paterno, materno, correo, telefono, username, password, img);
-            return new PersonaBean(nombre, paterno, materno, correo, telefono, username, password, img, rolBean, reservaBean);
+            return new PersonaBean(nombre, paterno, materno, correo, telefono, username,estatus, password, img, rolBean, reservaBean);
 
     }
 

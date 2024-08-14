@@ -16,7 +16,7 @@ public class HabitacionesController {
 
     private final HabitacionesService habitacionesService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<ApiResponse> AllHabitaciones(){
         return habitacionesService.getAllHabitaciones();
     }

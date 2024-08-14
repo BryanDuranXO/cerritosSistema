@@ -9,6 +9,11 @@ import Form from 'react-bootstrap/Form';
 
 function PerfilUser() {
     const navigate = useNavigate();
+
+    const cerrar = ()=>{
+      localStorage.removeItem('token');
+      navigate('/Acceso')
+    }
   
     return (
       <div className="contNav">
@@ -24,7 +29,7 @@ function PerfilUser() {
           <div className="nav">
             <div className="nv">
               <img className='userPic' src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="user" />John Doe
-              <button className='butSal' onClick={() => { navigate('/Acceso') }}>Cerrar sesión</button>
+              <button className='butSal' onClick={() => { cerrar() }}>Cerrar sesión</button>
             </div>
           </div>
   

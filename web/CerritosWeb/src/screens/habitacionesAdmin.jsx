@@ -45,7 +45,7 @@ const customStyles = {
 };
 
 function HabAdmin() {
-  const URLHAB = 'http://localhost:8080/api/cerritos/habitaciones';
+  const URLHAB = 'http://localhost:8080/api/cerritos/habitaciones/';
 
   const [totHab, setTotHab] = useState([]);
   const [tipo, setTipo] = useState('');
@@ -71,8 +71,7 @@ function HabAdmin() {
 
   const getHabitaciones = async () => {
     try {
-      const response = await axios.get(`${URLHAB}/`);
-      console.log('La respuesta del axios es:', response.data);
+      const response = await axios.get(`${URLHAB}all`);
 
       if (response.data && Array.isArray(response.data.data)) {
         setTotHab(response.data.data);
@@ -104,6 +103,8 @@ function HabAdmin() {
   const agregarHabitacion = async () => {
     try {
       let imageUrl = ''; // Valor por defecto
+
+      const token = localStorage.getItem('token')
   
       if (imageFile) {
         const storageRef = ref(storage, `images/${imageFile.name}`);
@@ -130,7 +131,11 @@ function HabAdmin() {
   
       console.log('Datos de la habitación a enviar:', newHab);
   
-      const respuesta = await axios.post(`${URLHAB}/`, newHab);
+      const respuesta = await axios.post(`${URLHAB}`, newHab,{
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        }
+      });
       console.log(`respuesta del axios post: ${respuesta.status}`);
   
       if (respuesta.status === 200) {
@@ -217,7 +222,13 @@ function HabAdmin() {
 
   const ChangeStatus = async (id, estado, numero_habitacion) => {
     try {
-      const response = await axios.patch(`${URLHAB}/${id}`, { estado: !estado });
+
+      const token = localStorage.getItem('token')
+      const response = await axios.patch(`${URLHAB}${id}`, { estado: !estado },{
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
 
       if (response.status === 200) {
         toast.success(`Estado de la habitación ${numero_habitacion} cambiado exitosamente`);

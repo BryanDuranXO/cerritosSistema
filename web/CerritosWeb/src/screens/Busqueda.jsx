@@ -9,7 +9,7 @@ const Busqueda = () => {
   const navigate = useNavigate();
 
   const URLReserva = 'http://localhost:8080/api/cerritos/reservas/';
-  const URLHab = 'http://localhost:8080/api/cerritos/habitaciones/';
+  const URLHab = 'http://localhost:8080/api/cerritos/habitaciones/all';
   const [reservas, setReservas] = useState(null);
   const [habitaciones, setHabitaciones] = useState([]);
   const [contrato, setContrato] = useState('');
@@ -19,7 +19,12 @@ const Busqueda = () => {
   
   const getHabitaciones = async () => {
     try {
-      const response = await axios.get(URLHab);
+      const token = localStorage.getItem('token')
+      const response = await axios.get(URLHab, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       console.log('La respuesta del axios es:', response.data);
 
       if (response.data && Array.isArray(response.data.data)) {
@@ -32,10 +37,32 @@ const Busqueda = () => {
     }
   };
 
+  /*
+   const token = await localStorage.getItem('token');
+      console.log(token)
+        
+      // Verifica si el token existe
+      if (!token) {
+        throw new Error('Token no encontrado');
+      }
+
+      const response = await axios.get('http://localhost:8080/api/cerritos/reservas/', {
+        headers: {
+          'Authorization': `Bearer ${token}` // Incluye el token en los encabezados
+        }
+      });
+  
+  */
+
   const traerReservas = async () => {
     setMensaje('');  
     try {
-      const response = await axios.get(`${URLReserva}${contrato}`);
+      const token = localStorage.getItem('token')
+      const response = await axios.get(`${URLReserva}${contrato}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (response.data && response.data.data && response.data.data.body && response.data.data.body.data) {
         const datos = response.data.data.body.data;
         console.log(datos);
