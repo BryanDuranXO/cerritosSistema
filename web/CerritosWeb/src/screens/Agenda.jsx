@@ -29,7 +29,7 @@ function NavAdmin() {
     day: '2-digit'
   }).split('/').reverse().join('-');
 
-  const URLreservas = 'http://localhost:8080/api/cerritos/reservas/';
+  const URLreservas = 'http://localhost:8080/api/cerritos/reservas/all';
 
   const [eventos, setEventos] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -72,7 +72,7 @@ function NavAdmin() {
         throw new Error('Token no encontrado');
       }
 
-      const response = await axios.get('http://localhost:8080/api/cerritos/reservas/', {
+      const response = await axios.get(URLreservas, {
         headers: {
           'Authorization': `Bearer ${token}` // Incluye el token en los encabezados
         }

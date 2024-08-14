@@ -23,6 +23,7 @@ const Login = () => {
 
   const URL = "http://localhost:8080/api/cerritos/persona/one/";
   const url = "http://localhost:8080/api/auth/signin"; // CON JWT
+  const urlRol = "http://localhost:8080/api/cerritos/rol/";
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -36,25 +37,47 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-       
-        const token = response.data.data; // Asumiendo que la API devuelve un token
+        const token = response.data.data; 
+        localStorage.setItem("token", token);
 
-       localStorage.setItem("token", token);
-
-       const person = await axios.get(`${URL}${username}`)
-       const responsePerson = person.data.data;
-      console.log(responsePerson)
-localStorage.setItem("persona", JSON.stringify(responsePerson));
-
-        Swal.fire({
-          icon: "success",
-          title: "Login exitoso",
-          text: "¡Bienvenido!",
-          timer: 1500,
-          showConfirmButton: false,
-        }).then(() => {
-          navigate("/ReservacionAdmin"); 
+        // Obtener la información del usuario
+        const personResponse = await axios.get(`${URL}${username}`, {
+          headers: { Authorization: `Bearer ${token}` }
         });
+        const responsePerson = personResponse.data.data;
+        localStorage.setItem("persona", JSON.stringify(responsePerson));
+
+        // Obtener los roles del usuario
+        const rolesResponse = await axios.get(urlRol, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const roles = rolesResponse.data.data;
+
+        // Encuentra el rol del usuario
+        const userRole = roles.find(role => 
+          role.personaBeans.some(person => person.username === username)
+        );
+
+        if (userRole) {
+          // Redirige según el ID del rol
+          if (userRole.id === 1) {
+            navigate("/ReservacionAdmin");
+          } else if (userRole.id === 2) {
+            navigate("/UserVista");
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Rol desconocido",
+              text: "No se ha encontrado un rol válido para el usuario.",
+            });
+          }
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Rol no encontrado",
+            text: "No se pudo encontrar el rol del usuario.",
+          });
+        }
       } else {
         Swal.fire({
           icon: "error",
